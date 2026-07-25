@@ -431,6 +431,30 @@ export default function Chat() {
           </div>
         </div>
 
+        {/* Guided Demo 5-Scenario Toolbar */}
+        <div className="px-4 py-2.5 bg-surface-variant/30 border-b border-outline-variant/60 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0">
+          <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-primary flex items-center gap-1 shrink-0">
+            <span className="material-symbols-outlined text-xs">play_circle</span>
+            GUIDED DEMO (90s):
+          </span>
+          {[
+            { label: "1. Analyze Ethereum", query: "Analyze Ethereum market sentiment and key risk drivers" },
+            { label: "2. Research Solana", query: "Give me an intelligence report on Solana adoption and risks" },
+            { label: "3. Evaluate Bitcoin risk", query: "Evaluate Bitcoin downside risk indicators and ETF inflows" },
+            { label: "4. Explain today's market", query: "Explain today's crypto market overview and top signal movements" },
+            { label: "5. Generate prediction opportunity", query: "Generate a verifiable prediction proposal for AI sector tokens" }
+          ].map((item, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleSend(item.query)}
+              className="px-3 py-1 rounded-xl bg-surface border border-outline-variant/80 hover:border-primary/50 hover:bg-primary/10 text-on-surface text-[10.5px] font-medium transition-all shrink-0 flex items-center gap-1"
+            >
+              <span>{item.label}</span>
+              <span className="material-symbols-outlined text-[10px] text-primary">arrow_forward</span>
+            </button>
+          ))}
+        </div>
+
         {/* Messages Stream Container */}
         <div className="flex-1 p-4 overflow-y-auto space-y-6 no-scrollbar">
           {messages.map((msg) => (
