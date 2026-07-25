@@ -11,6 +11,7 @@ export interface OKXAgentRequest {
 export interface OKXAgentResponse {
     success: boolean;
     provider: string;
+    aspType: 'A2A';
     version: string;
     sessionId: string;
     data?: UnifiedAgentResponse | null;
@@ -24,6 +25,7 @@ export interface OKXAgentResponse {
 
 export class OKXAgentAdapter {
     static readonly PROVIDER_NAME = 'Nexa AI';
+    static readonly ASP_TYPE = 'A2A'; // Agent-to-Agent (A2A) ASP for complex reasoning agents
     static readonly ADAPTER_VERSION = '1.0.0';
     static readonly DEFAULT_TIMEOUT_MS = 10000;
 
@@ -33,15 +35,27 @@ export class OKXAgentAdapter {
     static getMetadata() {
         return {
             name: ProtocolMetadata.name,
+            category: "AI Crypto Intelligence Agent",
+            aspType: "A2A",
+            aspTypeDescription: "Agent-to-Agent (A2A) ASP for complex research, reasoning, risk assessment, and prediction orchestration.",
+            productStory: "Nexa AI is an autonomous crypto intelligence agent that helps traders and researchers analyze markets, evaluate risks, understand token ecosystems, and generate evidence-backed prediction opportunities through natural language.",
             version: this.ADAPTER_VERSION,
             description: ProtocolMetadata.protocolDescription,
-            provider: "Nexa AI / OKX AI Agent Service Provider",
+            provider: "Nexa AI / OKX A2A Agent Service Provider",
+            services: [
+                "Market Research",
+                "Token Analysis",
+                "Risk Assessment",
+                "News Intelligence",
+                "Prediction Generation"
+            ],
             capabilities: [
                 "Token Research & Fundamental Analysis",
                 "Real-Time Market Signals & News Telemetry",
                 "Risk Scoring & Volatility Audit",
                 "Verifiable Prediction Proposals & IPFS Evidence Packaging"
             ],
+            defaultPricing: "Free / On-Chain Query Gas Only",
             endpoints: {
                 agentQuery: "/api/v1/okx/agent",
                 health: "/api/v1/okx/health",
@@ -60,7 +74,8 @@ export class OKXAgentAdapter {
     static getHealth() {
         return {
             status: "OK",
-            service: "Nexa AI OKX Agent Provider",
+            service: "Nexa AI A2A Agent Provider",
+            aspType: "A2A",
             uptimeSeconds: Math.floor(process.uptime()),
             timestamp: Date.now()
         };
@@ -72,6 +87,7 @@ export class OKXAgentAdapter {
     static getVersion() {
         return {
             name: ProtocolMetadata.name,
+            aspType: "A2A",
             version: this.ADAPTER_VERSION,
             apiVersion: "v1",
             build: "v1.0.0-stable",
@@ -96,7 +112,7 @@ export class OKXAgentAdapter {
             return { valid: false, error: "Query exceeds maximum length of 1000 characters." };
         }
 
-        const sessionId = reqBody.sessionId || `okx-session-${Date.now()}`;
+        const sessionId = reqBody.sessionId || `okx-a2a-session-${Date.now()}`;
         return { valid: true, query: query.trim(), sessionId };
     }
 
@@ -113,6 +129,7 @@ export class OKXAgentAdapter {
                 payload: {
                     success: false,
                     provider: this.PROVIDER_NAME,
+                    aspType: "A2A",
                     version: this.ADAPTER_VERSION,
                     sessionId: validation.sessionId || `err-${Date.now()}`,
                     data: null,
@@ -130,7 +147,7 @@ export class OKXAgentAdapter {
         const query = validation.query;
 
         try {
-            Logger.info(`[OKX_AGENT_ADAPTER] Processing request session "${sessionId}": "${query}"`);
+            Logger.info(`[OKX_A2A_ADAPTER] Processing request session "${sessionId}": "${query}"`);
 
             // Enforce 10s timeout protection wrapper
             const agentPromise = CoordinatorAgent.processQuery(query);
@@ -145,6 +162,7 @@ export class OKXAgentAdapter {
                 payload: {
                     success: true,
                     provider: this.PROVIDER_NAME,
+                    aspType: "A2A",
                     version: this.ADAPTER_VERSION,
                     sessionId,
                     data: agentResult,
@@ -155,13 +173,14 @@ export class OKXAgentAdapter {
             };
         } catch (err: any) {
             const isTimeout = err.message && err.message.includes("timeout");
-            Logger.error(`[OKX_AGENT_ADAPTER] Error processing request for session "${sessionId}":`, err);
+            Logger.error(`[OKX_A2A_ADAPTER] Error processing request for session "${sessionId}":`, err);
 
             return {
                 statusCode: isTimeout ? 504 : 500,
                 payload: {
                     success: false,
                     provider: this.PROVIDER_NAME,
+                    aspType: "A2A",
                     version: this.ADAPTER_VERSION,
                     sessionId,
                     data: null,

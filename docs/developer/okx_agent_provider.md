@@ -1,130 +1,114 @@
-# OKX.AI Agent Service Provider Integration
+# OKX.AI Agent-to-Agent (A2A) ASP Registration & Submission Guide
 
-## 1. Executive Overview
+## 1. Executive Discovery & ASP Classification
 
-Nexa AI is configured for submission as an **OKX.AI Agent Service Provider**. To maintain architectural integrity and prevent tight coupling to platform-specific specifications, all OKX integration handlers are isolated inside an adapter layer (`OKXAgentAdapter.ts`).
+Nexa AI is registered as an **Agent-to-Agent (A2A) Agent Service Provider (ASP)** on the OKX.AI platform.
 
-```mermaid
-flowchart LR
-    OKXPlatform[OKX.AI Platform] -->|REST Request| Adapter[OKXAgentAdapter]
-    Adapter -->|Request Validation| Router[CoordinatorAgent]
-    Router -->|Execution| Tools[Modular Tools & Agents]
-    Tools -->|Result| Router
-    Router -->|Raw Data| Adapter
-    Adapter -->|Standardized OKX JSON| OKXPlatform
-```
+### Why A2A (and NOT A2MCP)?
+- **A2A (Agent-to-Agent)**: Designed for complex, autonomous AI agents performing multi-agent research, reasoning, risk audits, negotiation, and customized task execution.
+- **A2MCP (Agent-to-MCP)**: Designed for simple, standardized data APIs or MCP services (e.g. price feeds or weather APIs) with mandatory payment endpoint schemas (e.g., `x402`).
+
+Since Nexa AI is a **reasoning and research agent**, **A2A** is the perfect classification fit.
 
 ---
 
-## 2. Public API Endpoints Reference
+## 2. Product Identity & 10-Second Elevator Story
 
-Nexa AI exposes four public REST API endpoints for OKX agent service provider verification:
+### Product Identity
+- **Product Name**: Nexa AI
+- **Category**: AI Crypto Intelligence Agent
+- **ASP Type**: ✅ **Agent-to-Agent (A2A)**
+- **Core Services**:
+  1. **Market Research**
+  2. **Token Analysis**
+  3. **Risk Assessment**
+  4. **News Intelligence**
+  5. **Prediction Generation**
+
+### 10-Second Product Story
+> *"Nexa AI is an autonomous crypto intelligence agent that helps traders and researchers analyze markets, evaluate risks, understand token ecosystems, and generate evidence-backed prediction opportunities through natural language."*
+
+---
+
+## 3. OKX.AI Marketplace Registration Sequence
+
+According to the OKX.AI onboarding protocol, the registration sequence is:
+
+```mermaid
+flowchart TD
+    Step1[1. Install Onchain OS] --> Step2[2. Log in to Agentic Wallet]
+    Step2 --> Step3[3. Register as A2A ASP]
+    Step3 --> Step4[4. Provide Registration Details]
+    Step4 --> Step5[5. Submit for OKX Review]
+    Step5 --> Step6[6. List ASP on OKX Marketplace]
+```
+
+### Registration Submission Details:
+- **ASP Name**: Nexa AI
+- **ASP Type**: Agent-to-Agent (A2A)
+- **Description**: Nexa AI is an autonomous crypto intelligence agent that analyzes market signals, evaluates risks, researches tokens, and structures verifiable prediction opportunities.
+- **Service List**:
+  - `Market Research`: Real-time signal stream evaluation and trend scoring.
+  - `Token Analysis`: Tokenomics, emission schedules, developer commits, and growth drivers.
+  - `Risk Assessment`: Volatility index scoring, liquidity safeguards, and downside matrices.
+  - `News Intelligence`: RSS news telemetry, headline sentiment, and social signals.
+  - `Prediction Generation`: Verifiable binary proposals with IPFS CIDs and on-chain settlement formats.
+- **Default Pricing**: Free / On-Chain Gas Only
+- **Endpoint URL**: `https://api.nexaai.io/api/v1/okx/agent`
+
+---
+
+## 4. Exposed A2A Public API Endpoints
 
 ### A. Health Check (`GET /api/v1/okx/health`)
-- **Description**: Returns real-time system health and service uptime.
-- **Response Example**:
 ```json
 {
   "status": "OK",
-  "service": "Nexa AI OKX Agent Provider",
+  "service": "Nexa AI A2A Agent Provider",
+  "aspType": "A2A",
   "uptimeSeconds": 1420,
   "timestamp": 1720000000000
 }
 ```
 
-### B. Version Endpoint (`GET /api/v1/okx/version`)
-- **Description**: Returns API versioning and build metrics.
-- **Response Example**:
+### B. Version (`GET /api/v1/okx/version`)
 ```json
 {
   "name": "Nexa AI",
+  "aspType": "A2A",
   "version": "1.0.0",
   "apiVersion": "v1",
-  "build": "v1.0.0-stable",
-  "environment": "Development"
+  "build": "v1.0.0-stable"
 }
 ```
 
-### C. Agent Metadata Endpoint (`GET /api/v1/okx/metadata`)
-- **Description**: Returns service provider capabilities, supported networks, and registered endpoints.
-- **Response Example**:
+### C. A2A Provider Metadata (`GET /api/v1/okx/metadata`)
 ```json
 {
   "name": "Nexa AI",
-  "version": "1.0.0",
-  "description": "Nexa AI is an AI-powered crypto intelligence agent...",
-  "provider": "Nexa AI / OKX AI Agent Service Provider",
-  "capabilities": [
-    "Token Research & Fundamental Analysis",
-    "Real-Time Market Signals & News Telemetry",
-    "Risk Scoring & Volatility Audit",
-    "Verifiable Prediction Proposals & IPFS Evidence Packaging"
+  "category": "AI Crypto Intelligence Agent",
+  "aspType": "A2A",
+  "aspTypeDescription": "Agent-to-Agent (A2A) ASP for complex research, reasoning, risk assessment, and prediction orchestration.",
+  "productStory": "Nexa AI is an autonomous crypto intelligence agent that helps traders and researchers analyze markets, evaluate risks, understand token ecosystems, and generate evidence-backed prediction opportunities through natural language.",
+  "services": [
+    "Market Research",
+    "Token Analysis",
+    "Risk Assessment",
+    "News Intelligence",
+    "Prediction Generation"
   ],
   "endpoints": {
     "agentQuery": "/api/v1/okx/agent",
     "health": "/api/v1/okx/health",
     "version": "/api/v1/okx/version",
     "metadata": "/api/v1/okx/metadata"
-  },
-  "supportedNetworks": ["Ethereum", "Arbitrum", "Base", "Optimism", "EVM Testnets"]
+  }
 }
 ```
 
-### D. Agent Query Execution Endpoint (`POST /api/v1/okx/agent`)
-- **Description**: Primary agent query processing endpoint.
-- **Request Body**:
-```json
-{
-  "query": "Analyze Bitcoin sentiment and key risk drivers for Q3",
-  "sessionId": "okx-session-99120"
-}
-```
-- **Response Example**:
-```json
-{
-  "success": true,
-  "provider": "Nexa AI",
-  "version": "1.0.0",
-  "sessionId": "okx-session-99120",
-  "data": {
-    "query": "Analyze Bitcoin sentiment and key risk drivers for Q3",
-    "primaryIntent": "RISK_ANALYSIS",
-    "aggregatedSummary": "### Nexa AI Intelligence Report for \"Analyze Bitcoin...\"\n...",
-    "confidenceScore": 0.94
-  },
-  "executionTimeMs": 340,
-  "timestamp": 1720000000000,
-  "error": null
-}
-```
-
----
-
-## 3. Operational Protection & Error Handling
-
-- **Request Validation**: Verifies that input payload is valid JSON and contains a non-empty `query` string (<1000 chars).
-- **10s Timeout Protection**: Uses `Promise.race` with a 10,000ms threshold to prevent hanging connection states.
-- **Standardized Error Codes**:
-  - `INVALID_INPUT` (HTTP 400): Missing or malformed query string.
-  - `REQUEST_TIMEOUT` (HTTP 504): Processing exceeded 10s cutoff limit.
-  - `INTERNAL_ERROR` (HTTP 500): Server-side execution exception.
-
----
-
-## 4. Verification with Curl
-
+### D. A2A Agent Query Execution (`POST /api/v1/okx/agent`)
 ```bash
-# Health Check
-curl -X GET http://localhost:3000/api/v1/okx/health
-
-# Version Info
-curl -X GET http://localhost:3000/api/v1/okx/version
-
-# Metadata
-curl -X GET http://localhost:3000/api/v1/okx/metadata
-
-# Execute Query
 curl -X POST http://localhost:3000/api/v1/okx/agent \
   -H "Content-Type: application/json" \
-  -d '{"query": "Analyze ETH market sentiment", "sessionId": "test-1"}'
+  -d '{"query": "Analyze ETH market sentiment and key risks", "sessionId": "okx-a2a-test-1"}'
 ```
