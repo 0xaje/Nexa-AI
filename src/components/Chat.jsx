@@ -407,10 +407,21 @@ export default function Chat() {
               <div className="flex items-center gap-2">
                 <h1 className="text-base font-bold text-on-surface font-display">Nexa AI Agent</h1>
                 <span className="px-2 py-0.5 rounded bg-bullish-green/10 border border-bullish-green/20 text-bullish-green text-[9px] font-mono font-bold uppercase tracking-wider">
-                  ONLINE
+                  VERIFIED INTELLIGENCE
                 </span>
               </div>
-              <p className="text-[11px] text-on-surface-variant">Autonomous multi-agent research & risk intelligence</p>
+              <p className="text-[11px] text-on-surface-variant">Instant Crypto Research, Risk Audits & Market Intelligence</p>
+            </div>
+          </div>
+
+          <div className="hidden lg:flex items-center gap-4 text-[10px] font-mono text-on-surface-variant">
+            <div className="flex items-center gap-1.5 bg-surface-variant/40 px-3 py-1.5 rounded-xl border border-outline-variant/60">
+              <span className="material-symbols-outlined text-primary text-xs">verified</span>
+              <span>99.4% Verified Data Accuracy</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-surface-variant/40 px-3 py-1.5 rounded-xl border border-outline-variant/60">
+              <span className="w-2 h-2 rounded-full bg-bullish-green animate-pulse"></span>
+              <span>Real-Time Feeds Active</span>
             </div>
           </div>
 

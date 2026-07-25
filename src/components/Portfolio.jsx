@@ -35,6 +35,26 @@ export default function Portfolio() {
 
   return (
     <main className="pt-24 pb-4 px-4 w-full flex flex-col items-center max-w-5xl mx-auto z-10 flex-grow">
+      {/* Header Banner */}
+      <div className="w-full bg-surface rounded-2xl border border-outline-variant shadow-lg p-6 mb-6 flex items-center justify-between gap-4 text-left">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shrink-0">
+            <span className="material-symbols-outlined text-2xl">history</span>
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-bold text-on-surface font-display">Research History & Activity</h1>
+              <span className="px-2 py-0.5 rounded bg-primary/15 border border-primary/30 text-primary text-[9px] font-mono font-bold uppercase tracking-wider">
+                SAVED WORKSPACE
+              </span>
+            </div>
+            <p className="text-xs text-on-surface-variant leading-relaxed">
+              Track your past research queries, analyzed market signals, and prediction outcomes in one unified workspace.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="w-full bg-surface rounded-xl border border-outline-variant shadow-lg p-6 lg:p-10 text-center flex flex-col items-center">
         <div className="w-24 h-24 rounded-full border-4 border-primary/20 p-1 mb-6 relative group">
            <img 

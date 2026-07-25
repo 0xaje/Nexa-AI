@@ -120,13 +120,13 @@ export default function Tokens() {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold text-on-surface font-display">Token Intelligence</h1>
+              <h1 className="text-xl font-bold text-on-surface font-display">Token Intelligence & Asset Research</h1>
               <span className="px-2 py-0.5 rounded bg-primary/15 border border-primary/30 text-primary text-[9px] font-mono font-bold uppercase tracking-wider">
-                AI RESEARCH
+                DEEP RESEARCH
               </span>
             </div>
             <p className="text-xs text-on-surface-variant leading-relaxed">
-              Multi-agent AI research, risk scores, and driver analysis for top crypto assets.
+              Deep-dive into token fundamentals, growth drivers, emission schedules, and multi-agent risk ratings.
             </p>
           </div>
         </div>
