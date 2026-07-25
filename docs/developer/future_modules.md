@@ -4,7 +4,7 @@
 ---
 
 ## 1. Executive Summary
-This document acts as the technical playbook for upcoming developer upgrades. It highlights the planned upgrades designed to improve decentralization, security, and verification across the AIRA Protocol.
+This document acts as the technical playbook for upcoming developer upgrades. It highlights the planned upgrades designed to improve decentralization, security, and verification across Nexa AI.
 
 ---
 

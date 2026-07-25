@@ -5,7 +5,7 @@
 
 ## 1. Interface Flow Overview
 
-The **Decision Explorer** is a step-based dashboard panel that allows users to drill down into the lifecycle of any decision made on the AIRA Protocol. The interface operates on a linear, six-stage stepper flow:
+The **Decision Explorer** is a step-based dashboard panel that allows users to drill down into the lifecycle of any decision made on Nexa AI. The interface operates on a linear, six-stage stepper flow:
 
 ```
 [Proposal Overview] 

@@ -1,9 +1,9 @@
 import { EventEmitter } from 'events';
 
-// Central Event Bus for the AIRA Protocol
-class AiraEventBus extends EventEmitter {}
+// Central Event Bus for the Nexa AI Protocol
+class NexaEventBus extends EventEmitter {}
 
-export const eventBus = new AiraEventBus();
+export const eventBus = new NexaEventBus();
 
 // Core Event Types
 export enum SystemEvents {

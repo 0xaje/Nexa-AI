@@ -5,7 +5,7 @@
 
 ## 1. Executive Summary
 
-The Multi-Agent Consensus Engine in the AIRA Protocol is modularized by specialized validation agents (e.g., `AnalystAgent`, `RiskAgent`, `ComplianceAgent`). This playbook guides developers through writing, registering, and integrating a new autonomous validation agent into the protocol backend.
+The Multi-Agent Consensus Engine in Nexa AI is modularized by specialized validation agents (e.g., `AnalystAgent`, `RiskAgent`, `ComplianceAgent`). This playbook guides developers through writing, registering, and integrating a new autonomous validation agent into the backend.
 
 ### Core Swarm Validators:
 *   **Analyst Agent**: Performs semantic reasoning over normalized signals and generates structured intelligence with confidence scoring.

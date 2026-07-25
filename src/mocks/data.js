@@ -2,35 +2,35 @@ export const trendingSuggestions = [
   {
     id: 'tech_1',
     category: 'TECH',
-    title: 'GPT-5 Autumn Release',
-    prompt: 'Create a market for OpenAI announcing GPT-5 before October 2025',
-    volume: '$3.4M',
-    hotness: '98%',
-    icon: 'developer_board'
-  },
-  {
-    id: 'tech_2',
-    category: 'TECH',
-    title: 'Foldable Apple iPhone',
-    prompt: 'Create a market for Apple launching its first fully foldable iPhone in 2025',
-    volume: '$1.8M',
-    hotness: '89%',
-    icon: 'devices'
-  },
-  {
-    id: 'tech_3',
-    category: 'TECH',
-    title: 'AGI Verification by Lab',
-    prompt: 'Create a market for a major AI laboratory claiming to achieve AGI by 2026',
+    title: 'AGI Benchmark by Major Lab',
+    prompt: 'Will a major AI laboratory publicly release a verifiable AGI benchmark score before the end of 2025?',
     volume: '$5.1M',
     hotness: '94%',
     icon: 'psychology'
   },
   {
+    id: 'tech_2',
+    category: 'TECH',
+    title: 'GPT-5 Global Launch',
+    prompt: 'Will OpenAI officially release GPT-5 to the public before October 2025?',
+    volume: '$3.4M',
+    hotness: '98%',
+    icon: 'developer_board'
+  },
+  {
+    id: 'tech_3',
+    category: 'TECH',
+    title: 'Humanoid Robot Deployment',
+    prompt: 'Will any company deploy more than 1,000 humanoid robots in an active commercial facility by end of 2025?',
+    volume: '$2.1M',
+    hotness: '87%',
+    icon: 'smart_toy'
+  },
+  {
     id: 'crypto_1',
     category: 'CRYPTO',
-    title: 'Bitcoin $150K Target',
-    prompt: 'Create a market for BTC crossing $150k before July 2025',
+    title: 'Bitcoin $150K Milestone',
+    prompt: 'Will Bitcoin (BTC) close above $150,000 USD on any major exchange before July 2026?',
     volume: '$18.9M',
     hotness: '97%',
     icon: 'currency_bitcoin'
@@ -38,70 +38,70 @@ export const trendingSuggestions = [
   {
     id: 'crypto_2',
     category: 'CRYPTO',
-    title: 'Solana Active Users Spike',
-    prompt: 'Create a market for Solana active addresses exceeding 5 million in Q3',
-    volume: '$4.1M',
-    hotness: '92%',
-    icon: 'token'
+    title: 'Ethereum L2 TVL Surge',
+    prompt: 'Will Ethereum Layer 2 networks collectively exceed $100B TVL before Q4 2025?',
+    volume: '$6.3M',
+    hotness: '89%',
+    icon: 'account_balance_wallet'
   },
   {
     id: 'crypto_3',
     category: 'CRYPTO',
-    title: 'ETH Spot ETF Net Inflow',
-    prompt: 'Create a market for ETH spot ETFs achieving $1B net inflow in first 10 days of release',
-    volume: '$8.2M',
-    hotness: '85%',
-    icon: 'account_balance_wallet'
+    title: 'AI Token Market Cap',
+    prompt: 'Will the aggregate AI token sector market cap exceed $200B USD before end of 2025?',
+    volume: '$4.8M',
+    hotness: '91%',
+    icon: 'token'
   },
   {
     id: 'politics_1',
     category: 'POLITICS',
-    title: 'US Election Vote Speed',
-    prompt: 'Create a market for the US presidential election resolution happening within 24 hours of closing',
-    volume: '$45.1M',
-    hotness: '99%',
+    title: 'AI Regulation Signed',
+    prompt: 'Will the United States pass a comprehensive federal AI regulation bill before the end of 2025?',
+    volume: '$12.7M',
+    hotness: '96%',
     icon: 'gavel'
   },
   {
     id: 'politics_2',
     category: 'POLITICS',
-    title: 'UK Snap Election Timeline',
-    prompt: 'Create a market for the UK Prime Minister calling for a snap election before 2026',
+    title: 'EU AI Act Full Enforcement',
+    prompt: 'Will the EU AI Act be in full enforcement across all member states before mid-2026?',
     volume: '$5.9M',
-    hotness: '76%',
-    icon: 'storefront'
+    hotness: '82%',
+    icon: 'policy'
   },
   {
     id: 'general_1',
     category: 'SPORTS',
-    title: 'Real Madrid Trophy Run',
-    prompt: 'Create a market for Real Madrid winning the next Champions League final',
-    volume: '$6.2M',
-    hotness: '84%',
+    title: 'AI-Assisted Sports Analytics',
+    prompt: 'Will an AI system publicly predict the winner of a major championship (NFL/NBA/UEFA) with >80% accuracy before 2026?',
+    volume: '$3.2M',
+    hotness: '79%',
     icon: 'sports_soccer'
   },
   {
     id: 'general_2',
     category: 'TECH',
-    title: 'SpaceX Starship Booster Catch',
-    prompt: 'Create a market for SpaceX catching the Starship booster on IFT-5',
-    volume: '$18.4M',
+    title: 'SpaceX Starship Orbital Success',
+    prompt: 'Will SpaceX successfully complete a Starship orbital flight with full booster recovery before Q3 2025?',
+    volume: '$9.4M',
     hotness: '96%',
     icon: 'rocket_launch'
   }
 ];
 
 export const getLeaderboardData = (profileNickname, profilePicture) => [
-  { rank: 1, user: "GiwaWhale", avatar: "https://i.pravatar.cc/150?u=1", winRate: "89%", volume: "$4.2M", profit: "+$1.1M" },
+  { rank: 1, user: "NexaWhale", avatar: "https://i.pravatar.cc/150?u=1", winRate: "89%", volume: "$4.2M", profit: "+$1.1M" },
   { rank: 2, user: "0xQuantum", avatar: "https://i.pravatar.cc/150?u=2", winRate: "76%", volume: "$2.8M", profit: "+$890K" },
   { rank: 3, user: "AlphaSeeker", avatar: "https://i.pravatar.cc/150?u=3", winRate: "82%", volume: "$1.9M", profit: "+$640K" },
-  { rank: 4, user: "DeFi_Ninja", avatar: "https://i.pravatar.cc/150?u=4", winRate: "71%", volume: "$1.5M", profit: "+$420K" },
+  { rank: 4, user: "DeepMind_X", avatar: "https://i.pravatar.cc/150?u=4", winRate: "71%", volume: "$1.5M", profit: "+$420K" },
   { rank: 5, user: profileNickname, avatar: profilePicture, winRate: "68%", volume: "$1.2M", profit: "+$310K" },
 ];
 
 export const feedCategories = [
-  { id: 'TECH', label: 'Tech Feed', icon: 'developer_board', color: 'text-bearish' },
-  { id: 'CRYPTO', label: 'Crypto Feed', icon: 'currency_bitcoin', color: 'text-primary' },
-  { id: 'SPORTS', label: 'Sports Feed', icon: 'sports_soccer', color: 'text-bullish-green' },
-  { id: 'POLITICS', label: 'Politics Feed', icon: 'gavel', color: 'text-bullish' }
+  { id: 'TECH', label: 'AI & Tech', icon: 'developer_board', color: 'text-bearish' },
+  { id: 'CRYPTO', label: 'Crypto & Assets', icon: 'currency_bitcoin', color: 'text-primary' },
+  { id: 'SPORTS', label: 'Sports & Data', icon: 'sports_soccer', color: 'text-bullish-green' },
+  { id: 'POLITICS', label: 'Macro & Policy', icon: 'gavel', color: 'text-bullish' }
 ];

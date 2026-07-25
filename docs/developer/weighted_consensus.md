@@ -1,6 +1,6 @@
 # Weighted Consensus Engine Guide
 
-This guide documents the implementation, equations, and reputation parameters utilized in the AIRA Protocol's **Weighted Consensus Engine**.
+This guide documents the implementation, equations, and reputation parameters utilized in Nexa AI's **Weighted Consensus Engine**.
 
 ---
 

@@ -4,11 +4,11 @@
 ---
 
 ## 1. High-Level Architecture Design
-The AIRA Protocol is a general-purpose, verifiable AI decision layer that decouples off-chain cognitive processing from immutable blockchain settlement:
+Nexa AI is a general-purpose, verifiable AI decision layer that decouples off-chain cognitive processing from immutable blockchain settlement:
 *   **Off-Chain Cognitive Processing**: The Ingestion Feed gathers real-world signals, compiling them into **Evidence Packages** which are audited via Multi-Agent Analysis in the Multi-Agent Consensus Engine.
 *   **On-Chain State Settlement**: Smart contracts govern all custody, tokens, and payouts. This guarantees safety of user funds even if the off-chain system experiences downtime.
 
-The AIRA Protocol is governed by an 8-stage unified protocol lifecycle:
+Nexa AI is governed by an 8-stage unified lifecycle:
 
 ```mermaid
 flowchart TD

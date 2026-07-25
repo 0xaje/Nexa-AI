@@ -1,5 +1,5 @@
 # Development Workflow & Standards
-### Engineering Guidelines for the AIRA Protocol
+### Engineering Guidelines for Nexa AI
 
 ---
 

@@ -1,6 +1,6 @@
 # GIWA Sepolia Testnet Deployment Report
 
-This report documents the smart contract deployment, explorer verification, and integration logs of the AIRA Protocol on Dunamu's **GIWA Sepolia Testnet**.
+This report documents the smart contract deployment, explorer verification, and integration logs of Nexa AI on Dunamu's **GIWA Sepolia Testnet**.
 
 ---
 

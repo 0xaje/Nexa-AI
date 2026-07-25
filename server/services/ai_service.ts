@@ -3,15 +3,15 @@ import { llmManager } from './llm/manager';
 import { Logger } from '../utils/logger';
 
 /**
- * AIRA AI Intelligence Service
- * Handles prompt generation, confidence scoring, and outcome prediction via LLM.
+ * Nexa AI Intelligence Service
+ * Handles prompt generation, confidence scoring, and decision analysis via LLM.
  */
 export class AIService {
     static async generateMarketProposal(signal: NormalizedSignal) {
         Logger.info(`[AI_SERVICE] Generating proposal via LLM for ${signal.category.toUpperCase()}: ${signal.topic.substring(0, 50)}...`);
         
         const prompt = `
-Task: Formulate a binary decision intelligence proposal and an Intelligence Report from the incoming real-world signal.
+Task: Formulate a binary structured intelligence proposal and an Intelligence Report from the incoming real-world signal.
 Signal Topic: "${signal.topic}"
 Signal Category: "${signal.category}"
 Signal Source: "${signal.source}"

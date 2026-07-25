@@ -5,7 +5,7 @@
 
 ## 1. Executive Summary
 
-To prevent unstable free-text parsing or heuristics in agent audits, the AIRA Protocol routes all LLM calls through a shared **LLM Abstraction Layer**. This layer forces all model responses (from OpenAI, Gemini, Anthropic, or local node models) into strict JSON payloads conforming to the protocol's reasoning schemas.
+To prevent unstable free-text parsing or heuristics in agent audits, Nexa AI routes all LLM calls through a shared **LLM Abstraction Layer**. This layer forces all model responses (from OpenAI, Gemini, Anthropic, or local node models) into strict JSON payloads conforming to the platform's reasoning schemas.
 
 ```
                           ┌───────────────────────────┐

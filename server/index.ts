@@ -171,7 +171,7 @@ const server = http.createServer(async (req, res) => {
             const { DbAdapter } = await import('./services/db_adapter');
             const prisma = DbAdapter.getClient();
 
-            const proposals = await prisma.pendingMarket.findMany({
+            const proposals = await prisma.pendingDecision.findMany({
                 include: { evaluations: true, intelligenceReport: true },
                 orderBy: { createdAt: 'desc' }
             });

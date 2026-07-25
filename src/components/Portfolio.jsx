@@ -164,7 +164,7 @@ export default function Portfolio() {
                  My Predictions & Outcome History
               </h3>
               <span className="font-mono text-[9px] text-on-surface-variant font-bold uppercase tracking-wider bg-surface-variant px-2.5 py-1 rounded">
-                GIWA ON-CHAIN SYNCHRONIZED
+                ON-CHAIN SYNCHRONIZED
               </span>
             </div>
 
@@ -172,12 +172,12 @@ export default function Portfolio() {
                {(portfolioStats.tradesList && portfolioStats.tradesList.length > 0 ? portfolioStats.tradesList : [
                  {
                    id: 1,
-                   title: "Will AI Agent Protocol v2 launch on GIWA before Q4?",
+                   title: "Will AI Agent Protocol v2 launch on testnet before Q4?",
                    side: "YES",
-                   amount: 2000000000000000n, // 0.002 GIWA
+                   amount: 2000000000000000n, // 0.002 native currency
                    outcome: "WON",
                    claimed: false,
-                   payout: "0.0039 GIWA"
+                   payout: `0.0039 ${getNativeCurrencySymbol()}`
                  },
                  {
                    id: 2,

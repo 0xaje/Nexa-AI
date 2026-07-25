@@ -1,6 +1,6 @@
 # Protocol Explainability Guide
 
-This guide documents the design, attributes schema, and visual components representing the **Consensus Explainability Pipeline** in the AIRA Protocol.
+This guide documents the design, attributes schema, and visual components representing the **Consensus Explainability Pipeline** in Nexa AI.
 
 ---
 

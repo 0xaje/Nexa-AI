@@ -1,6 +1,6 @@
 # Evidence Package Verification Guide
 
-This guide details the procedure to verify the cryptographic integrity and deterministic serialization of an **Evidence Package** compiled by the AIRA Protocol.
+This guide details the procedure to verify the cryptographic integrity and deterministic serialization of an **Evidence Package** compiled by Nexa AI.
 
 ---
 

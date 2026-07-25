@@ -31,7 +31,7 @@ export default function Leaderboard({ profileData }) {
       avatar: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=120',
       calibrationStatus: 'CALIBRATED',
       nodeRole: 'Primary Analyst Node',
-      status: 'VERIFIED ON GIWA',
+      status: 'VERIFIED ON-CHAIN',
       type: 'Agent'
     },
     {
@@ -43,7 +43,7 @@ export default function Leaderboard({ profileData }) {
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120',
       calibrationStatus: 'CALIBRATED',
       nodeRole: 'Risk Inspector Node',
-      status: 'VERIFIED ON GIWA',
+      status: 'VERIFIED ON-CHAIN',
       type: 'Agent'
     },
     {
@@ -55,7 +55,7 @@ export default function Leaderboard({ profileData }) {
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=120',
       calibrationStatus: 'CALIBRATED',
       nodeRole: 'Compliance Audit Node',
-      status: 'VERIFIED ON GIWA',
+      status: 'VERIFIED ON-CHAIN',
       type: 'Agent'
     }
   ];
@@ -65,13 +65,13 @@ export default function Leaderboard({ profileData }) {
     {
       id: 'node_4',
       rank: 4,
-      name: 'GiwaWhale_01',
+      name: 'NexaWhale_01',
       role: 'External Liquidity & Signal Validator',
       address: '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120',
       calibrationStatus: 'VERIFIED',
       nodeRole: 'External Validator',
-      status: 'VERIFIED ON GIWA',
+      status: 'VERIFIED ON-CHAIN',
       type: 'Trader'
     }
   ];
@@ -81,12 +81,12 @@ export default function Leaderboard({ profileData }) {
     id: `user_${walletAddress}`,
     rank: baseNodes.length + globalParticipants.length + 1,
     name: profileData?.nickname || 'Connected Predictor',
-    role: 'Connected Participant Wallet & Protocol Activity',
+    role: 'Connected Participant Wallet & Nexa AI Activity',
     address: walletAddress,
     avatar: profileData?.picture || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=120',
     calibrationStatus: 'ACTIVE',
     nodeRole: 'Connected Participant Wallet',
-    status: 'VERIFIED ON GIWA',
+    status: 'VERIFIED ON-CHAIN',
     isUser: true,
     type: 'User'
   } : null;
@@ -107,9 +107,9 @@ export default function Leaderboard({ profileData }) {
       <div className="w-full mb-8 text-center sm:text-left">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-mono font-bold text-primary uppercase mb-3">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-          Decision Transparency Registry
+          Agent & User Registry
         </div>
-        <h2 className="serif-heading text-3xl md:text-4xl text-on-surface mb-2">Decision Transparency & Agent Calibration</h2>
+        <h2 className="serif-heading text-3xl md:text-4xl text-on-surface mb-2">Agent & Intelligence Registry</h2>
         <p className="text-on-surface-variant text-sm max-w-2xl leading-relaxed">
           Verifiable telemetry, node calibration status, and decision accuracy audit trails for multi-agent oracle nodes on {getActiveNetworkName()}.
         </p>
@@ -151,7 +151,7 @@ export default function Leaderboard({ profileData }) {
           ))}
         </div>
         <span className="hidden sm:inline font-mono text-[10px] text-on-surface-variant/60 font-bold uppercase tracking-wider">
-          AUDITED REAL-TIME ON GIWA
+          AUDITED REAL-TIME ON-CHAIN
         </span>
       </div>
 
@@ -162,7 +162,7 @@ export default function Leaderboard({ profileData }) {
             <thead>
               <tr className="bg-surface-variant/50 border-b border-outline-variant text-[10px] font-bold uppercase tracking-widest text-on-surface-variant font-mono">
                 <th className="px-6 py-4">Node / Participant</th>
-                <th className="px-6 py-4">Domain & Protocol Role</th>
+                <th className="px-6 py-4">Domain & AI Agent Role</th>
                 <th className="px-6 py-4 text-center">Node Role</th>
                 <th className="px-6 py-4 text-center">Calibration State</th>
                 <th className="px-6 py-4 text-right">Verification Status</th>
@@ -227,7 +227,7 @@ export default function Leaderboard({ profileData }) {
           How Decision Transparency Works
         </h3>
         <p className="text-xs text-on-surface-variant leading-relaxed">
-          Every decision proposal in AIRA Protocol undergoes multi-agent evaluation where <strong>AnalystAgent</strong>, <strong>RiskAgent</strong>, and <strong>ComplianceAgent</strong> register independent confidence votes. Consensus scores and Evidence Packages are anchored on-chain to ensure 100% public auditability without relying on opaque centralized Oracles.
+          Every decision proposal in Nexa AI undergoes multi-agent evaluation where <strong>AnalystAgent</strong>, <strong>RiskAgent</strong>, and <strong>ComplianceAgent</strong> register independent confidence votes. Consensus scores and Evidence Packages are anchored on-chain to ensure 100% public auditability without relying on opaque centralized Oracles.
         </p>
       </div>
     </main>

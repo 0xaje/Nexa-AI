@@ -13,7 +13,7 @@ export class TransparencyLogger {
             fs.mkdirSync(logDir, { recursive: true });
         }
         
-        const logFile = path.join(logDir, 'aira_transparency.log');
+        const logFile = path.join(logDir, 'nexa_transparency.log');
         
         // Structure exact verifiable format as requested
         const logEntry = {

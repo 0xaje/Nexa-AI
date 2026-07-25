@@ -43,7 +43,7 @@ async function runTests() {
             approvalProbability: 0.95,
             averagedReputation: 85
         },
-        metadata: { protocol: 'AIRA', protocolVersion: 'v2.4.0', release: 'v2', build: '100' },
+        metadata: { protocol: 'Nexa AI', protocolVersion: 'v1.0.0', release: 'v1', build: '1' },
         modelVersion: 'gpt-4o',
         timestamp: new Date().toISOString(),
         promptHash: 'e618b420aef52ad212b7a01996ca224bc56156b0edbc0d0ef9cbcf3ea63a77f0',

@@ -21,12 +21,12 @@ export default function Terminal() {
 
   const currentMarket = (activeMarket && activeMarket.realId) ? activeMarket : {
     realId: 1,
-    title: 'Will AI Agent Protocol v2 launch on GIWA before Q4?',
+    title: 'Will AI Agent Protocol v2 launch on testnet before Q4?',
     confidence: '98%',
     yesPrice: 0.78,
     noPrice: 0.22,
-    vol: '0.0020 GIWA',
-    openInterest: '0.0020 GIWA',
+    vol: `0.0020 ${getNativeCurrencySymbol()}`,
+    openInterest: `0.0020 ${getNativeCurrencySymbol()}`,
     drift: 'LIVE'
   };
 
@@ -265,14 +265,14 @@ export default function Terminal() {
       <div className="col-span-12 lg:col-span-8 xl:col-span-9 flex flex-col gap-4 h-auto">
         <div className="sahara-panel p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface shrink-0">
           <div className="flex items-center gap-4">
-            <div className="w-11 h-11 bg-surface-variant rounded-xl flex items-center justify-center border border-outline-variant flex-shrink-0">
-              <span className="material-symbols-outlined text-primary text-xl">terminal</span>
+            <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/30 flex-shrink-0">
+              <span className="material-symbols-outlined text-primary text-xl">shield</span>
             </div>
             <div>
               <h1 className="font-bold text-sm sm:text-base text-on-surface tracking-tight mb-0.5">{currentMarket.title}</h1>
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                <p className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant">MARKET EXPIRY PENDING RESOLUTION</p>
+                <p className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant font-mono">AI RISK ASSESSMENT & INTELLIGENCE</p>
               </div>
             </div>
           </div>
@@ -295,11 +295,11 @@ export default function Terminal() {
             <div className="flex gap-1 p-0.5 bg-surface-variant rounded-lg overflow-x-auto max-w-[220px] sm:max-w-none no-scrollbar">
               {['PROBABILITY', 'VOLUME', 'POSITIONS', 'DECISION TIMELINE', 'ADMIN CONTROL'].map(tab => {
                 const tabLabels = {
-                  'PROBABILITY': 'PROB',
-                  'VOLUME': 'VOL',
-                  'POSITIONS': 'MY POS',
-                  'DECISION TIMELINE': 'TIMELINE',
-                  'ADMIN CONTROL': 'ADMIN'
+                  'PROBABILITY': 'RISK & PROB',
+                  'VOLUME': 'VOLATILITY',
+                  'POSITIONS': 'POSITIONS',
+                  'DECISION TIMELINE': 'AI TIMELINE',
+                  'ADMIN CONTROL': 'RESOLVE'
                 };
                 return (
                   <button 
@@ -392,9 +392,9 @@ export default function Terminal() {
                      </span>
                      <span className="text-bullish-green font-bold">RULES SATISFIED (99%)</span>
                    </div>
-                   <p className="text-[10px] text-on-surface-variant leading-relaxed">
-                     Enforced decentralized oracle protocol rules and anchor specifications on GIWA Sepolia L2.
-                   </p>
+                    <p className="text-[10px] text-on-surface-variant leading-relaxed">
+                      Enforced decentralized oracle rules and anchor specifications on On-Chain L2.
+                    </p>
                  </div>
                </div>
             </div>
@@ -404,8 +404,8 @@ export default function Terminal() {
             <div className="relative w-full flex-grow flex flex-col justify-center items-center text-center min-h-0 bg-surface-variant/20 rounded-xl p-6 border border-outline-variant/30">
                <h3 className="text-sm font-bold text-on-surface mb-2 font-display tracking-widest uppercase flex items-center gap-2">
                  <span className="material-symbols-outlined text-primary">shield</span>
-                 ADMINISTRATIVE PROTOCOL RESOLUTION
-               </h3>
+                  ADMINISTRATIVE RESOLUTION
+                </h3>
                <p className="text-xs text-on-surface-variant max-w-lg mb-6">
                  Propose market outcomes to the decentralized oracle or execute resolution after timelock.
                </p>
@@ -477,11 +477,11 @@ export default function Terminal() {
             </div>
             <div className="p-2.5 bg-surface-variant/30 rounded border border-outline-variant/50">
               <p className="text-[8px] font-bold text-on-surface-variant mb-0.5 uppercase tracking-widest font-mono">24h Vol.</p>
-              <p className="font-mono text-xs text-on-surface font-semibold">{currentMarket.vol || '0.0020 GIWA'}</p>
+              <p className="font-mono text-xs text-on-surface font-semibold">{currentMarket.vol || `0.0020 ${getNativeCurrencySymbol()}`}</p>
             </div>
             <div className="p-2.5 bg-surface-variant/30 rounded border border-outline-variant/50">
               <p className="text-[8px] font-bold text-on-surface-variant mb-0.5 uppercase tracking-widest font-mono">Open Interest</p>
-              <p className="font-mono text-xs text-on-surface font-semibold">{currentMarket.openInterest || '0.0020 GIWA'}</p>
+              <p className="font-mono text-xs text-on-surface font-semibold">{currentMarket.openInterest || `0.0020 ${getNativeCurrencySymbol()}`}</p>
             </div>
 
           </div>

@@ -7,7 +7,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model PendingMarket {
+model PendingDecision {
   id                 Int                 @id @default(autoincrement())
   signalId           String              @unique
   title              String
@@ -24,14 +24,14 @@ model PendingMarket {
 }
 
 model AgentEvaluation {
-  id              Int           @id @default(autoincrement())
-  pendingMarketId Int
-  pendingMarket   PendingMarket @relation(fields: [pendingMarketId], references: [id], onDelete: Cascade)
-  agentName       String
-  vote            String
-  confidence      Float
-  reasoning       String
-  createdAt       DateTime      @default(now())
+  id                Int           @id @default(autoincrement())
+  pendingDecisionId Int
+  pendingDecision   PendingDecision @relation(fields: [pendingDecisionId], references: [id], onDelete: Cascade)
+  agentName         String
+  vote              String
+  confidence        Float
+  reasoning         String
+  createdAt         DateTime      @default(now())
 }
 
 
@@ -79,29 +79,29 @@ model EvidencePackage {
 }
 
 model IntelligenceReport {
-  id                    Int           @id @default(autoincrement())
-  pendingMarketId       Int           @unique
-  pendingMarket         PendingMarket @relation(fields: [pendingMarketId], references: [id], onDelete: Cascade)
-  signalId              String        @unique
+  id                    Int             @id @default(autoincrement())
+  pendingDecisionId     Int             @unique
+  pendingDecision       PendingDecision @relation(fields: [pendingDecisionId], references: [id], onDelete: Cascade)
+  signalId              String          @unique
   summary               String
-  supportingEvidence    String        // JSON array represented as string
-  contradictingEvidence String        // JSON array represented as string
+  supportingEvidence    String          // JSON array represented as string
+  contradictingEvidence String          // JSON array represented as string
   confidence            Float
-  riskFactors           String        // JSON array represented as string
+  riskFactors           String          // JSON array represented as string
   reasoning             String
   recommendedDecision   String
-  createdAt             DateTime      @default(now())
+  createdAt             DateTime        @default(now())
 }
 
 model DebateSession {
-  id              Int          @id @default(autoincrement())
-  signalId        String       @unique
-  pendingMarketId Int?         @unique
-  pendingMarket   PendingMarket? @relation(fields: [pendingMarketId], references: [id], onDelete: Cascade)
-  status          String       // e.g. "INITIATED", "RISK_REVIEW", "COMPLIANCE_REVIEW", "ANALYST_RESPONSE", "CONCLUDED"
-  turns           DebateTurn[]
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  id                Int               @id @default(autoincrement())
+  signalId          String            @unique
+  pendingDecisionId Int?              @unique
+  pendingDecision   PendingDecision?  @relation(fields: [pendingDecisionId], references: [id], onDelete: Cascade)
+  status            String            // e.g. "INITIATED", "RISK_REVIEW", "COMPLIANCE_REVIEW", "ANALYST_RESPONSE", "CONCLUDED"
+  turns             DebateTurn[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 }
 
 model DebateTurn {

@@ -1,6 +1,6 @@
 # Agent Reputation System Guide
 
-This guide documents the implementation, self-correcting weights algorithm, and REST APIs for the AIRA Protocol's **Agent Reputation System**.
+This guide documents the implementation, self-correcting weights algorithm, and REST APIs for Nexa AI's **Agent Reputation System**.
 
 ---
 

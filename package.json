@@ -1,8 +1,8 @@
 {
-  "name": "airamarket",
+  "name": "nexa-ai",
   "private": true,
-  "version": "0.0.0",
-  "description": "AIRA Protocol: Transparent AI Decisions. Verifiable on GIWA, with AIRA Markets as its flagship prediction market sandbox application.",
+  "version": "1.0.0",
+  "description": "Nexa AI: Your AI-Powered Crypto Intelligence Agent.",
   "type": "module",
   "scripts": {
     "dev": "vite",

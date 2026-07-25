@@ -5,7 +5,7 @@
 
 ## 1. Executive Summary
 
-To make the AIRA Protocol feel like blockchain infrastructure, the **Protocol Explorer** is designed to mimic traditional L1/L2 block explorers (e.g., Etherscan). It exposes real-time logs, consensus rounds, IPFS file systems, and GIWA smart contract transactions, giving developers, auditors, and users transparent access to verify off-chain calculations and on-chain logs.
+To make Nexa AI feel like transparent blockchain infrastructure, the **AI Transparency Dashboard** is designed to mimic traditional L1/L2 block explorers (e.g., Etherscan). It exposes real-time logs, consensus rounds, IPFS file systems, and GIWA smart contract transactions, giving developers, auditors, and users transparent access to verify off-chain calculations and on-chain logs.
 
 ---
 

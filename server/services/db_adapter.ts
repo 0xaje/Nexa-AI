@@ -14,13 +14,13 @@ export class DbAdapter {
     static async getPendingMarkets(): Promise<any[]> {
         try {
             const client = this.getClient();
-            const records = await client.pendingMarket.findMany({
+            const records = await client.pendingDecision.findMany({
                 include: { evaluations: true, intelligenceReport: true },
                 orderBy: { createdAt: 'asc' }
             });
             return records;
         } catch (error) {
-            Logger.error('[DB_ADAPTER] Error fetching pending markets', error);
+            Logger.error('[DB_ADAPTER] Error fetching pending decisions', error);
             return [];
         }
     }
@@ -28,7 +28,7 @@ export class DbAdapter {
     static async addPendingMarket(proposal: any) {
         try {
             const client = this.getClient();
-            await client.pendingMarket.create({
+            await client.pendingDecision.create({
                 data: {
                     signalId: proposal.signalId || String(Math.random()),
                     title: proposal.title || '',
@@ -131,8 +131,8 @@ export class DbAdapter {
     static async clearPendingMarkets() {
         try {
             const client = this.getClient();
-            await client.pendingMarket.deleteMany({});
-            Logger.success('[DB_ADAPTER] Database pending markets cache cleared.');
+            await client.pendingDecision.deleteMany({});
+            Logger.success('[DB_ADAPTER] Database pending decisions cache cleared.');
         } catch (error) {
             Logger.error('[DB_ADAPTER] Error clearing database cache', error);
         }

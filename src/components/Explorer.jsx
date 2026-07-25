@@ -127,7 +127,7 @@ const defaultSeedData = {
     }
   ],
   evidencePackages: [
-    { id: "ev_1", title: "GIWA Protocol Testnet Bytecode & Deployment Verification" },
+    { id: "ev_1", title: "GIWA Ledger Testnet Bytecode & Deployment Verification" },
     { id: "ev_2", title: "OpenAI Model Benchmark Telemetry Data" },
     { id: "ev_3", title: "Bitcoin Institutional Spot ETF Daily Inflow Ledger" },
     { id: "ev_4", title: "UEFA Final Competition Outcome Match Sheet" }
@@ -210,10 +210,10 @@ export default function Explorer() {
           status: m.resolved ? "RESOLVED" : "PENDING_APPROVAL",
           confidence: confidenceVal,
           supportingEvidence: `Verified live smart contract market #${marketId} deployed on ${getActiveNetworkName()} with total volume ${total.toFixed(4)} ${getNativeCurrencySymbol()}.`,
-          ipfsHash: `QmGIWA${marketId}x89Fk278vA1992048591048104810293`,
-          decisionReason: "On-chain protocol creation verified by autonomous network validators.",
+          ipfsHash: `QmGIWASepolia${marketId}x98Fk278vA1992048591048104810293`,
+          decisionReason: "On-chain platform creation verified by autonomous network validators.",
           intelligenceReport: {
-            summary: `Live prediction market #${marketId} created on ${getActiveNetworkName()} smart contract protocol.`,
+            summary: `Live prediction market #${marketId} created on ${getActiveNetworkName()} smart contract platform.`,
             supportingEvidence: [
               `Contract address: ${getContractAddress()}`,
               `Liquidity pool: ${total.toFixed(4)} ${getNativeCurrencySymbol()}`
@@ -244,7 +244,7 @@ export default function Explorer() {
       ipfsHash: cm.ipfsCID || `QmGIWACustom${idx + 1}x89Fk278vA1992048591048104810293`,
       decisionReason: "Deployed by wallet signature with multi-agent cognitive evaluation.",
       intelligenceReport: {
-        summary: `Custom prediction proposal "${cm.title}" created on ${getActiveNetworkName()} protocol.`,
+        summary: `Custom prediction proposal "${cm.title}" created on ${getActiveNetworkName()} platform.`,
         supportingEvidence: [
           `Tx Hash: ${cm.txHash || '0xGIWA...Custom'}`,
           `Category: ${cm.category}`,
@@ -339,9 +339,9 @@ export default function Explorer() {
 
       {/* Title */}
       <div className="w-full mb-8 text-center sm:text-left">
-        <h2 className="serif-heading text-3xl md:text-4xl text-on-surface mb-2">Protocol Explorer</h2>
+        <h2 className="serif-heading text-3xl md:text-4xl text-on-surface mb-2">AI Transparency Dashboard</h2>
         <p className="text-on-surface-variant text-sm max-w-2xl">
-          Verifiable cognitive log ledger for signals, evidence packages, consensus evaluations, and settlements on {getActiveNetworkName()}.
+          Verifiable audit trail for real-world signals, multi-agent reasoning, IPFS evidence packages, and on-chain settlements on {getActiveNetworkName()}.
         </p>
       </div>
 
@@ -509,7 +509,7 @@ export default function Explorer() {
 
                           <div className="bg-surface border border-outline-variant p-5 rounded-xl space-y-4 shadow-sm">
                             <div className="flex justify-between items-center border-b border-outline-variant/60 pb-3">
-                              <span className="font-mono text-[9px] text-primary font-bold uppercase tracking-widest">Protocol Intelligence Report</span>
+                              <span className="font-mono text-[9px] text-primary font-bold uppercase tracking-widest">Nexa AI Intelligence Report</span>
                               <span className="px-2 py-0.5 bg-primary/10 text-primary text-[8px] font-mono rounded font-bold uppercase">Consensus Secured</span>
                             </div>
 
@@ -724,7 +724,7 @@ export default function Explorer() {
               <pre className="bg-background border border-outline-variant/60 p-4 rounded-xl text-[10.5px] font-mono text-primary overflow-x-auto max-h-60 leading-relaxed">
 {JSON.stringify({
   ipfsCID: ipfsModalItem.ipfsHash,
-  protocol: "AIRA Protocol v1.0",
+  protocol: "Nexa AI v1.0",
   title: ipfsModalItem.title,
   category: ipfsModalItem.category,
   signalId: ipfsModalItem.signalId,

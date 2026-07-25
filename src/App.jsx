@@ -15,6 +15,8 @@ import CreatorLab from './components/CreatorLab';
 import Terminal from './components/Terminal';
 import Portfolio from './components/Portfolio';
 import Explorer from './components/Explorer';
+import Chat from './components/Chat';
+import Tokens from './components/Tokens';
 
 function App() {
   const navigate = useNavigate();
@@ -74,42 +76,54 @@ function App() {
           >
             {ProtocolMetadata.protocolName}
           </span>
-          <nav className="hidden md:flex gap-8">
+          <nav className="hidden md:flex gap-6 lg:gap-8">
             <button 
-              className={`font-semibold text-sm pb-1 transition-all ${currentView === 'landing' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/landing')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'landing' || currentView === '' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/')}
             >
-              AIRA Protocol
+              Home
             </button>
             <button 
-              className={`font-semibold text-sm pb-1 transition-all ${currentView === 'feed' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/feed')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'chat' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/chat')}
             >
-              Core Feed
+              AI Chat
             </button>
             <button 
-              className={`font-semibold text-sm pb-1 transition-all ${currentView === 'creator' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/creator')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'intelligence' || currentView === 'feed' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/intelligence')}
             >
-              Consensus Engine
+              Intelligence
             </button>
             <button 
-              className={`font-semibold text-sm pb-1 transition-all ${currentView === 'terminal' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/terminal')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'tokens' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/tokens')}
             >
-              Terminal
+              Tokens
             </button>
             <button 
-              className={`font-semibold text-sm pb-1 transition-all ${currentView === 'leaderboard' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/leaderboard')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'risk' || currentView === 'terminal' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/risk')}
+            >
+              Risk Analysis
+            </button>
+            <button 
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'lab' || currentView === 'creator' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/lab')}
+            >
+              AI Lab
+            </button>
+            <button 
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'transparency' || currentView === 'explorer' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/transparency')}
+            >
+              Transparency
+            </button>
+            <button 
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'registry' || currentView === 'leaderboard' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/registry')}
             >
               Registry
-            </button>
-            <button 
-              className={`font-semibold text-sm pb-1 transition-all ${currentView === 'explorer' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/explorer')}
-            >
-              Explorer
             </button>
           </nav>
         </div>
@@ -257,46 +271,54 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/landing" element={<Landing />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/intelligence" element={<Feed />} />
         <Route path="/feed" element={<Feed />} />
-        <Route path="/creator" element={<CreatorLab />} />
+        <Route path="/tokens" element={<Tokens />} />
+        <Route path="/risk" element={<Terminal />} />
         <Route path="/terminal" element={<Terminal />} />
+        <Route path="/lab" element={<CreatorLab />} />
+        <Route path="/creator" element={<CreatorLab />} />
+        <Route path="/transparency" element={<Explorer />} />
+        <Route path="/explorer" element={<Explorer />} />
+        <Route path="/registry" element={<Leaderboard profileData={profileData} />} />
         <Route path="/leaderboard" element={<Leaderboard profileData={profileData} />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/explorer" element={<Explorer />} />
       </Routes>
 
       {/* Mobile Bottom Navigation Dock */}
       <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-xl border-t border-outline-variant shadow-2xl px-2 py-1.5 pb-safe">
         <div className="flex items-center justify-between gap-1 overflow-x-auto no-scrollbar py-0.5">
           {[
-            { id: 'landing', route: '/landing', label: 'HOME', icon: 'grid_view' },
-            { id: 'feed', route: '/feed', label: 'FEED', icon: 'dynamic_feed' },
-            { id: 'creator', route: '/creator', label: 'AI LAB', icon: 'auto_awesome' },
-            { id: 'terminal', route: '/terminal', label: 'TERMINAL', icon: 'candlestick_chart' },
-            { id: 'explorer', route: '/explorer', label: 'EXPLORER', icon: 'manage_search' },
-            { id: 'leaderboard', route: '/leaderboard', label: 'REGISTRY', icon: 'verified_user' },
-            { id: 'portfolio', route: '/portfolio', label: 'PORTFOLIO', icon: 'account_balance' },
+            { id: 'landing', route: '/', label: 'HOME', icon: 'home' },
+            { id: 'chat', route: '/chat', label: 'CHAT', icon: 'smart_toy' },
+            { id: 'intelligence', route: '/intelligence', label: 'INTEL', icon: 'bar_chart' },
+            { id: 'tokens', route: '/tokens', label: 'TOKENS', icon: 'token' },
+            { id: 'risk', route: '/risk', label: 'RISK', icon: 'shield' },
+            { id: 'lab', route: '/lab', label: 'LAB', icon: 'science' },
+            { id: 'transparency', route: '/transparency', label: 'PROOF', icon: 'verified' },
+            { id: 'portfolio', route: '/portfolio', label: 'PORTFOLIO', icon: 'account_balance_wallet' },
           ].map((item) => {
-            const isActive = currentView === item.id || (item.id === 'landing' && currentView === '');
+            const isActive = currentView === item.id || (item.id === 'landing' && (currentView === '' || currentView === 'landing'));
             return (
               <button
                 key={item.id}
                 onClick={() => navigate(item.route)}
-                className={`flex flex-col items-center justify-center px-2.5 py-1.5 rounded-xl transition-all shrink-0 min-w-[62px] ${
+                className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all shrink-0 min-w-[54px] ${
                   isActive 
                     ? 'bg-primary/15 text-primary border border-primary/30 font-bold shadow-xs' 
                     : 'text-on-surface-variant/70 hover:text-on-surface hover:bg-surface-variant/40'
                 }`}
               >
                 <div className="relative flex items-center justify-center">
-                  <span className={`material-symbols-outlined text-lg transition-transform ${isActive ? 'scale-110 text-primary' : ''}`}>
+                  <span className={`material-symbols-outlined text-base transition-transform ${isActive ? 'scale-110 text-primary' : ''}`}>
                     {item.icon}
                   </span>
                   {isActive && (
                     <span className="absolute -bottom-1 w-1 h-1 rounded-full bg-primary animate-pulse"></span>
                   )}
                 </div>
-                <span className={`text-[8px] font-mono tracking-wider uppercase mt-1 ${isActive ? 'font-black text-primary' : 'font-semibold'}`}>
+                <span className={`text-[7.5px] font-mono tracking-wider uppercase mt-0.5 ${isActive ? 'font-black text-primary' : 'font-semibold'}`}>
                   {item.label}
                 </span>
               </button>

@@ -99,7 +99,7 @@ export class SignalIngestionService {
         try {
             // Using Reddit as a free robust JSON feed with a mock User-Agent to bypass 403 blocks
             const res = await axios.get('https://www.reddit.com/r/politics/top.json?limit=10', {
-                headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 AiraMarket/1.0' }
+                headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 NexaAI/1.0' }
             });
             const posts = res.data.data.children;
             

@@ -5,7 +5,7 @@
 
 ## 1. Executive Summary
 
-In the AIRA Protocol, decisions are never made in isolation. Every conclusion, market approval, or settlement recommendation must be backed by a verifiable, immutable **Evidence Package**. 
+In Nexa AI, decisions are never made in isolation. Every conclusion, market approval, or settlement recommendation must be backed by a verifiable, immutable **Evidence Package**. 
 
 By packaging ingestion signals, model versions, agent reasoning trails, and consensus calculations, and subsequently anchoring their cryptographic hashes on L2 ledgers, the protocol achieves decentralized, auditable verifiability.
 

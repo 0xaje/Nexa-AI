@@ -5,10 +5,10 @@
 
 ## 1. Executive Summary
 
-This guide outlines a cohesive, end-to-end demonstration flow for the **AIRA Protocol**. It is designed to wow hackathon judges and grant committees by proving how the protocol moves from a raw real-world signal to an auditable, multi-agent consensus decision, anchored verifiably on Dunamu's **GIWA Sepolia L2 Ledger** and **IPFS**.
+This guide outlines a cohesive, end-to-end demonstration flow for **Nexa AI**. It is designed to wow hackathon judges and grant committees by proving how the platform moves from a raw real-world signal to an auditable, multi-agent consensus decision, anchored verifiably on Dunamu's **GIWA Sepolia L2 Ledger** and **IPFS**.
 
 ### Presenter Value Proposition
-> "Most AI products present decisions as a black box. AIRA Protocol shifts this paradigm. Every decision on our platform is backed by a structured, verifiable Evidence Package, audited via a multi-agent debate swarm, and anchored cryptographically on GIWA. Let's trace how a single breaking event becomes on-chain infrastructure."
+> "Most AI products present decisions as a black box. Nexa AI shifts this paradigm. Every decision on our platform is backed by a structured, verifiable Evidence Package, audited via a multi-agent debate swarm, and anchored cryptographically on GIWA. Let's trace how a single breaking event becomes on-chain infrastructure."
 
 ---
 

@@ -120,10 +120,10 @@ export class EvidenceService {
             confidence: consensusConfidence,
             consensus,
             metadata: {
-                protocol: 'AIRA Protocol',
+                protocol: 'Nexa AI',
                 protocolVersion,
-                release: 'v2',
-                build: '124'
+                release: 'v1',
+                build: '1'
             },
             modelVersion,
             timestamp,

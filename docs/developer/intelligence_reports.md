@@ -5,14 +5,14 @@
 
 ## 1. System Overview
 
-Traditional AI decision layers and prediction protocols suffer from an "explainability deficit" by outputting single binary states or simple confidence percentages. The AIRA Protocol resolves this by requiring every decision proposal to be backed by a structured, auditable **Intelligence Report**.
+Traditional AI decision layers and prediction protocols suffer from an "explainability deficit" by outputting single binary states or simple confidence percentages. Nexa AI resolves this by requiring every decision proposal to be backed by a structured, auditable **Intelligence Report**.
 
 Instead of a black-box decision flow:
 ```
 Signal ──► Decision
 ```
 
-The AIRA Protocol executes a multi-stage cognitive pipeline:
+The Nexa AI platform executes a multi-stage cognitive pipeline:
 ```
 Signal ──► Evidence Ingestion ──► Sentiment reasoning ──► Counter-Arguments ──► Quorum consensus ──► Decision
 ```

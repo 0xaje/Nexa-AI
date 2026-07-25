@@ -128,8 +128,8 @@ export default function CreatorLab() {
           reason: data.reason || 'Multi-agent review pipeline approved this proposal.',
           evaluations: data.evaluations || [
             { agent: 'Analyst', role: 'Probability Modeling', verdict: 'Approved', score: '78%', notes: 'Signal analysis shows strong predictive confidence.' },
-            { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: '75%', notes: 'Risk bounds fall within protocol parameters.' },
-            { agent: 'Compliance', role: 'Policy & Safety', verdict: 'Approved', score: '82%', notes: 'Passed protocol policy checks and content safety guidelines.' }
+            { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: '75%', notes: 'Risk bounds fall within safety parameters.' },
+            { agent: 'Compliance', role: 'Policy & Safety', verdict: 'Approved', score: '82%', notes: 'Passed policy checks and content safety guidelines.' }
           ]
         };
         setCreatorMessages(prev => [...prev, botMessage]);
@@ -164,7 +164,7 @@ export default function CreatorLab() {
         evaluations: [
           { agent: 'Analyst', role: 'Probability Modeling', verdict: 'Approved', score: '78%', notes: 'Gas trend models indicate high probability of fee reduction post-EIP-4844 scaling.' },
           { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: '74%', notes: 'Volatilities are bounded within safe liquidity parameters.' },
-          { agent: 'Compliance', role: 'Policy & Safety', verdict: 'Approved', score: '80%', notes: 'Passed protocol policy checks and content safety guidelines.' }
+          { agent: 'Compliance', role: 'Policy & Safety', verdict: 'Approved', score: '80%', notes: 'Passed policy checks and content safety guidelines.' }
         ]
       };
       setCreatorMessages(prev => [...prev, botMessage]);
@@ -187,8 +187,8 @@ export default function CreatorLab() {
       // Presentation & Demo Mode: Simulate full block confirmation on GIWA Sepolia
       launchingMarketSet(market);
       setTimeout(() => {
-        const mockHash = `0xgiwa${Math.random().toString(16).substring(2, 10)}${Date.now().toString(16)}`;
-        const mockCid = `QmGIWASepolia${Math.random().toString(36).substring(2, 10)}`;
+        const mockHash = `0xnexa${Math.random().toString(16).substring(2, 10)}${Date.now().toString(16)}`;
+        const mockCid = `QmNexaOnChain${Math.random().toString(36).substring(2, 10)}`;
         
         useAppStore.getState().addCustomMarket({
           title: market.title,
@@ -199,7 +199,7 @@ export default function CreatorLab() {
           timestamp: Date.now()
         });
 
-        useAppStore.getState().showToast("Deployed to GIWA Sepolia", `"${market.title}" successfully committed on-chain!`, "success", mockHash);
+        useAppStore.getState().showToast("Deployed On-Chain", `"${market.title}" successfully committed on-chain!`, "success", mockHash);
         launchingMarketSet(null);
         navigate('/feed');
       }, 1500);
@@ -341,7 +341,7 @@ export default function CreatorLab() {
           <div className="sahara-card p-10 rounded-2xl max-w-md text-center space-y-6 bg-surface border-2 border-primary/20">
             <span className="material-symbols-outlined text-primary text-6xl animate-bounce">rocket_launch</span>
             {/* FIX #2: Replaced "NEURAL DEPLOYER" with infrastructure-grade label */}
-            <h3 className="serif-heading text-2xl text-on-surface">Deploying to GIWA Ledger</h3>
+            <h3 className="serif-heading text-2xl text-on-surface">Deploying On-Chain</h3>
             <p className="text-sm text-on-surface-variant font-medium animate-pulse">Preparing IPFS evidence package and signing on-chain transaction...</p>
             <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
               <div className="h-full bg-primary animate-marquee w-[60%]"></div>
@@ -355,14 +355,14 @@ export default function CreatorLab() {
         <div className="col-span-12 lg:col-span-4 flex flex-col justify-between h-auto bg-surface-variant/20 border border-outline-variant rounded-xl p-5 order-2 lg:order-1">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary-container text-primary font-mono text-[9px] tracking-widest uppercase font-bold animate-pulse">
-              <span className="material-symbols-outlined text-[13px]">terminal</span>
-              DECISION ENGINE ACTIVE
+              <span className="material-symbols-outlined text-[13px]">science</span>
+              PREDICTION ENGINE CAPABILITY
             </div>
             <h2 className="serif-heading text-2xl md:text-3xl lg:text-4xl text-on-surface tracking-tight leading-tight">
-              Intelligent Decisions, <br/><span className="text-primary italic">Deployed Instantly.</span>
+              AI Prediction Engine, <br/><span className="text-primary italic">Verifiable & On-Chain.</span>
             </h2>
             <p className="text-on-surface-variant text-xs leading-relaxed opacity-95">
-              Describe your decision proposal vision and let {ProtocolMetadata.protocolName}'s intelligence structure, validate, and launch decision pools directly to the {getActiveNetworkName()} ledger.
+              Describe what you would like Nexa AI to predict. Our multi-agent consensus pipeline will structure, evaluate, and package the evidence for on-chain decision settlement.
             </p>
           </div>
 
@@ -384,7 +384,7 @@ export default function CreatorLab() {
               </div>
               <div>
                 <p className="font-mono text-[8px] text-on-surface-variant mb-0.5 uppercase tracking-widest font-bold">Network Fee</p>
-                <p className="font-bold text-xs text-on-surface">~0.002 GIWA Gas Estimate</p>
+                <p className="font-bold text-xs text-on-surface">~0.002 {getNativeCurrencySymbol()} Gas Estimate</p>
               </div>
             </div>
             {/* FIX #4: "Secure Multi-Oracle" → accurate testnet label */}
@@ -422,7 +422,7 @@ export default function CreatorLab() {
                       <div className="flex items-center justify-between mb-4 pb-3 border-b border-outline-variant">
                         <div className="flex items-center gap-2">
                           <span className="font-mono text-primary text-[9px] tracking-widest uppercase font-bold">Proposal</span>
-                          <span className="px-1.5 py-0.5 bg-bullish-green/10 text-bullish-green text-[8px] rounded font-bold font-mono">{ProtocolMetadata.protocolName.toUpperCase()} APPROVED</span>
+                          <span className="px-1.5 py-0.5 bg-bullish-green/10 text-bullish-green text-[8px] rounded font-bold font-mono">NEXA AI APPROVED</span>
                         </div>
                         {/* FIX #8: Removed fake "2.14ms Ticker" invented performance metric */}
                       </div>

@@ -11,13 +11,13 @@ const defaultSeedCards = [
     realId: 1,
     title: 'GPT-5 Autumn Release by OpenAI',
     category: 'TECH',
-    volume: '3.4000 GIWA',
+    volume: '3.4000 ETH',
     yesProb: 78,
     noProb: 22,
     yesPrice: 0.78,
     noPrice: 0.22,
     confidence: '98%',
-    openInterest: '3.4000 GIWA',
+    openInterest: '3.4000 ETH',
     drift: '+2.4%',
     status: 'ACTIVE'
   },
@@ -26,13 +26,13 @@ const defaultSeedCards = [
     realId: 1,
     title: 'Bitcoin $150K Target Before July',
     category: 'CRYPTO',
-    volume: '18.9000 GIWA',
+    volume: '18.9000 ETH',
     yesProb: 65,
     noProb: 35,
     yesPrice: 0.65,
     noPrice: 0.35,
     confidence: '97%',
-    openInterest: '18.9000 GIWA',
+    openInterest: '18.9000 ETH',
     drift: '+5.1%',
     status: 'ACTIVE'
   },
@@ -41,13 +41,13 @@ const defaultSeedCards = [
     realId: 1,
     title: 'Real Madrid Champions League Victory',
     category: 'SPORTS',
-    volume: '6.2000 GIWA',
+    volume: '6.2000 ETH',
     yesProb: 58,
     noProb: 42,
     yesPrice: 0.58,
     noPrice: 0.42,
     confidence: '84%',
-    openInterest: '6.2000 GIWA',
+    openInterest: '6.2000 ETH',
     drift: '+1.8%',
     status: 'ACTIVE'
   },
@@ -56,13 +56,13 @@ const defaultSeedCards = [
     realId: 1,
     title: 'US Presidential Election Resolution in 24h',
     category: 'POLITICS',
-    volume: '45.1000 GIWA',
+    volume: '45.1000 ETH',
     yesProb: 82,
     noProb: 18,
     yesPrice: 0.82,
     noPrice: 0.18,
     confidence: '99%',
-    openInterest: '45.1000 GIWA',
+    openInterest: '45.1000 ETH',
     drift: '+8.9%',
     status: 'ACTIVE'
   }
@@ -177,13 +177,13 @@ export default function Feed() {
       confidence: confidence || '92.4%',
       impliedPrice: yesPrice || 0.5,
       closesIn: '04H 22M 11S',
-      vol: vol || '0.0020 GIWA',
-      openInterest: openInterest || '0.0020 GIWA',
+      vol: vol || `0.0020 ${getNativeCurrencySymbol()}`,
+      openInterest: openInterest || `0.0020 ${getNativeCurrencySymbol()}`,
       drift: drift || 'LIVE',
       yesPrice: yesPrice || 0.5,
       noPrice: noPrice || 0.5
     });
-    navigate('/terminal');
+    navigate('/risk');
   };
 
   const scrollToColumn = (colId) => {
@@ -338,12 +338,12 @@ export default function Feed() {
                             className="w-full bg-primary text-white py-3 rounded font-display font-bold text-[9px] tracking-[0.2em] uppercase hover:brightness-105 active:scale-[0.99] transition-all shrink-0"
                             onClick={() => activateTerminalTrade(card.title, card.yesPrice, card.noPrice, card.confidence, card.volume, card.openInterest, card.drift, card.realId)}
                           >
-                            PLACE PREDICTION
+                            VIEW INTELLIGENCE & RISK
                           </button>
                         )}
                         {card.status === 'ENDED' && (
                           <button disabled className="w-full bg-surface-container-low text-on-surface-variant/30 border border-outline-variant/30 py-3 rounded font-display font-bold text-[9px] tracking-[0.2em] uppercase cursor-not-allowed shrink-0">
-                            MARKET RESOLVED
+                            SIGNAL RESOLVED
                           </button>
                         )}
                       </div>
@@ -352,7 +352,7 @@ export default function Feed() {
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center text-center p-6 bg-surface-variant/10 border border-dashed border-outline-variant rounded-xl">
                     <span className="material-symbols-outlined text-primary/30 text-3xl mb-2 animate-pulse">inventory_2</span>
-                    <p className="text-[10px] font-bold text-on-surface-variant/40 uppercase">NO MATCHING PREDICTIONS</p>
+                    <p className="text-[10px] font-bold text-on-surface-variant/40 uppercase">NO MATCHING INTELLIGENCE SIGNALS</p>
                   </div>
                 )}
               </div>

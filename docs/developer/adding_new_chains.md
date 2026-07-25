@@ -6,7 +6,7 @@
 ## 1. Executive Summary
 
 ### Why This Exists
-EVM compatibility allows dApps to easily expand their user base. This **Multi-Chain Integration Playbook** exists to standardize the registration of new blockchain networks within the AIRA Protocol.
+EVM compatibility allows dApps to easily expand their user base. This **Multi-Chain Integration Playbook** exists to standardize the registration of new blockchain networks within Nexa AI.
 
 ### What Problem It Solves
 It eliminates hardcoded network assumptions and manual codebase refactoring. By providing a configuration-driven registry, the protocol allows developers to add support for any EVM-compatible chain (e.g. Arbitrum, Optimism, Base) in minutes, solely by editing registry settings.
@@ -71,7 +71,7 @@ const deployments: Record<number, Record<string, { address: string; abi: any }>>
 
 ## 3. Why GIWA
 
-The AIRA Protocol relies on Dunamu's **GIWA OP Stack L2** network as its core settlement layer. The network provides specific advantages crucial to off-chain verifiable AI systems:
+Nexa AI relies on Dunamu's **GIWA OP Stack L2** network as its core settlement layer. The network provides specific advantages crucial to off-chain verifiable AI systems:
 *   **Efficient Settlement**: Enables low-gas, pari-mutuel pool creations, micro-trades, and dispute settlements that are economically unviable on Ethereum Layer 1.
 *   **Verifiable AI Execution**: Low execution fees support the frequent administrative signatures required to commit consensus proposals trustlessly.
 *   **Low-Cost On-Chain Evidence Anchoring**: Allows the permanent anchoring of detailed IPFS Content Identifiers (CIDs) mapping to Evidence Packages and agent audits directly within event log states, establishing complete public transparency.
