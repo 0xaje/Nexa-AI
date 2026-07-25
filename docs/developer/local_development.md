@@ -20,11 +20,11 @@ PRIVATE_KEY="0x..."
 # Database URL for Prisma schema mappings
 DATABASE_URL="postgresql://username:password@localhost:5432/airamarket"
 
-# RPC Endpoint URL (Default: GIWA Sepolia Testnet)
-RPC_URL="https://sepolia-rpc.giwa.io"
+# RPC Endpoint URL (Default: Sepolia Testnet)
+RPC_URL="https://rpc.sepolia.org"
 
 # Flagship Chain Selector
-DEFAULT_CHAIN="giwa"
+DEFAULT_CHAIN="sepolia"
 ```
 
 ---

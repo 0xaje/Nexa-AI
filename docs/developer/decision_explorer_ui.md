@@ -23,7 +23,7 @@ The **Decision Explorer** is a step-based dashboard panel that allows users to d
 [Final Decision]      (Verdicts & questions formulated)
        │
        ▼
-[GIWA Transaction]    (Verifiable on-chain transaction receipt)
+[On-Chain Transaction]    (Verifiable on-chain transaction receipt)
 ```
 
 ---
@@ -42,7 +42,7 @@ DecisionExplorerContainer (Main Wrapper & Controller)
       ├── Step3: DebateSwarmPanel (Visualizes agent turns, questions & counter-claims)
       ├── Step4: ConsensusGauge (Renders weighted score, confidence graphs & reputations)
       ├── Step5: VerdictDisplay (Synthesizes results & details final question targets)
-      └── Step6: GIWATransactionReceipt (Displays smart contract target, IPFS CIDs & hash indexes)
+      └── Step6: TransactionReceipt (Displays smart contract target, IPFS CIDs & hash indexes)
 ```
 
 ### II. Layout Wireframe
@@ -90,7 +90,7 @@ To populate the stepper panel, the frontend calls a unified query route on the b
     { "event": "Signal Ingested", "timestamp": "2026-07-09T22:00:00Z", "source": "Reuters RSS" },
     { "event": "Swarm Debate Started", "timestamp": "2026-07-09T22:00:15Z" },
     { "event": "Consensus Formed", "timestamp": "2026-07-09T22:00:30Z", "consensusScore": 0.72 },
-    { "event": "GIWA Anchor Verified", "timestamp": "2026-07-09T22:01:00Z" }
+    { "event": "On-Chain Anchor Verified", "timestamp": "2026-07-09T22:01:00Z" }
   ],
   "debate": {
     "sessionId": 42,
@@ -189,7 +189,7 @@ export interface UITransaction {
 ## 5. Navigation Flow Specification
 
 1. **Step Increments**: Navigation is controlled via `BACK` and `FORWARD` footer triggers, or by clicking active steps in the top `StepperNavigation` bar.
-2. **Conditional Lock gates**: Steps `2` through `6` are only clickable if the proposal state contains valid sub-attributes (e.g. GIWA Transaction receipt step is locked or disabled for proposals in `PENDING_APPROVAL` status).
+2. **Conditional Lock gates**: Steps `2` through `6` are only clickable if the proposal state contains valid sub-attributes (e.g. Transaction receipt step is locked or disabled for proposals in `PENDING_APPROVAL` status).
 3. **Deep-linking URL params**: Navigating steps updates the query param `?step=X` in the browser URL, allowing direct sharing of specific steps (e.g. `?step=3` highlights the agent debate swarm transcript).
 
 ---

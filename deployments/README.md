@@ -1,5 +1,5 @@
 # Smart Contract Deployment Registry
-### Powered by GIWA
+### Multi-Chain EVM Protocol
 
 ---
 
@@ -14,9 +14,9 @@ It eliminates hardcoded contract address assumptions and prevents manual lookup 
 ### Why It Matters
 A standardized registry prevents configuration drift and assures developers that they are interacting with the correct contract instances. This is vital for maintaining protocol auditability and ensuring that client interfaces connect to authentic smart contract endpoints.
 
-### How It Benefits GIWA
-- **Flagship Registry Showcase**: By establishing GIWA Sepolia (`Chain ID 91342`) as the flagship default target, the registry promotes GIWA as the primary network of the protocol, boosting its ecosystem adoption.
-- **Simplifying Verification**: Providing pre-configured, modular Hardhat deployment settings for GIWA enables external developers to quickly deploy, audit, and verify contracts on GIWA, lowering the friction for L2 expansion.
+### Ecosystem Benefits
+- **Flagship Registry Showcase**: By establishing Sepolia (`Chain ID 91342`) as the flagship default target, the registry provides clear default environments while boosting ecosystem adoption.
+- **Simplifying Verification**: Providing pre-configured, modular Hardhat deployment settings enables external developers to quickly deploy, audit, and verify contracts, lowering the friction for expansion.
 
 ---
 
@@ -24,7 +24,7 @@ A standardized registry prevents configuration drift and assures developers that
 
 | Network | Chain ID | Contract Address | Status | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| **GIWA Sepolia Testnet** | `91342` | `0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846` | **Live Production** | Fully operational and verified on-chain. |
+| **Sepolia Testnet** | `91342` | `0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846` | **Live Production** | Fully operational and verified on-chain. |
 
 ---
 
@@ -37,9 +37,9 @@ To deploy and register contracts on the supported EVM chain:
    PRIVATE_KEY="0x..."
    ```
 2. **Execute Deployment Script**:
-   - For **GIWA Network**:
+   - For **Sepolia Network**:
      ```bash
-     npm run deploy:giwa
+     npm run deploy:sepolia
      ```
 3. **Register Deployment Artifacts**:
    - Create a directory `/deployments/<CHAIN_ID>` matching the network chain ID.

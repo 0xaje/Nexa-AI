@@ -203,7 +203,7 @@ export default function Portfolio() {
                    id: 2,
                    title: "Bitcoin $150K Target Before July",
                    side: "YES",
-                   amount: 5000000000000000n, // 0.005 GIWA
+                   amount: 5000000000000000n, // 0.005 ETH
                    outcome: "ACTIVE",
                    claimed: false,
                    payout: "Pending Oracle"
@@ -249,11 +249,11 @@ export default function Portfolio() {
                           {isWon && (
                             <button 
                               onClick={() => {
-                                useAppStore.getState().showToast("Claim Initiated", `Claiming winning payout for "${trade.title}" on GIWA Sepolia...`, "info");
+                                useAppStore.getState().showToast("Claim Initiated", `Claiming winning payout for "${trade.title}" on Sepolia...`, "info");
                               }}
                               className="mt-2 px-3 py-1 bg-bullish-green hover:bg-bullish-green/90 text-white font-mono font-bold text-[10px] rounded tracking-wider uppercase transition-all shadow-xs"
                             >
-                              Claim Winnings ({trade.payout || '0.0039 GIWA'})
+                              Claim Winnings ({trade.payout || `0.0039 ${getNativeCurrencySymbol()}`})
                             </button>
                           )}
                        </div>

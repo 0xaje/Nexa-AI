@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { ProtocolMetadata } from '../../config/protocol/protocol';
 
 const examplePrompts = [
-  { label: 'Analyze ETH', icon: 'analytics', query: "Analyze Ethereum's market sentiment and key risk drivers" },
+  { label: 'Analyze Ethereum', icon: 'analytics', query: "Compare the network growth of Solana vs Ethereum over the last 30 days" },
+  { label: "Research Solana", icon: 'search', query: "Give me an intelligence report on Solana fee-paying active address growth and risk metrics" },
+  { label: 'Should I buy Bitcoin?', icon: 'help', query: "What is the multi-agent AI verdict on buying Bitcoin at current prices?" },
   { label: "Explain today's market", icon: 'insights', query: "Explain today's crypto market overview and top signal movements" },
-  { label: 'Research SUI', icon: 'search', query: "Give me an intelligence report on SUI token adoption and risks" },
-  { label: 'Should I buy BTC?', icon: 'help', query: "What is the multi-agent AI verdict on buying Bitcoin at current prices?" },
-  { label: 'Generate prediction idea', icon: 'auto_awesome', query: "Generate a verifiable prediction proposal for AI sector tokens" }
+  { label: 'Generate prediction opportunity', icon: 'auto_awesome', query: "Generate a verifiable prediction proposal for AI sector tokens" }
 ];
 
 const recentAnalyses = [
@@ -44,6 +44,8 @@ export default function Landing() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState('evidence');
   const [demoStep, setDemoStep] = useState(0);
+  const [promptInput, setPromptInput] = useState('');
+  const [webEnabled, setWebEnabled] = useState(true);
 
   const steps = [
     {
@@ -125,79 +127,147 @@ console.log("Decision Integrity:", isValid ? "VERIFIED" : "FAILED");`
     navigate('/chat', { state: { initialPrompt: promptQuery } });
   };
 
+  const handleGenerateReport = () => {
+    const queryToSend = promptInput.trim() || examplePrompts[0].query;
+    navigate('/chat', { state: { initialPrompt: queryToSend } });
+  };
+
   return (
-    <main className="relative pt-28 pb-16 min-h-[calc(100vh-120px)] flex flex-col justify-center items-center px-4 md:px-8 flex-grow w-full max-w-6xl mx-auto z-10">
-      <div className="w-full text-center flex flex-col items-center flex-grow justify-center max-w-5xl">
+    <div className="relative pt-6 pb-16 min-h-screen flex flex-col justify-start items-center px-4 md:px-8 w-full max-w-6xl mx-auto z-10">
+      
+      {/* Minimalist Background Effect */}
+      <div className="absolute inset-0 pointer-events-none opacity-25 overflow-hidden">
+        <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[140px]"></div>
+        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-tertiary/10 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div className="relative w-full text-center flex flex-col items-center justify-center min-h-[75vh] mb-12">
         
         {/* Top Product Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/25 mb-6 bg-surface shadow-sm text-[9.5px] font-mono font-bold tracking-[0.25em] text-primary uppercase">
+        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-outline-variant/30 mb-6 bg-surface-container-low shadow-sm text-[10px] font-mono font-bold tracking-[0.2em] text-primary uppercase">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-          NEXA AI · ENTERPRISE CRYPTO INTELLIGENCE
+          NEXA AI · INSTITUTIONAL INTELLIGENCE
         </div>
         
-        {/* Main Hero H1 */}
-        <h1 className="serif-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] mb-4 text-on-surface tracking-tight font-black max-w-4xl">
-          Meet <span className="italic text-primary bg-gradient-to-r from-primary via-indigo-500 to-violet-600 bg-clip-text text-transparent">Nexa AI</span>
-        </h1>
-        
-        {/* Subtitle H2 */}
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-on-surface-variant mb-6 tracking-tight font-display">
-          Enterprise AI Crypto Intelligence Agent
-        </h2>
-
-        {/* Short Description */}
-        <p className="max-w-2xl mx-auto text-on-surface-variant text-xs sm:text-sm md:text-base font-medium leading-relaxed mb-8 opacity-90 px-4">
-          Nexa AI unifies multi-agent research, real-time risk scoring, tokenomics audits, and verifiable market predictions in a single natural language platform.
-        </p>
-
-        {/* Primary & Secondary Action CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4 w-full mb-12">
-          <button 
-            className="w-full sm:w-auto px-8 py-4 bg-primary text-white rounded-2xl font-extrabold text-xs tracking-[0.15em] uppercase hover:bg-on-surface hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 font-mono"
-            onClick={() => navigate('/chat')}
-          >
-            <span className="material-symbols-outlined text-lg">smart_toy</span>
-            <span>Start Research</span>
-          </button>
-          <button 
-            className="w-full sm:w-auto px-8 py-4 bg-surface border border-outline-variant text-on-surface rounded-2xl font-bold text-xs tracking-[0.15em] uppercase hover:border-primary hover:text-primary hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-mono"
-            onClick={() => {
-              setDemoStep(1);
-              const el = document.getElementById('demo-sandbox');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            <span className="material-symbols-outlined text-lg">play_circle</span>
-            <span>View Demo</span>
-          </button>
+        {/* Hero Title */}
+        <div className="text-center mb-8 space-y-3">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-on-surface tracking-tight font-extrabold leading-tight">
+            What would you like to research today?
+          </h1>
+          <p className="font-sans text-sm md:text-base text-on-surface-variant/70 max-w-2xl mx-auto leading-relaxed font-normal">
+            Access institutional-grade real-time intelligence across the crypto ecosystem.
+          </p>
         </div>
 
-        {/* SECTION 1: Suggested Research Questions (Interactive Prompt Chips) */}
-        <div className="w-full max-w-4xl mb-16 p-5 md:p-6 bg-surface/80 border border-outline-variant rounded-2xl shadow-md backdrop-blur-md text-left">
-          <div className="flex items-center gap-2 mb-3.5 px-1">
-            <span className="material-symbols-outlined text-primary text-base">auto_awesome</span>
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-on-surface-variant">
-              Suggested Research Questions:
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-2.5">
-            {examplePrompts.map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => handlePromptClick(item.query)}
-                className="px-4 py-2.5 rounded-xl bg-surface-variant/40 border border-outline-variant hover:border-primary/40 hover:bg-primary/10 text-on-surface hover:text-primary transition-all text-xs font-medium flex items-center gap-2 group shrink-0"
+        {/* Premium Prompt Box */}
+        <div className="w-full max-w-3xl group mb-6">
+          <div className="institutional-card p-2 md:p-3 rounded-xl shadow-2xl flex flex-col relative overflow-hidden text-left">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+            <textarea 
+              value={promptInput}
+              onChange={(e) => setPromptInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleGenerateReport();
+                }
+              }}
+              className="w-full bg-transparent border-none focus:ring-0 text-on-surface text-sm md:text-base min-h-[110px] resize-none p-4 placeholder:text-on-surface-variant/30 font-sans" 
+              placeholder="e.g., 'Compare the network growth of Solana vs Ethereum over the last 30 days...'"
+            ></textarea>
+            <div className="flex items-center justify-between p-3 border-t border-outline-variant/10 bg-surface-container/50 rounded-b-lg">
+              <div className="flex items-center gap-3">
+                <button 
+                  type="button"
+                  onClick={() => setWebEnabled(!webEnabled)}
+                  className={`transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono font-bold ${
+                    webEnabled ? 'bg-primary/15 text-primary border border-primary/30' : 'text-on-surface-variant/70 hover:text-on-surface'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[18px]" data-icon="language">language</span>
+                  <span className="uppercase">WEB: {webEnabled ? 'ON' : 'OFF'}</span>
+                </button>
+              </div>
+              <button 
+                onClick={handleGenerateReport}
+                className="bg-primary hover:bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-all active:scale-95 text-xs font-mono tracking-wider uppercase shadow-md"
               >
-                <span className="material-symbols-outlined text-xs text-primary group-hover:scale-110 transition-transform">
-                  {item.icon}
-                </span>
-                <span>{item.label}</span>
-                <span className="material-symbols-outlined text-[10px] opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all">
-                  arrow_forward
-                </span>
+                <span>GENERATE REPORT</span>
+                <span className="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
               </button>
-            ))}
+            </div>
           </div>
         </div>
+
+        {/* Prompt Chips */}
+        <div className="w-full max-w-3xl flex flex-wrap justify-center gap-2 mb-12">
+          {examplePrompts.map((chip, idx) => (
+            <button 
+              key={idx}
+              onClick={() => {
+                setPromptInput(chip.query);
+              }}
+              className="px-4 py-2 bg-surface-container-low border border-outline-variant/20 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:border-primary/40 hover:text-on-surface transition-all text-xs font-medium"
+            >
+              {chip.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Institutional Context Cards (Bento) */}
+        <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+          <div className="institutional-card p-4 rounded-xl flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono text-on-surface-variant/60 font-semibold uppercase tracking-wider">BTC/USD TREND</span>
+              <span className="text-bullish-green text-xs font-mono font-bold">+2.4%</span>
+            </div>
+            <div className="h-14 w-full flex items-end gap-1 pt-1">
+              <div className="flex-1 bg-primary/20 h-[30%] rounded-t"></div>
+              <div className="flex-1 bg-primary/20 h-[45%] rounded-t"></div>
+              <div className="flex-1 bg-primary/20 h-[40%] rounded-t"></div>
+              <div className="flex-1 bg-primary/20 h-[60%] rounded-t"></div>
+              <div className="flex-1 bg-primary/20 h-[55%] rounded-t"></div>
+              <div className="flex-1 bg-primary/20 h-[80%] rounded-t"></div>
+              <div className="flex-1 bg-primary/60 h-[100%] rounded-t"></div>
+            </div>
+          </div>
+
+          <div className="institutional-card p-4 rounded-xl flex flex-col gap-3">
+            <span className="text-[11px] font-mono text-on-surface-variant/60 font-semibold uppercase tracking-wider">AI CONFIDENCE INDEX</span>
+            <div className="space-y-2 pt-1">
+              <div className="flex justify-between text-xs font-mono text-on-surface">
+                <span>High Probability</span>
+                <span className="text-primary font-bold">84%</span>
+              </div>
+              <div className="flex gap-1 h-2">
+                {[...Array(8)].map((_, i) => (
+                  <div key={i} className="flex-1 bg-primary rounded-sm"></div>
+                ))}
+                {[...Array(2)].map((_, i) => (
+                  <div key={i} className="flex-1 bg-outline-variant/20 rounded-sm"></div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="institutional-card p-4 rounded-xl flex flex-col gap-3">
+            <span className="text-[11px] font-mono text-on-surface-variant/60 font-semibold uppercase tracking-wider">AGENT ACTIVITY</span>
+            <div className="flex items-center gap-3 pt-1">
+              <div className="relative w-10 h-10 shrink-0">
+                <svg className="w-full h-full transform -rotate-90">
+                  <circle cx="20" cy="20" fill="transparent" r="18" stroke="rgba(164,139,133,0.15)" strokeWidth="4"></circle>
+                  <circle className="text-tertiary" cx="20" cy="20" fill="transparent" r="18" stroke="currentColor" strokeDasharray="113" strokeDashoffset="30" strokeWidth="4"></circle>
+                </svg>
+                <span className="absolute inset-0 flex items-center justify-center font-mono text-xs text-on-surface font-bold">12</span>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-on-surface">Deep Analysis</p>
+                <p className="text-[11px] font-mono text-on-surface-variant/60">In-progress queries</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
         {/* SECTION 2: Why Nexa AI (Comparison Grid) */}
         <div className="w-full max-w-5xl mb-20 text-left">
@@ -682,7 +752,6 @@ console.log("Decision Integrity:", isValid ? "VERIFIED" : "FAILED");`
             </div>
           </div>
         </div>
-      </div>
-    </main>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { ProtocolMetadata } from '../config/protocol/protocol';
 
@@ -23,6 +23,7 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentView = location.pathname.substring(1) || 'landing';
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Network State
   const { isConnected } = useAccount();
@@ -54,7 +55,7 @@ function App() {
   const colors = {
     success: 'bg-bullish-green text-white border-bullish-green/50',
     error: 'bg-bearish-red text-white border-bearish-red/50',
-    info: 'bg-surface border-outline-variant text-on-surface'
+    info: 'bg-surface-container-high border-outline-variant text-on-surface'
   };
 
   const icons = {
@@ -62,169 +63,227 @@ function App() {
     error: 'error',
     info: 'info'
   };
-  return (
-    <div className="min-h-[105vh] bg-background text-on-surface selection:bg-primary/20 flex flex-col w-full overflow-x-clip">
-      {/* Background Texture Pattern dot grid */}
-      <div className="fixed inset-0 sand-pattern pointer-events-none z-0"></div>
 
-      {/* Top Navigation */}
-      {/* Top Navigation */}
-      <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-3 md:px-12 h-20 bg-surface/90 backdrop-blur-md border-b border-outline-variant">
-        <div className="flex items-center gap-4 md:gap-10">
+  const handleHeaderSearch = (e) => {
+    if (e.key === 'Enter' && searchQuery.trim()) {
+      navigate('/chat', { state: { initialPrompt: searchQuery } });
+      setSearchQuery('');
+    }
+  };
+
+  const navItems = [
+    { id: 'chat', route: '/chat', label: 'Chat', icon: 'chat', aliases: ['', 'chat', 'landing'] },
+    { id: 'research', route: '/research', label: 'Research', icon: 'biotech', aliases: ['research', 'tokens'] },
+    { id: 'markets', route: '/markets', label: 'Markets', icon: 'query_stats', aliases: ['markets', 'feed', 'intelligence'] },
+    { id: 'insights', route: '/insights', label: 'Insights', icon: 'auto_graph', aliases: ['insights', 'terminal', 'risk'] },
+    { id: 'history', route: '/history', label: 'History', icon: 'history', aliases: ['history', 'portfolio'] },
+    { id: 'settings', route: '/settings', label: 'Settings', icon: 'settings', aliases: ['settings'] },
+    { id: 'lab', route: '/lab', label: 'Creator Lab', icon: 'science', aliases: ['lab', 'creator'] },
+    { id: 'leaderboard', route: '/leaderboard', label: 'Registry', icon: 'leaderboard', aliases: ['leaderboard', 'registry'] }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background text-on-surface selection:bg-primary/20 flex flex-col w-full overflow-x-hidden font-body-md">
+      
+      {/* SideNavBar Shell (Desktop) */}
+      <nav className="hidden md:flex fixed left-0 top-0 h-full w-64 flex-col py-base border-r border-outline-variant/20 bg-surface-container-lowest z-50">
+        <div 
+          className="px-gutter mb-base flex items-center gap-base cursor-pointer"
+          onClick={() => navigate('/landing')}
+        >
+          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary via-primary-container to-tertiary flex items-center justify-center text-on-primary font-bold shadow-md">
+            <span className="material-symbols-outlined text-xl">auto_awesome</span>
+          </div>
+          <div>
+            <h1 className="font-headline-lg text-lg leading-none font-bold text-on-surface tracking-tight">{ProtocolMetadata.protocolName}</h1>
+            <p className="font-label-sm text-[11px] text-on-surface-variant/60 font-mono">Institutional Intelligence</p>
+          </div>
+        </div>
+
+        <div className="flex-1 space-y-1 px-base mt-gutter overflow-y-auto no-scrollbar">
+          {navItems.map((item) => {
+            const isActive = item.aliases.includes(currentView);
+            return (
+              <button
+                key={item.id}
+                onClick={() => navigate(item.route)}
+                className={`w-full flex items-center gap-base px-gutter py-2.5 rounded-lg transition-all duration-200 text-left ${
+                  isActive 
+                    ? 'font-bold text-primary bg-surface-container-high border-r-2 border-primary' 
+                    : 'text-on-surface-variant hover:bg-surface-container-high/60 hover:text-on-surface'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[20px]" data-icon={item.icon}>{item.icon}</span>
+                <span className="font-body-md text-sm">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="px-base mt-auto space-y-base pt-base border-t border-outline-variant/20">
+          <button 
+            onClick={() => navigate('/portfolio')}
+            className="w-full flex items-center gap-base px-gutter py-2 text-on-surface-variant transition-all duration-200 hover:bg-surface-container-high hover:text-on-surface rounded-lg"
+          >
+            <span className="material-symbols-outlined text-[20px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+            <span className="font-body-md text-sm">Wallet Vault</span>
+          </button>
+          
+          <div className="flex items-center justify-between px-gutter py-2 text-on-surface-variant/60 text-xs">
+            <div className="flex items-center gap-base font-mono">
+              <span className="material-symbols-outlined text-[14px]" data-icon="sync_alt">sync_alt</span>
+              <span className="font-label-sm text-[10px] uppercase tracking-wider">API Status</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] font-mono text-primary/80">ONLINE</span>
+              <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* TopNavBar Shell */}
+      <header className="fixed top-0 right-0 left-0 md:left-64 z-40 flex justify-between items-center px-4 md:px-gutter h-16 border-b border-outline-variant/20 bg-surface/95 backdrop-blur-md">
+        <div className="flex items-center gap-3 md:hidden">
           <span 
-            className="font-bold text-base sm:text-lg md:text-xl tracking-tight sahara-gradient-text uppercase cursor-pointer font-display shrink-0"
+            className="font-bold text-base tracking-tight text-primary font-display cursor-pointer"
             onClick={() => navigate('/landing')}
           >
             {ProtocolMetadata.protocolName}
           </span>
-          <nav aria-label="Main Navigation" className="hidden md:flex gap-6 lg:gap-8">
-            <button 
-              aria-label="Chat Interface"
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'chat' || currentView === '' || currentView === 'landing' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/chat')}
-            >
-              Chat
-            </button>
-            <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'research' || currentView === 'tokens' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/research')}
-            >
-              Research
-            </button>
-            <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'markets' || currentView === 'intelligence' || currentView === 'feed' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/markets')}
-            >
-              Markets
-            </button>
-            <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'insights' || currentView === 'risk' || currentView === 'terminal' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/insights')}
-            >
-              Insights
-            </button>
-            <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'history' || currentView === 'portfolio' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/history')}
-            >
-              History
-            </button>
-            <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'settings' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/settings')}
-            >
-              Settings
-            </button>
-          </nav>
         </div>
-        <div className="flex items-center gap-2 md:gap-6">
-          <div className="flex items-center gap-1.5 sm:gap-4 relative">
-            {!hasLlmKey && (
-              <span className="hidden lg:flex items-center gap-1 px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-500 rounded-full font-mono text-[9px] font-bold uppercase tracking-wider shrink-0" title="Running with fallback multi-agent models & verifiable telemetry">
-                <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></span>
-                SIMULATION MODE
-              </span>
-            )}
-            
-            <div className="relative flex items-center shrink-0">
-              <ConnectButton.Custom>
-                {({
-                  account,
-                  chain,
-                  openAccountModal,
-                  openChainModal,
-                  openConnectModal,
-                  authenticationStatus,
-                  mounted,
-                }) => {
-                  const ready = mounted && authenticationStatus !== 'loading';
-                  const connected =
-                    ready &&
-                    account &&
-                    chain &&
-                    (!authenticationStatus ||
-                      authenticationStatus === 'authenticated');
 
-                  return (
-                    <div
-                      {...(!ready && {
-                        'aria-hidden': true,
-                        'style': {
-                          opacity: 0,
-                          pointerEvents: 'none',
-                          userSelect: 'none',
-                        },
-                      })}
-                    >
-                      {(() => {
-                        if (!connected) {
-                          return (
-                            <button
-                              onClick={openConnectModal}
-                              type="button"
-                              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-primary hover:bg-primary/90 text-white font-extrabold text-[11px] sm:text-xs font-mono rounded-lg shadow-md transition-all active:scale-95 flex items-center gap-1 sm:gap-1.5 shrink-0"
-                            >
-                              <span className="material-symbols-outlined text-sm sm:text-base">account_balance_wallet</span>
-                              <span>Connect</span>
-                            </button>
-                          );
-                        }
+        <div className="flex-1 max-w-xl mx-2 md:mx-0">
+          <div className="relative flex items-center">
+            <span className="material-symbols-outlined absolute left-3 text-on-surface-variant/70 text-lg" data-icon="search">search</span>
+            <input 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleHeaderSearch}
+              className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg pl-10 pr-base py-1.5 focus:ring-1 focus:ring-primary/40 text-xs md:text-sm placeholder:text-on-surface-variant/40 text-on-surface transition-all" 
+              placeholder="Search markets, tokens, or agents (Press Enter)..." 
+              type="text"
+            />
+          </div>
+        </div>
 
-                        if (chain.unsupported) {
-                          return (
-                            <button
-                              onClick={openChainModal}
-                              type="button"
-                              className="px-2.5 py-1.5 bg-bearish-red text-white font-bold text-[10px] sm:text-xs font-mono rounded-lg transition-all flex items-center gap-1"
-                            >
-                              Wrong Network
-                            </button>
-                          );
-                        }
+        <div className="flex items-center gap-3 md:gap-gutter">
+          {!hasLlmKey && (
+            <span className="hidden lg:flex items-center gap-1 px-2.5 py-1 bg-primary/10 border border-primary/20 text-primary rounded-full font-mono text-[9px] font-bold uppercase tracking-wider shrink-0" title="Operating with local multi-agent simulation model">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+              SIMULATION MODE
+            </span>
+          )}
 
+          {/* RainbowKit Wallet Connect button */}
+          <div className="relative flex items-center shrink-0">
+            <ConnectButton.Custom>
+              {({
+                account,
+                chain,
+                openAccountModal,
+                openChainModal,
+                openConnectModal,
+                authenticationStatus,
+                mounted,
+              }) => {
+                const ready = mounted && authenticationStatus !== 'loading';
+                const connected =
+                  ready &&
+                  account &&
+                  chain &&
+                  (!authenticationStatus ||
+                    authenticationStatus === 'authenticated');
+
+                return (
+                  <div
+                    {...(!ready && {
+                      'aria-hidden': true,
+                      'style': {
+                        opacity: 0,
+                        pointerEvents: 'none',
+                        userSelect: 'none',
+                      },
+                    })}
+                  >
+                    {(() => {
+                      if (!connected) {
                         return (
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={openAccountModal}
-                              type="button"
-                              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-surface-variant/80 hover:bg-surface-variant border border-outline-variant text-on-surface font-bold text-[10px] sm:text-xs font-mono rounded-lg transition-all flex items-center gap-1.5"
-                            >
-                              <span className="w-2 h-2 rounded-full bg-bullish-green animate-pulse"></span>
-                              <span>{account.displayName}</span>
-                            </button>
-                          </div>
+                          <button
+                            onClick={openConnectModal}
+                            type="button"
+                            className="bg-primary hover:bg-primary-container text-on-primary-container px-3 md:px-gutter py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all text-xs font-mono shadow-sm active:scale-95"
+                          >
+                            <span className="material-symbols-outlined text-[16px]">account_balance_wallet</span>
+                            <span className="hidden sm:inline">CONNECT</span>
+                          </button>
                         );
-                      })()}
-                    </div>
-                  );
-                }}
-              </ConnectButton.Custom>
-            </div>
-            
-            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-outline-variant p-0.5 shrink-0" onClick={() => navigate('/portfolio')} title="View Portfolio">
-              <img 
-                alt="User avatar" 
-                className="w-full h-full rounded-full object-cover grayscale hover:grayscale-0 transition-all cursor-pointer" 
-                src={profileData.picture}
-              />
-            </div>
+                      }
+
+                      if (chain.unsupported) {
+                        return (
+                          <button
+                            onClick={openChainModal}
+                            type="button"
+                            className="px-2.5 py-1.5 bg-bearish-red text-white font-bold text-[10px] font-mono rounded-lg transition-all"
+                          >
+                            Wrong Network
+                          </button>
+                        );
+                      }
+
+                      return (
+                        <button
+                          onClick={openAccountModal}
+                          type="button"
+                          className="px-2.5 py-1.5 bg-surface-container-high border border-outline-variant/40 text-on-surface font-bold text-xs font-mono rounded-lg transition-all flex items-center gap-1.5"
+                        >
+                          <span className="w-2 h-2 rounded-full bg-bullish-green animate-pulse"></span>
+                          <span>{account.displayName}</span>
+                        </button>
+                      );
+                    })()}
+                  </div>
+                );
+              }}
+            </ConnectButton.Custom>
+          </div>
+
+          <button 
+            onClick={() => navigate('/feed')}
+            className="text-on-surface-variant hover:text-primary transition-colors relative"
+            title="Notifications"
+          >
+            <span className="material-symbols-outlined text-[22px]" data-icon="notifications">notifications</span>
+            <span className="absolute -top-1 -right-1 w-2 h-2 bg-tertiary rounded-full"></span>
+          </button>
+
+          <div 
+            onClick={() => navigate('/portfolio')}
+            className="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high flex items-center justify-center border border-outline-variant/40 cursor-pointer hover:border-primary transition-all"
+            title="User Profile"
+          >
+            <img 
+              className="w-full h-full object-cover" 
+              alt="Profile avatar" 
+              src={profileData.picture}
+            />
           </div>
         </div>
       </header>
 
-      {/* Simulation Mode / Demo Mode Banner */}
+      {/* Simulation Mode Banner */}
       {showSimBanner && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-40 bg-surface/95 backdrop-blur-md border border-t-0 border-outline-variant shadow-xl rounded-b-2xl px-4 py-2.5 flex items-center gap-3 text-xs max-w-[95%] sm:max-w-lg animate-slide-down">
-          <span className="material-symbols-outlined text-amber-500 text-base shrink-0 animate-pulse">science</span>
+        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-40 bg-surface-container-high border border-outline-variant/40 shadow-xl rounded-b-xl px-4 py-2 flex items-center gap-3 text-xs max-w-[95%] sm:max-w-lg animate-slide-down">
+          <span className="material-symbols-outlined text-primary text-base shrink-0 animate-pulse">science</span>
           <div className="flex flex-col gap-0.5 flex-1 min-w-0 font-mono">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-[9px] uppercase tracking-wider text-amber-500 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded">
-                SIMULATION DEMO MODE
+              <span className="font-bold text-[9px] uppercase tracking-wider text-primary bg-primary/10 border border-primary/20 px-1.5 py-0.5 rounded">
+                INSTITUTIONAL SIMULATION MODE
               </span>
-              <span className="text-[9px] text-on-surface-variant/70">LLM API Key Unset</span>
             </div>
             <p className="text-[10px] text-on-surface-variant leading-tight">
-              Operating on verified testnet telemetry & local AI consensus agent models.
+              Operating with local multi-agent telemetry models and testnet evidence verification.
             </p>
           </div>
           <button 
@@ -237,9 +296,9 @@ function App() {
         </div>
       )}
 
-      {/* Hanging Chain Warning Banner */}
+      {/* Chain Warning Banner */}
       {showChainWarning && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-surface/95 backdrop-blur-md border border-t-0 border-outline-variant shadow-2xl rounded-b-2xl px-5 py-3 flex items-center gap-4 text-xs max-w-[90%] sm:max-w-md animate-slide-down">
+        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-surface-container-high border border-outline-variant shadow-2xl rounded-b-2xl px-5 py-3 flex items-center gap-4 text-xs max-w-[90%] sm:max-w-md animate-slide-down">
           <span className="material-symbols-outlined text-amber-500 animate-pulse text-lg shrink-0">warning</span>
           <div className="flex flex-col gap-0.5 flex-1 min-w-0">
             <span className="font-bold text-[9px] uppercase tracking-wider text-amber-500 font-mono">alternate chain connected</span>
@@ -257,52 +316,47 @@ function App() {
         </div>
       )}
 
-      {/* Main View Area Routing */}
-      <Routes>
-        <Route path="/" element={<Chat />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/about" element={<Landing />} />
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/research" element={<Tokens />} />
-        <Route path="/tokens" element={<Tokens />} />
-        <Route path="/markets" element={<Feed />} />
-        <Route path="/intelligence" element={<Feed />} />
-        <Route path="/feed" element={<Feed />} />
-        <Route path="/insights" element={<Terminal />} />
-        <Route path="/risk" element={<Terminal />} />
-        <Route path="/terminal" element={<Terminal />} />
-        <Route path="/history" element={<Portfolio />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/lab" element={<CreatorLab />} />
-        <Route path="/creator" element={<CreatorLab />} />
-        <Route path="/transparency" element={<Explorer />} />
-        <Route path="/explorer" element={<Explorer />} />
-        <Route path="/registry" element={<Leaderboard profileData={profileData} />} />
-        <Route path="/leaderboard" element={<Leaderboard profileData={profileData} />} />
-      </Routes>
+      {/* Main Content View Container */}
+      <main className="fixed inset-0 left-0 md:left-64 top-16 overflow-y-auto bg-background">
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/landing" element={<Landing />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/about" element={<Landing />} />
+          <Route path="/research" element={<Tokens />} />
+          <Route path="/tokens" element={<Tokens />} />
+          <Route path="/markets" element={<Feed />} />
+          <Route path="/intelligence" element={<Feed />} />
+          <Route path="/feed" element={<Feed />} />
+          <Route path="/insights" element={<Terminal />} />
+          <Route path="/risk" element={<Terminal />} />
+          <Route path="/terminal" element={<Terminal />} />
+          <Route path="/history" element={<Portfolio />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/lab" element={<CreatorLab />} />
+          <Route path="/creator" element={<CreatorLab />} />
+          <Route path="/transparency" element={<Explorer />} />
+          <Route path="/explorer" element={<Explorer />} />
+          <Route path="/registry" element={<Leaderboard profileData={profileData} />} />
+          <Route path="/leaderboard" element={<Leaderboard profileData={profileData} />} />
+        </Routes>
+      </main>
 
       {/* Mobile Bottom Navigation Dock */}
-      <nav aria-label="Mobile Bottom Navigation" className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-xl border-t border-outline-variant shadow-2xl px-3 py-1.5 pb-safe">
+      <nav aria-label="Mobile Bottom Navigation" className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-xl border-t border-outline-variant/20 shadow-2xl px-3 py-1.5 pb-safe">
         <div className="flex items-center justify-between gap-1 overflow-x-auto no-scrollbar py-0.5">
-          {[
-            { id: 'chat', route: '/chat', label: 'CHAT', icon: 'smart_toy' },
-            { id: 'research', route: '/research', label: 'RESEARCH', icon: 'search' },
-            { id: 'markets', route: '/markets', label: 'MARKETS', icon: 'bar_chart' },
-            { id: 'insights', route: '/insights', label: 'INSIGHTS', icon: 'shield' },
-            { id: 'history', route: '/history', label: 'HISTORY', icon: 'history' },
-            { id: 'settings', route: '/settings', label: 'SETTINGS', icon: 'settings' },
-          ].map((item) => {
-            const isActive = currentView === item.id || (item.id === 'chat' && (currentView === '' || currentView === 'chat'));
+          {navItems.slice(0, 6).map((item) => {
+            const isActive = item.aliases.includes(currentView);
             return (
               <button
                 key={item.id}
                 aria-label={`Navigate to ${item.label}`}
                 onClick={() => navigate(item.route)}
-                className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all shrink-0 min-w-[56px] ${
+                className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all shrink-0 min-w-[52px] ${
                   isActive 
-                    ? 'bg-primary/15 text-primary border border-primary/30 font-bold shadow-xs' 
-                    : 'text-on-surface-variant/70 hover:text-on-surface hover:bg-surface-variant/40'
+                    ? 'bg-surface-container-high text-primary border border-primary/30 font-bold shadow-xs' 
+                    : 'text-on-surface-variant/70 hover:text-on-surface'
                 }`}
               >
                 <div className="relative flex items-center justify-center">
@@ -321,9 +375,10 @@ function App() {
           })}
         </div>
       </nav>
+
       {/* Global Toast Notification */}
       {toast && (
-        <div className={`fixed bottom-24 md:bottom-8 right-4 md:right-8 z-[100] flex flex-col gap-1 p-4 rounded-xl shadow-2xl border ${colors[toast.type]} animate-subtle-fade min-w-[300px] max-w-[400px]`}>
+        <div className={`fixed bottom-20 md:bottom-8 right-4 md:right-8 z-[100] flex flex-col gap-1 p-4 rounded-xl shadow-2xl border ${colors[toast.type]} min-w-[300px] max-w-[400px]`}>
           <div className="flex justify-between items-start mb-1">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-lg">{icons[toast.type]}</span>

@@ -1,5 +1,5 @@
 # System Architecture Overview
-### Transparent AI Decisions. Verifiable on GIWA.
+### Transparent AI Decisions. Verifiable On-Chain.
 
 ---
 
@@ -18,7 +18,7 @@ flowchart TD
     stage4 --> stage5[Consensus Engine]
     stage5 --> stage6[Decision Proposal]
     stage6 --> stage7[Human Verification]
-    stage7 --> stage8[GIWA On-Chain Settlement]
+    stage7 --> stage8[On-Chain Settlement]
 ```
 
 ---
@@ -41,7 +41,7 @@ flowchart TD
 *   **Rationale**: Prevents weak, insecure, or policy-violating proposals from reaching execution pipelines.
 
 ### IV. Smart Contracts
-*   **Responsibility**: Core state registry, pool distributions, and final settlement on the GIWA Network.
+*   **Responsibility**: Core state registry, pool distributions, and final settlement on the EVM Network.
 *   **Boundary**: Inputs: signed transactions verified by admin keys. Outputs: state logs and transaction receipts.
 *   **Rationale**: Serves as the ultimate trust anchor for user capital.
 
@@ -56,7 +56,6 @@ flowchart TD
 
 Smart contract interactions dynamically target these deployed network instances:
 
-*   **GIWA Sepolia Testnet** (`Chain ID: 91342`):
-    *   **Registry Address**: [`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`](https://sepolia-explorer.giwa.io/address/0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846)
+*   **Sepolia Testnet** (`Chain ID: 91342`):
+    *   **Registry Address**: [`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`](https://sepolia.etherscan.io/address/0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846)
     *   **Status**: [LIVE] Verified on Explorer
-

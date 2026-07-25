@@ -2,7 +2,7 @@
 ### Your AI agent for crypto research, risk analysis, market insights, and verifiable on-chain predictions.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![GIWA Sepolia](https://img.shields.io/badge/Ecosystem-GIWA_Sepolia-blue.svg)](https://sepolia-explorer.giwa.io)
+[![Sepolia Testnet](https://img.shields.io/badge/Ecosystem-Sepolia_Testnet-blue.svg)](https://sepolia.etherscan.io)
 [![Solidity](https://img.shields.io/badge/Language-Solidity-lightgrey.svg)](contracts/AiraMarket.sol)
 
 Nexa AI is an autonomous, multi-agent crypto intelligence platform that provides token analysis, risk scoring, market research, and inspectable prediction generation.
@@ -32,7 +32,7 @@ Signal Ingestion ➔ Multi-Agent Review (Analyst/Risk/Compliance) ➔ Evidence P
 
 - **Cognitive Layer**: Multi-agent consensus engine running AnalystAgent, RiskAgent, and ComplianceAgent.
 - **Evidence Layer**: Deterministic SHA-256 evidence packages pinned to IPFS CIDs.
-- **Settlement Layer**: Smart contract state settlement on GIWA Sepolia Testnet (`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`).
+- **Settlement Layer**: Smart contract state settlement on Sepolia Testnet (`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`).
 - **Application Layer**: 9 responsive UI modules delivering complete crypto intelligence.
 
 ---
@@ -45,7 +45,7 @@ Signal Ingestion ➔ Multi-Agent Review (Analyst/Risk/Compliance) ➔ Evidence P
 - **Database**: PostgreSQL / SQLite dev cache
 - **Smart Contracts**: Solidity, Hardhat, Ethers.js v6
 - **Storage**: IPFS Content Identifiers (CIDs)
-- **Network**: GIWA Sepolia L2 Testnet (Chain ID: `91342`)
+- **Network**: Sepolia EVM Testnet (Chain ID: `91342`)
 
 ---
 

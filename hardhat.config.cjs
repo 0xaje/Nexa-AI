@@ -13,24 +13,14 @@ module.exports = {
     }
   },
   networks: {
-    giwa: {
-      url: process.env.RPC_URL || "https://sepolia-rpc.giwa.io",
+    sepolia: {
+      url: process.env.RPC_URL || "https://rpc.sepolia.org",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
     }
   },
   etherscan: {
     apiKey: {
-      giwa: "any_value_needed_by_hardhat"
-    },
-    customChains: [
-      {
-        network: "giwa",
-        chainId: 91342,
-        urls: {
-          apiURL: "https://sepolia-explorer.giwa.io/api",
-          browserURL: "https://sepolia-explorer.giwa.io"
-        }
-      }
-    ]
+      sepolia: process.env.ETHERSCAN_API_KEY || "any_value_needed_by_hardhat"
+    }
   }
 };

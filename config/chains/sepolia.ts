@@ -1,13 +1,13 @@
 import { ChainConfig } from './types';
 
-export const giwa: ChainConfig = {
+export const sepolia: ChainConfig = {
   chainId: 91342,
-  networkName: 'GIWA Sepolia Testnet',
-  rpcUrl: 'https://sepolia-rpc.giwa.io',
-  blockExplorer: 'https://sepolia-explorer.giwa.io',
+  networkName: 'Sepolia Testnet',
+  rpcUrl: 'https://rpc.sepolia.org',
+  blockExplorer: 'https://sepolia.etherscan.io',
   nativeCurrency: {
-    name: 'GIWA',
-    symbol: 'GIWA',
+    name: 'Ether',
+    symbol: 'ETH',
     decimals: 18,
   },
   contracts: {
@@ -15,5 +15,5 @@ export const giwa: ChainConfig = {
   },
   confirmations: 1,
   isTestnet: true,
-  icon: 'giwa',
+  icon: 'ethereum',
 };

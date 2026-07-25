@@ -30,7 +30,7 @@ async function main() {
         report.push(msg);
     }
 
-    log("### Starting E2E Testing on GIWA Sepolia ###\n");
+    log("### Starting E2E Testing on Sepolia ###\n");
 
     try {
         // Test A: Create Market

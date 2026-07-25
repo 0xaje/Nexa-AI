@@ -14,8 +14,8 @@ const useAppStore = create((set) => ({
     confidence: '91%',
     impliedPrice: 0.74,
     closesIn: '04H 22M 11S',
-    vol: '0.0020 GIWA',
-    openInterest: '0.0020 GIWA',
+    vol: '0.0020 ETH',
+    openInterest: '0.0020 ETH',
     drift: 'LIVE',
     yesPrice: 0.74,
     noPrice: 0.26

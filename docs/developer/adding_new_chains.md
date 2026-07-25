@@ -1,5 +1,5 @@
 # Adding New Chains
-### Powered by GIWA
+### Multi-Chain EVM Integration
 
 ---
 
@@ -13,9 +13,6 @@ It eliminates hardcoded network assumptions and manual codebase refactoring. By 
 
 ### Why It Matters
 A configuration-driven registry reduces deployment errors, simplifies multi-chain rollouts, and ensures that the backend indexer and client UI dynamically adapt to any selected chain.
-
-### How It Benefits GIWA
-- **Ensuring Flagship Primacy**: While multi-chain support is maintained, the protocol defaults to **GIWA Sepolia** as the flagship network. This highlights GIWA as the primary network, while demonstrating that the protocol remains compatible with the broader EVM ecosystem.
 
 ---
 
@@ -48,10 +45,11 @@ export const arbitrum: ChainConfig = {
 ### Step 2: Register in Chain Loader
 Import and append the configuration to `/config/chains/loader.ts`:
 ```typescript
+import { sepolia } from './sepolia';
 import { arbitrum } from './arbitrum';
 
 const chains: Record<string, ChainConfig> = {
-  giwa,
+  sepolia,
   arbitrum,
 };
 ```
@@ -59,23 +57,22 @@ const chains: Record<string, ChainConfig> = {
 ### Step 3: Register Deployment Artifacts
 Save the contract deployment details to `/deployments/42161/AiraMarketProtocol.ts` and map it in `/deployments/loader.ts`:
 ```typescript
+import { AiraMarketProtocolDeployment as sepoliaDeployment } from './91342/AiraMarketProtocol';
 import { AiraMarketProtocolDeployment as arbitrumDeployment } from './42161/AiraMarketProtocol';
 
 const deployments: Record<number, Record<string, { address: string; abi: any }>> = {
-  91342: { AiraMarketProtocol: giwaDeployment },
+  91342: { AiraMarketProtocol: sepoliaDeployment },
   42161: { AiraMarketProtocol: arbitrumDeployment },
 };
 ```
 
 ---
 
-## 3. Why GIWA
+## 3. Why EVM Layer 2
 
-Nexa AI relies on Dunamu's **GIWA OP Stack L2** network as its core settlement layer. The network provides specific advantages crucial to off-chain verifiable AI systems:
+Nexa AI relies on EVM L2 networks as its core settlement layer. They provide specific advantages crucial to off-chain verifiable AI systems:
 *   **Efficient Settlement**: Enables low-gas, pari-mutuel pool creations, micro-trades, and dispute settlements that are economically unviable on Ethereum Layer 1.
 *   **Verifiable AI Execution**: Low execution fees support the frequent administrative signatures required to commit consensus proposals trustlessly.
 *   **Low-Cost On-Chain Evidence Anchoring**: Allows the permanent anchoring of detailed IPFS Content Identifiers (CIDs) mapping to Evidence Packages and agent audits directly within event log states, establishing complete public transparency.
 *   **Developer Experience**: Combines standard EVM tooling compatibility (ethers, viem, Hardhat) with high RPC transaction processing speeds, streamlining sandbox testing and contract verification.
 *   **Scalable Execution**: Rapid block times facilitate high transaction throughput, ensuring consensus engine proposals are queued and initialized with sub-second finality.
-*   **Future Protocol Expansion**: The OP Stack's scalable design aligns with future protocol updates, including Multi-Party Computation (MPC) administrative multi-sigs and Zero-Knowledge (ZK) execution verification tools.
-```

@@ -1,14 +1,15 @@
-# Interactive Demonstration Guide: Verifiable AI on GIWA
+# Interactive Demonstration Guide: Verifiable AI
+
 ### Presenter Script & Auditing Playbook for Live Presentations and Grant Judging
 
 ---
 
 ## 1. Executive Summary
 
-This guide outlines a cohesive, end-to-end demonstration flow for **Nexa AI**. It is designed to wow hackathon judges and grant committees by proving how the platform moves from a raw real-world signal to an auditable, multi-agent consensus decision, anchored verifiably on Dunamu's **GIWA Sepolia L2 Ledger** and **IPFS**.
+This guide outlines a cohesive, end-to-end demonstration flow for **Nexa AI**. It is designed to wow hackathon judges and grant committees by proving how the platform moves from a raw real-world signal to an auditable, multi-agent consensus decision, anchored verifiably on **Sepolia L2 Ledger** and **IPFS**.
 
 ### Presenter Value Proposition
-> "Most AI products present decisions as a black box. Nexa AI shifts this paradigm. Every decision on our platform is backed by a structured, verifiable Evidence Package, audited via a multi-agent debate swarm, and anchored cryptographically on GIWA. Let's trace how a single breaking event becomes on-chain infrastructure."
+> "Most AI products present decisions as a black box. Nexa AI shifts this paradigm. Every decision on our platform is backed by a structured, verifiable Evidence Package, audited via a multi-agent debate swarm, and anchored cryptographically on-chain. Let's trace how a single breaking event becomes on-chain infrastructure."
 
 ---
 
@@ -86,13 +87,13 @@ Upon human approval, the compiled Evidence Package is serialized and anchored in
 
 ---
 
-## 6. GIWA On-Chain Transaction Execution
+## 6. On-Chain Transaction Execution
 
-The final step is submitting the transaction to the verified contract on the GIWA Sepolia Testnet.
+The final step is submitting the transaction to the verified contract on the Sepolia Testnet.
 
-### Step 5: GIWA Transaction Receipt
+### Step 5: Transaction Receipt
 * **Presenter Action**: Show the block explorer transaction receipt:
-- **Smart Contract Target**: [`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`](https://sepolia-explorer.giwa.io/address/0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846)
+- **Smart Contract Target**: [`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`](https://sepolia.etherscan.io/address/0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846)
 - **Transaction Hash**: `0x8aeee03dfa7b4cedd0a802dfb54db580e3f9c0449b7aafb9fb1d3cbdad801be4`
 - **Method Called**: `createMarket(signalId, ipfsHash)`
 - **Block Number**: `14205`
@@ -112,7 +113,7 @@ This is the climax of the presentation where the presenter proves that the off-c
   1. Downloads the JSON Evidence Package from IPFS (`QmW5RMmYSALsLZkVy4izmHhAiUh91zjMqZKpMATvC4dic4`).
   2. Sorts its keys alphabetically locally in the browser.
   3. Computes the SHA-256 hash.
-  4. Fetches the hash recorded on the GIWA blockchain (`e407ac25...`).
+  4. Fetches the hash recorded on the blockchain (`e407ac25...`).
   5. Compares them side-by-side:
 ```
   [Local IPFS Hash]: e407ac250ab1a318d1a4dbc8296c7606f32f04b6f3fdf9420f13d80bee71b0dc

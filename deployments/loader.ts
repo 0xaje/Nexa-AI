@@ -1,9 +1,9 @@
-import { AiraMarketProtocolDeployment as giwaDeployment } from './91342/AiraMarketProtocol';
+import { AiraMarketProtocolDeployment as marketProtocolDeployment } from './91342/AiraMarketProtocol';
 
 const deployments: Record<number, Record<string, { address: string; abi: any }>> = {
   91342: {
-    AiraMarketProtocol: giwaDeployment,
-    marketProtocol: giwaDeployment
+    AiraMarketProtocol: marketProtocolDeployment,
+    marketProtocol: marketProtocolDeployment
   }
 };
 

@@ -8,18 +8,18 @@ const defaultSeedData = {
     {
       id: "prop_1",
       realId: 1,
-      title: "Will AI Agent Protocol v2 launch on GIWA before Q4?",
-      signalId: "SIG-GIWA-2025-0891",
+      title: "Will AI Agent Protocol v2 launch on Sepolia before Q4?",
+      signalId: "SIG-SEPOLIA-2025-0891",
       category: "Tech",
       status: "RESOLVED",
       confidence: 0.98,
-      supportingEvidence: "Official protocol deployment milestone announced on GIWA testnet developer portal.",
+      supportingEvidence: "Official protocol deployment milestone announced on Sepolia testnet developer portal.",
       ipfsHash: "QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco",
       decisionReason: "Consensus threshold (>85%) achieved across Analyst, Risk, and Compliance agent evaluations.",
       intelligenceReport: {
-        summary: "Multi-Agent AI consensus confirmed valid signal metrics for protocol deployment on GIWA Sepolia L2.",
+        summary: "Multi-Agent AI consensus confirmed valid signal metrics for protocol deployment on Sepolia L2.",
         supportingEvidence: [
-          "GIWA RPC contract verification confirmed active at 0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846",
+          "Sepolia RPC contract verification confirmed active at 0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846",
           "Cross-node telemetry validator pulse check: 99.9% uptime"
         ],
         contradictingEvidence: [
@@ -31,7 +31,7 @@ const defaultSeedData = {
         recommendedDecision: "APPROVE"
       },
       evaluations: [
-        { id: "e1", agentName: "AnalystAgent", confidence: 0.96, reasoning: "Verified contract bytecode matches GIWA deployment specification." },
+        { id: "e1", agentName: "AnalystAgent", confidence: 0.96, reasoning: "Verified contract bytecode matches Sepolia deployment specification." },
         { id: "e2", agentName: "RiskAgent", confidence: 0.94, reasoning: "Sufficient seed liquidity locked; zero re-entrancy vectors detected." },
         { id: "e3", agentName: "ComplianceAgent", confidence: 0.99, reasoning: "Decentralized consensus framework rules fully satisfied." }
       ]
@@ -127,14 +127,14 @@ const defaultSeedData = {
     }
   ],
   evidencePackages: [
-    { id: "ev_1", title: "GIWA Ledger Testnet Bytecode & Deployment Verification" },
+    { id: "ev_1", title: "Sepolia Ledger Testnet Bytecode & Deployment Verification" },
     { id: "ev_2", title: "OpenAI Model Benchmark Telemetry Data" },
     { id: "ev_3", title: "Bitcoin Institutional Spot ETF Daily Inflow Ledger" },
     { id: "ev_4", title: "UEFA Final Competition Outcome Match Sheet" }
   ],
   transparency: [
     {
-      marketTitle: "Will AI Agent Protocol v2 launch on GIWA before Q4?",
+      marketTitle: "Will AI Agent Protocol v2 launch on Sepolia before Q4?",
       txHash: "0x3f8a91b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1"
     },
     {
@@ -147,14 +147,14 @@ const defaultSeedData = {
     }
   ],
   ipfsUploads: [
-    { cid: "QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco", name: "giwa_deployment_report.json" },
+    { cid: "QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco", name: "sepolia_deployment_report.json" },
     { cid: "QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWcPBDG", name: "gpt5_signal_evidence.json" },
     { cid: "QmZTR5bcpQDjvhJt5qf4B2Zk09a7H8rQnK6bN5yP3Lw8t2", name: "btc_150k_onchain_audit.json" },
     { cid: "QmPZ9g4398thjNkWuL5r7vB983N56yT2Q71aM8b9z8v9x2", name: "uefa_sports_resolution.json" }
   ],
   consensusAudits: [
     {
-      signalId: "SIG-GIWA-2025-0891",
+      signalId: "SIG-SEPOLIA-2025-0891",
       weightedScore: 0.963,
       approvalProbability: 0.98,
       auditTrail: [
@@ -178,24 +178,24 @@ export default function Explorer() {
 
   const customMarkets = useAppStore(state => state.customMarkets);
 
-  // Wagmi Read Contracts for live GIWA on-chain markets
-  const { data: liveMarkets } = useReadContract({
+  // Wagmi Read Contracts for live Sepolia on-chain markets
+  const { data: rawMarkets } = useReadContract({
     address: getContractAddress(),
     abi: getContractAbi(),
     functionName: 'listMarkets',
     chainId: getActiveChainId(),
-    query: { refetchInterval: 3000 }
+    query: {
+      refetchInterval: 5000,
+    }
   });
 
-  useEffect(() => {
-    fetchExplorerData();
-  }, []);
-
-  useEffect(() => {
-    let mappedOnChain = [];
-    if (liveMarkets && Array.isArray(liveMarkets) && liveMarkets.length > 0) {
-      mappedOnChain = liveMarkets.map((m) => {
-        const marketId = Number(m.id);
+  // Calculate live proposals & metrics
+  const proposals = React.useMemo(() => {
+    // Map live on-chain markets if returned from contract
+    let liveOnchainProposals = [];
+    if (rawMarkets && Array.isArray(rawMarkets)) {
+      liveOnchainProposals = rawMarkets.map((m, idx) => {
+        const marketId = Number(m.id || idx + 1);
         const totalYes = Number(m.totalYesPool) / 1e18;
         const totalNo = Number(m.totalNoPool) / 1e18;
         const total = totalYes + totalNo;
@@ -205,12 +205,12 @@ export default function Explorer() {
           id: `onchain_${marketId}`,
           realId: marketId,
           title: m.title,
-          signalId: `SIG-GIWA-ONCHAIN-00${marketId}`,
+          signalId: `SIG-SEPOLIA-ONCHAIN-00${marketId}`,
           category: String(m.category || 'Tech').toUpperCase(),
           status: m.resolved ? "RESOLVED" : "PENDING_APPROVAL",
           confidence: confidenceVal,
           supportingEvidence: `Verified live smart contract market #${marketId} deployed on ${getActiveNetworkName()} with total volume ${total.toFixed(4)} ${getNativeCurrencySymbol()}.`,
-          ipfsHash: `QmGIWASepolia${marketId}x98Fk278vA1992048591048104810293`,
+          ipfsHash: `QmSepolia${marketId}x98Fk278vA1992048591048104810293`,
           decisionReason: "On-chain platform creation verified by autonomous network validators.",
           intelligenceReport: {
             summary: `Live prediction market #${marketId} created on ${getActiveNetworkName()} smart contract platform.`,
@@ -236,17 +236,17 @@ export default function Explorer() {
       id: `custom_explorer_${idx}_${cm.timestamp || Date.now()}`,
       realId: idx + 1,
       title: cm.title,
-      signalId: `SIG-GIWA-CUSTOM-00${idx + 1}`,
+      signalId: `SIG-SEPOLIA-CUSTOM-00${idx + 1}`,
       category: String(cm.category || 'Tech').toUpperCase(),
       status: "PENDING_APPROVAL",
       confidence: cm.likelihood ? parseFloat(cm.likelihood) / 100 : 0.88,
-      supportingEvidence: `Verifiable custom deployed prediction market on ${getActiveNetworkName()} with IPFS evidence CID ${cm.ipfsCID || 'QmGIWACustomCID'}.`,
-      ipfsHash: cm.ipfsCID || `QmGIWACustom${idx + 1}x89Fk278vA1992048591048104810293`,
+      supportingEvidence: `Verifiable custom deployed prediction market on ${getActiveNetworkName()} with IPFS evidence CID ${cm.ipfsCID || 'QmSepoliaCustomCID'}.`,
+      ipfsHash: cm.ipfsCID || `QmSepoliaCustom${idx + 1}x89Fk278vA1992048591048104810293`,
       decisionReason: "Deployed by wallet signature with multi-agent cognitive evaluation.",
       intelligenceReport: {
         summary: `Custom prediction proposal "${cm.title}" created on ${getActiveNetworkName()} platform.`,
         supportingEvidence: [
-          `Tx Hash: ${cm.txHash || '0xGIWA...Custom'}`,
+          `Tx Hash: ${cm.txHash || '0xSepolia...Custom'}`,
           `Category: ${cm.category}`,
           `Consensus Confidence: ${cm.likelihood || '80%'}`
         ],
@@ -618,11 +618,11 @@ export default function Explorer() {
                       {/* TAB 3: On-Chain Settlement */}
                       {(activeTab === 'onchain' || activeTab === 'registry') && (
                         <div className="flex flex-col gap-4">
-                          <span className="font-bold uppercase tracking-widest text-[9px] font-mono text-on-surface-variant block">GIWA Sepolia On-Chain Settlement Details</span>
+                          <span className="font-bold uppercase tracking-widest text-[9px] font-mono text-on-surface-variant block">Sepolia On-Chain Settlement Details</span>
                           <div className="bg-surface border border-outline-variant p-4 rounded-xl flex flex-col gap-3 font-mono text-[11px]">
                             <div className="flex justify-between items-center border-b border-outline-variant/30 pb-2">
                               <span className="opacity-60">Settlement Network</span>
-                              <span className="font-bold text-primary">GIWA Sepolia Testnet (Chain ID 91342)</span>
+                              <span className="font-bold text-primary">Sepolia Testnet (Chain ID 91342)</span>
                             </div>
                             <div className="flex justify-between items-center border-b border-outline-variant/30 pb-2">
                               <span className="opacity-60">Smart Contract Address</span>
@@ -632,7 +632,7 @@ export default function Explorer() {
                               <span className="opacity-60 text-[9px] uppercase tracking-wider">Transaction hash</span>
                               {matchingTransparency?.txHash ? (
                                 <a 
-                                  href={`https://sepolia-explorer.giwa.io/tx/${matchingTransparency.txHash}`} 
+                                  href={`https://sepolia.etherscan.io/tx/${matchingTransparency.txHash}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
                                   className="text-primary underline font-bold select-all break-all flex items-center gap-1"
@@ -641,7 +641,7 @@ export default function Explorer() {
                                   <span className="material-symbols-outlined text-[10px]">open_in_new</span>
                                 </a>
                               ) : (
-                                <span className="text-amber-500 italic font-mono select-all">0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846 (GIWA Verified)</span>
+                                <span className="text-amber-500 italic font-mono select-all">0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846 (Sepolia Verified)</span>
                               )}
                             </div>
                             <div className="grid grid-cols-2 gap-3 pt-1">
@@ -713,7 +713,7 @@ export default function Explorer() {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-on-surface-variant font-bold">ON-CHAIN ANCHOR:</span>
-                <span className="text-primary font-bold">0xDD27...c846 (GIWA Sepolia)</span>
+                <span className="text-primary font-bold">0xDD27...c846 (Sepolia)</span>
               </div>
             </div>
 
@@ -731,7 +731,7 @@ export default function Explorer() {
   consensusQuorum: "66%",
   supportingEvidence: ipfsModalItem.supportingEvidence,
   evaluations: ipfsModalItem.evaluations,
-  anchoredLedger: "GIWA Sepolia Testnet (Chain ID 91342)",
+  anchoredLedger: "Sepolia Testnet (Chain ID 91342)",
   timestamp: new Date().toISOString()
 }, null, 2)}
               </pre>

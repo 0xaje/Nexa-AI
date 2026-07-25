@@ -1,11 +1,11 @@
 # Protocol Explorer Architecture Specifications
-### Transforming AI-Consensus and GIWA Transactions into Blockchain Infrastructure Logs
+### Transforming AI-Consensus and On-Chain Transactions into Blockchain Infrastructure Logs
 
 ---
 
 ## 1. Executive Summary
 
-To make Nexa AI feel like transparent blockchain infrastructure, the **AI Transparency Dashboard** is designed to mimic traditional L1/L2 block explorers (e.g., Etherscan). It exposes real-time logs, consensus rounds, IPFS file systems, and GIWA smart contract transactions, giving developers, auditors, and users transparent access to verify off-chain calculations and on-chain logs.
+To make Nexa AI feel like transparent blockchain infrastructure, the **AI Transparency Dashboard** is designed to mimic traditional L1/L2 block explorers (e.g., Etherscan). It exposes real-time logs, consensus rounds, IPFS file systems, and smart contract transactions, giving developers, auditors, and users transparent access to verify off-chain calculations and on-chain logs.
 
 ---
 
@@ -22,7 +22,7 @@ The Protocol Explorer provides six browse and auditing modules:
                   │ 3. Agent Swarm Browser       │
                   │ 4. Consensus Engine Browser  │
                   │ 5. IPFS Directory Browser    │
-                  │ 6. GIWA Transaction Ledger   │
+                  │ 6. On-Chain Transaction Ledger│
                   └──────────────────────────────┘
 ```
 
@@ -46,7 +46,7 @@ The Protocol Explorer provides six browse and auditing modules:
 - Monitors the distributed storage performance.
 - Details: IPFS CIDs, upload latency metrics, replication providers (e.g., Pinata, local nodes), and file status.
 
-### VI. Browse GIWA Transaction Registry
+### VI. Browse On-Chain Transaction Registry
 - Catalogues all on-chain transactions originating from the AI Decision Layer.
 - Details: Transaction hash, block numbers, gas consumed, smart contract address, execution methods (e.g., `createMarket()`, `resolveMarket()`), and signer signatures.
 
@@ -58,7 +58,7 @@ The explorer interface implements search index lookup algorithms:
 
 ### I. Global Search Indexing
 Users can type into a single search input, which matches:
-- **Exact Hash / Tx Hash**: Matches 64-character hex strings (`0x...`) and redirects to the GIWA Transaction card.
+- **Exact Hash / Tx Hash**: Matches 64-character hex strings (`0x...`) and redirects to the Transaction card.
 - **IPFS CID**: Matches 46-character base58 strings (`Qm...`) and redirects to the IPFS directory browser.
 - **Signal ID**: Matches topic-based alphanumeric strings and redirects to the Proposal detail view.
 - **Topic Keyword**: Performs semantic word search across proposal titles.
@@ -85,7 +85,7 @@ To audit the authenticity of any decision, the Explorer UI provides an interacti
 3. Compute SHA-256 Hash locally
        │
        ▼
-4. Compare locally computed Hash with on-chain Hash from GIWA logs
+4. Compare locally computed Hash with on-chain Hash from blockchain logs
        │
        ├─► MATCH:   "Decision Integrity Verified [OK]"
        └─► MISMATCH: "Decision Integrity Compromised [FAIL]"
@@ -114,8 +114,8 @@ The Protocol Explorer dashboard is powered by the following open API endpoints:
 * **Endpoint**: `GET /api/explorer/ipfs/:cid`
 * **Response**: Ingestion logs, latencies, and upload statuses.
 
-### V. Browse GIWA Transactions
-* **Endpoint**: `GET /api/explorer/giwa`
+### V. Browse On-Chain Transactions
+* **Endpoint**: `GET /api/explorer/transactions`
 * **Query Parameters**: `blockNumber`, `limit`
 * **Response**: List of L2 ledger receipts.
 

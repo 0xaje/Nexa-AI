@@ -13,10 +13,10 @@ Ensure the deployer account private key is populated in the `.env` file:
 PRIVATE_KEY="0x..."
 ```
 
-### Production Deployment to GIWA Sepolia Testnet
+### Production Deployment to Sepolia Testnet
 To compile contracts and deploy them to the flagship network:
 ```bash
-npm run deploy:giwa
+npm run deploy:sepolia
 ```
 This command triggers the Hardhat deployment script configured in `/scripts/deploy.cjs` targeting network settings in `hardhat.config.cjs`.
 
@@ -26,10 +26,10 @@ This command triggers the Hardhat deployment script configured in `/scripts/depl
 
 Contract source codes should be verified on block explorer registries to ensure visibility and auditability.
 
-### Verification on GIWA Sepolia Explorer
-To verify the solidity contract code on Dunamu's GIWA Explorer:
+### Verification on Sepolia Explorer
+To verify the solidity contract code on Sepolia Explorer:
 ```bash
-npm run verify:giwa -- --contract contracts/AiraMarket.sol:AiraMarketProtocol <DEPLOYED_CONTRACT_ADDRESS>
+npm run verify:sepolia -- --contract contracts/AiraMarket.sol:AiraMarketProtocol <DEPLOYED_CONTRACT_ADDRESS>
 ```
 
 ---

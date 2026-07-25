@@ -9,8 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "tsx server/index.ts",
-    "deploy:giwa": "npx hardhat run scripts/deploy.cjs --network giwa",
-    "verify:giwa": "npx hardhat verify --network giwa"
+    "deploy:sepolia": "npx hardhat run scripts/deploy.cjs --network sepolia",
+    "verify:sepolia": "npx hardhat verify --network sepolia"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.6.1",

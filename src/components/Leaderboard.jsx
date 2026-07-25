@@ -9,7 +9,7 @@ export default function Leaderboard({ profileData }) {
 
   const customMarkets = useAppStore(state => state.customMarkets);
 
-  // Wagmi Read Contracts for real live GIWA on-chain market count
+  // Wagmi Read Contracts for real live on-chain market count
   const { data: liveMarkets } = useReadContract({
     address: getContractAddress(),
     abi: getContractAbi(),

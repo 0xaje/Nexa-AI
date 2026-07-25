@@ -184,7 +184,7 @@ export default function CreatorLab() {
 
   const handleLaunchOnChain = async (market) => {
     if (!isConnected) {
-      // Presentation & Demo Mode: Simulate full block confirmation on GIWA Sepolia
+      // Presentation & Demo Mode: Simulate full block confirmation on Sepolia
       launchingMarketSet(market);
       setTimeout(() => {
         const mockHash = `0xnexa${Math.random().toString(16).substring(2, 10)}${Date.now().toString(16)}`;
@@ -210,7 +210,7 @@ export default function CreatorLab() {
     const networkName = getActiveNetworkName();
     const currencySymbol = getNativeCurrencySymbol();
 
-    // 1. Enforce active chain connection (e.g. GIWA Sepolia Testnet - 91342)
+    // 1. Enforce active chain connection (e.g. Sepolia Testnet - 91342)
     if (connectedChainId !== targetChainId) {
       try {
         if (switchChainAsync) {
@@ -226,7 +226,7 @@ export default function CreatorLab() {
       }
     }
 
-    // 2. Check native balance for 0.000002 GIWA seed liquidity requirement
+    // 2. Check native balance for 0.000002 ETH seed liquidity requirement
     const { parseEther } = await import('viem');
     const requiredSeed = parseEther("0.000002");
 
@@ -277,7 +277,7 @@ export default function CreatorLab() {
         chainId: targetChainId
       });
       
-      useAppStore.getState().showToast("Transaction Submitted", "Waiting for block confirmation on GIWA Sepolia...", "info", hash);
+      useAppStore.getState().showToast("Transaction Submitted", "Waiting for block confirmation on Sepolia...", "info", hash);
 
       // Add to Zustand optimistic market store immediately
       useAppStore.getState().addCustomMarket({
@@ -377,7 +377,7 @@ export default function CreatorLab() {
                 <p className="font-bold text-xs text-on-surface">66% Agent Approval Threshold</p>
               </div>
             </div>
-            {/* FIX #5: ETH → GIWA native denomination */}
+            {/* Network native denomination */}
             <div className="bg-surface p-4 rounded-lg border border-outline-variant flex items-center gap-4 shadow-sm">
               <div className="w-9 h-9 rounded bg-surface-variant flex items-center justify-center shrink-0">
                 <span className="material-symbols-outlined text-primary text-lg">link</span>
@@ -394,7 +394,7 @@ export default function CreatorLab() {
               </div>
               <div>
                 <p className="font-mono text-[8px] text-on-surface-variant mb-0.5 uppercase tracking-widest font-bold">Settlement Oracle</p>
-                <p className="font-bold text-xs text-on-surface">Optimistic Oracle (GIWA Testnet)</p>
+                <p className="font-bold text-xs text-on-surface">Optimistic Oracle (Sepolia Testnet)</p>
               </div>
             </div>
           </div>
@@ -521,7 +521,7 @@ export default function CreatorLab() {
                                 Human Approval Checkpoint
                                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping inline-block"></span>
                               </p>
-                              <p className="text-[9.5px] font-mono text-on-surface-variant font-medium">66% Agent Quorum Reached — Explicit human confirmation required before smart contract execution on GIWA.</p>
+                              <p className="text-[9.5px] font-mono text-on-surface-variant font-medium">66% Agent Quorum Reached — Explicit human confirmation required before smart contract execution on Sepolia.</p>
                             </div>
                           </div>
                         </div>
@@ -531,7 +531,7 @@ export default function CreatorLab() {
                             className="group px-6 py-3.5 bg-primary text-white font-mono text-[9px] tracking-[0.2em] rounded-lg transition-all hover:bg-on-surface hover:shadow-lg active:scale-95 uppercase font-bold flex items-center gap-2"
                             onClick={() => handleLaunchOnChain(msg)}
                           >
-                            <span>Approve & Deploy to GIWA Sepolia</span>
+                            <span>Approve & Deploy to Sepolia</span>
                             <span className="material-symbols-outlined text-xs">rocket_launch</span>
                           </button>
                         </div>

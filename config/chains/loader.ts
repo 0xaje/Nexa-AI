@@ -1,8 +1,8 @@
 import { ChainConfig } from './types';
-import { giwa } from './giwa';
+import { sepolia } from './sepolia';
 
 const chains: Record<string, ChainConfig> = {
-  giwa,
+  sepolia,
 };
 
 const getEnv = (key: string): string | undefined => {
@@ -18,7 +18,7 @@ const getEnv = (key: string): string | undefined => {
 };
 
 export function loadChainConfig(): ChainConfig {
-  const defaultChainKey = getEnv('DEFAULT_CHAIN') || 'giwa';
+  const defaultChainKey = getEnv('DEFAULT_CHAIN') || 'sepolia';
   
   // Find chain by name or by chainId
   let baseConfig = chains[defaultChainKey];
@@ -27,7 +27,7 @@ export function loadChainConfig(): ChainConfig {
     const found = Object.values(chains).find(
       c => c.chainId.toString() === defaultChainKey || c.networkName.toLowerCase() === defaultChainKey.toLowerCase()
     );
-    baseConfig = found || giwa; // Default to giwa
+    baseConfig = found || sepolia; // Default to sepolia
   }
 
   // Deep copy base config

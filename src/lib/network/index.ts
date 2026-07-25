@@ -7,25 +7,25 @@ import { getDeployment } from '../../../deployments/loader';
 import { ProtocolMetadata } from '../../../config/protocol/protocol';
 
 // Define all supported chains explicitly
-export const giwaChain = defineChain({
+export const sepoliaChain = defineChain({
   id: 91342,
-  name: 'GIWA Sepolia Testnet',
-  nativeCurrency: { name: 'GIWA', symbol: 'GIWA', decimals: 18 },
+  name: 'Sepolia Testnet',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
-    default: { http: ['https://sepolia-rpc.giwa.io'] },
-    public: { http: ['https://sepolia-rpc.giwa.io'] },
+    default: { http: ['https://rpc.sepolia.org'] },
+    public: { http: ['https://rpc.sepolia.org'] },
   },
   blockExplorers: {
     default: {
       name: 'Explorer',
-      url: 'https://sepolia-explorer.giwa.io',
+      url: 'https://sepolia.etherscan.io',
     },
   },
   testnet: true,
 });
 
 // Select active chain from dynamic config
-export const activeChain = giwaChain;
+export const activeChain = sepoliaChain;
 
 const connectors = connectorsForWallets(
   [
@@ -42,9 +42,9 @@ const connectors = connectorsForWallets(
 
 export const config = createConfig({
   connectors,
-  chains: [giwaChain],
+  chains: [sepoliaChain],
   transports: {
-    [giwaChain.id]: http(giwaChain.rpcUrls.default.http[0]),
+    [sepoliaChain.id]: http(sepoliaChain.rpcUrls.default.http[0]),
   },
 });
 
