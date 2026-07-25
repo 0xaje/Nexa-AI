@@ -36,16 +36,16 @@ const initialChatMessages = [
   {
     id: 1,
     sender: 'agent',
-    agentName: 'Nexa Intelligence Agent',
-    role: 'CRYPTO INTELLIGENCE',
+    agentName: 'Nexa AI Lead Analyst',
+    role: 'SENIOR RESEARCH ANALYST',
     timestamp: 'Just now',
-    text: "Hello! I am **Nexa AI**, your autonomous crypto intelligence agent. I analyze real-world signals using multi-agent consensus (`AnalystAgent`, `RiskAgent`, and `ComplianceAgent`).\n\nAsk me anything about token research, market risk, market trends, or prediction scenarios.",
+    text: "Good day. I am **Nexa AI**, your senior crypto research analyst. I evaluate real-time market signals using empirical multi-agent research (`AnalystAgent`, `RiskAgent`, and `ComplianceAgent`).\n\nEvery analysis I provide systematically evaluates empirical telemetry and risk factors before presenting conclusions. What asset, market trend, or risk profile shall we examine today?",
     sources: [
       { name: 'CoinGecko Real-Time Feed', url: 'https://coingecko.com', trust: 'VERIFIED' },
       { name: 'Multi-Agent Quorum (94% Weighted Approval)', trust: 'CONSENSUS' },
       { name: 'On-Chain Evidence Ledger', trust: 'IPFS ANCHORED' }
     ],
-    confidence: '98%',
+    confidence: '94%',
     chartData: {
       title: 'Global Crypto Sentiment Index (7D)',
       trend: '+12.4%',
@@ -53,9 +53,9 @@ const initialChatMessages = [
       labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     },
     followUps: [
-      "What is the 30-day volatility outlook for Bitcoin?",
-      "Show me RiskAgent's counter-arguments for Ethereum L2s",
-      "Generate a verifiable prediction proposal for this topic"
+      "What are the primary downside risk drivers for this asset?",
+      "How does on-chain liquidity depth impact this trend?",
+      "Shall we examine the structural tokenomics and emission schedule?"
     ]
   }
 ];
