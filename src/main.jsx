@@ -8,6 +8,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import { config } from './lib/network'
 import App from './App.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 import './index.css'
 
 const queryClient = new QueryClient()
@@ -22,14 +23,16 @@ function RainbowKitThemeBoundProvider({ children }) {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitThemeBoundProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </RainbowKitThemeBoundProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <ErrorBoundary>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          <RainbowKitThemeBoundProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </RainbowKitThemeBoundProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )

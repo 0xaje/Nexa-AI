@@ -17,6 +17,7 @@ import Portfolio from './components/Portfolio';
 import Explorer from './components/Explorer';
 import Chat from './components/Chat';
 import Tokens from './components/Tokens';
+import Settings from './components/Settings';
 
 function App() {
   const navigate = useNavigate();
@@ -76,54 +77,43 @@ function App() {
           >
             {ProtocolMetadata.protocolName}
           </span>
-          <nav className="hidden md:flex gap-6 lg:gap-8">
+          <nav aria-label="Main Navigation" className="hidden md:flex gap-6 lg:gap-8">
             <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'landing' || currentView === '' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/')}
-            >
-              Home
-            </button>
-            <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'chat' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              aria-label="Chat Interface"
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'chat' || currentView === '' || currentView === 'landing' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
               onClick={() => navigate('/chat')}
             >
-              AI Chat
+              Chat
             </button>
             <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'intelligence' || currentView === 'feed' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/intelligence')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'research' || currentView === 'tokens' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/research')}
             >
-              Intelligence
+              Research
             </button>
             <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'tokens' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/tokens')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'markets' || currentView === 'intelligence' || currentView === 'feed' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/markets')}
             >
-              Tokens
+              Markets
             </button>
             <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'risk' || currentView === 'terminal' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/risk')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'insights' || currentView === 'risk' || currentView === 'terminal' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/insights')}
             >
-              Risk Analysis
+              Insights
             </button>
             <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'lab' || currentView === 'creator' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/lab')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'history' || currentView === 'portfolio' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/history')}
             >
-              AI Lab
+              History
             </button>
             <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'transparency' || currentView === 'explorer' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/transparency')}
+              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'settings' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
+              onClick={() => navigate('/settings')}
             >
-              Transparency
-            </button>
-            <button 
-              className={`font-semibold text-xs lg:text-sm pb-1 transition-all ${currentView === 'registry' || currentView === 'leaderboard' ? 'text-primary border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => navigate('/registry')}
-            >
-              Registry
+              Settings
             </button>
           </nav>
         </div>
@@ -269,42 +259,47 @@ function App() {
 
       {/* Main View Area Routing */}
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/landing" element={<Landing />} />
+        <Route path="/" element={<Chat />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/about" element={<Landing />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route path="/research" element={<Tokens />} />
+        <Route path="/tokens" element={<Tokens />} />
+        <Route path="/markets" element={<Feed />} />
         <Route path="/intelligence" element={<Feed />} />
         <Route path="/feed" element={<Feed />} />
-        <Route path="/tokens" element={<Tokens />} />
+        <Route path="/insights" element={<Terminal />} />
         <Route path="/risk" element={<Terminal />} />
         <Route path="/terminal" element={<Terminal />} />
+        <Route path="/history" element={<Portfolio />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/lab" element={<CreatorLab />} />
         <Route path="/creator" element={<CreatorLab />} />
         <Route path="/transparency" element={<Explorer />} />
         <Route path="/explorer" element={<Explorer />} />
         <Route path="/registry" element={<Leaderboard profileData={profileData} />} />
         <Route path="/leaderboard" element={<Leaderboard profileData={profileData} />} />
-        <Route path="/portfolio" element={<Portfolio />} />
       </Routes>
 
       {/* Mobile Bottom Navigation Dock */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-xl border-t border-outline-variant shadow-2xl px-2 py-1.5 pb-safe">
+      <nav aria-label="Mobile Bottom Navigation" className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-xl border-t border-outline-variant shadow-2xl px-3 py-1.5 pb-safe">
         <div className="flex items-center justify-between gap-1 overflow-x-auto no-scrollbar py-0.5">
           {[
-            { id: 'landing', route: '/', label: 'HOME', icon: 'home' },
             { id: 'chat', route: '/chat', label: 'CHAT', icon: 'smart_toy' },
-            { id: 'intelligence', route: '/intelligence', label: 'INTEL', icon: 'bar_chart' },
-            { id: 'tokens', route: '/tokens', label: 'TOKENS', icon: 'token' },
-            { id: 'risk', route: '/risk', label: 'RISK', icon: 'shield' },
-            { id: 'lab', route: '/lab', label: 'LAB', icon: 'science' },
-            { id: 'transparency', route: '/transparency', label: 'PROOF', icon: 'verified' },
-            { id: 'portfolio', route: '/portfolio', label: 'PORTFOLIO', icon: 'account_balance_wallet' },
+            { id: 'research', route: '/research', label: 'RESEARCH', icon: 'search' },
+            { id: 'markets', route: '/markets', label: 'MARKETS', icon: 'bar_chart' },
+            { id: 'insights', route: '/insights', label: 'INSIGHTS', icon: 'shield' },
+            { id: 'history', route: '/history', label: 'HISTORY', icon: 'history' },
+            { id: 'settings', route: '/settings', label: 'SETTINGS', icon: 'settings' },
           ].map((item) => {
-            const isActive = currentView === item.id || (item.id === 'landing' && (currentView === '' || currentView === 'landing'));
+            const isActive = currentView === item.id || (item.id === 'chat' && (currentView === '' || currentView === 'chat'));
             return (
               <button
                 key={item.id}
+                aria-label={`Navigate to ${item.label}`}
                 onClick={() => navigate(item.route)}
-                className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all shrink-0 min-w-[54px] ${
+                className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all shrink-0 min-w-[56px] ${
                   isActive 
                     ? 'bg-primary/15 text-primary border border-primary/30 font-bold shadow-xs' 
                     : 'text-on-surface-variant/70 hover:text-on-surface hover:bg-surface-variant/40'
@@ -318,7 +313,7 @@ function App() {
                     <span className="absolute -bottom-1 w-1 h-1 rounded-full bg-primary animate-pulse"></span>
                   )}
                 </div>
-                <span className={`text-[7.5px] font-mono tracking-wider uppercase mt-0.5 ${isActive ? 'font-black text-primary' : 'font-semibold'}`}>
+                <span className={`text-[8px] font-mono tracking-wider uppercase mt-0.5 ${isActive ? 'font-black text-primary' : 'font-semibold'}`}>
                   {item.label}
                 </span>
               </button>

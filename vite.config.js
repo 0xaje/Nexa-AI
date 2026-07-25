@@ -18,4 +18,15 @@ export default defineConfig({
     'process.env': {},
     global: 'globalThis',
   },
+  build: {
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-web3': ['wagmi', 'viem', '@rainbow-me/rainbowkit'],
+        },
+      },
+    },
+  },
 })

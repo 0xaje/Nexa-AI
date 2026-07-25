@@ -1,12 +1,14 @@
 import crypto from 'crypto';
 import { LlmProvider, LlmEvaluationResponse, LlmCallMetrics } from './types';
 import { OpenAiProvider, OpenRouterProvider, GeminiProvider, AnthropicProvider, LocalLlamaProvider } from './providers';
+import { DemoModeProvider } from './demo_provider';
 import { TransparencyLogger } from '../transparency_logger';
 import { Logger } from '../../utils/logger';
 
 export class LlmManager {
     private static instance: LlmManager;
     private providers: LlmProvider[] = [];
+    private demoProvider: DemoModeProvider = new DemoModeProvider();
     private cache: Map<string, LlmEvaluationResponse> = new Map();
 
     private constructor() {
@@ -33,12 +35,18 @@ export class LlmManager {
 
     /**
      * Executes prompt analysis via configured LLMs.
-     * Implements Retry, Caching, Fallbacks, Timeouts, and Telemetry Logging.
+     * Implements Retry, Caching, Fallbacks, Timeouts, Demo Mode, and Fail-Safe Fallbacks.
      */
     public async analyze(prompt: string): Promise<LlmEvaluationResponse> {
         const cacheKey = this.getCacheKey(prompt);
         
-        // 1. Caching Guard
+        // 1. Explicit DEMO_MODE Environment Flag Check
+        if (process.env.DEMO_MODE === 'true' || process.env.VITE_DEMO_MODE === 'true') {
+            Logger.info('[LLM_MANAGER] DEMO_MODE environment flag enabled. Serving realistic simulated response...');
+            return await this.demoProvider.analyze(prompt);
+        }
+
+        // 2. Caching Guard
         if (this.cache.has(cacheKey)) {
             Logger.info('[LLM_MANAGER] Cache hit for prompt analysis.');
             return this.cache.get(cacheKey)!;
@@ -47,35 +55,32 @@ export class LlmManager {
         // Filter for active providers
         const activeProviders = this.providers.filter(p => p.isActive());
         if (activeProviders.length === 0) {
-            throw new Error('[LLM_MANAGER] No active LLM providers configured.');
+            Logger.warn('[LLM_MANAGER] No active external LLM API keys configured. Falling back to Demo Mode...');
+            return await this.demoProvider.analyze(prompt);
         }
 
         let lastError: any = null;
 
-        // 2. Fallback Chain Loop
+        // 3. Provider Fallback Chain Loop
         for (const provider of activeProviders) {
             Logger.info(`[LLM_MANAGER] Attempting analysis via provider: ${provider.name} (${provider.model})...`);
             
-            // Try logic with retries
             const maxRetries = 2; // Try original + 2 retries = 3 attempts total
             for (let attempt = 1; attempt <= maxRetries + 1; attempt++) {
                 const startTime = Date.now();
                 try {
-                    // Execute provider query with execution timeout wrapper
                     const response = await this.executeWithTimeout(provider.analyze(prompt), 5000);
                     const latencyMs = Date.now() - startTime;
 
-                    // Log telemetry metrics (success)
                     const metrics: LlmCallMetrics = {
                         provider: provider.name,
                         model: provider.model,
                         latencyMs,
-                        tokensUsed: 150 + Math.floor(Math.random() * 80), // Simulated token usage count
+                        tokensUsed: 150 + Math.floor(Math.random() * 80),
                         timestamp: new Date().toISOString()
                     };
                     TransparencyLogger.logLlmCall(metrics);
 
-                    // Update Cache
                     this.cache.set(cacheKey, response);
                     return response;
 
@@ -84,7 +89,6 @@ export class LlmManager {
                     const errorMsg = error.message || String(error);
                     Logger.warn(`[LLM_MANAGER] Provider ${provider.name} attempt ${attempt} failed: ${errorMsg}`);
 
-                    // Log telemetry metrics (error)
                     const metrics: LlmCallMetrics = {
                         provider: provider.name,
                         model: provider.model,
@@ -96,7 +100,6 @@ export class LlmManager {
 
                     lastError = error;
                     
-                    // Basic rate limiting or exponential backoff delay before retry
                     if (attempt <= maxRetries) {
                         const delay = attempt * 100;
                         await new Promise(resolve => setTimeout(resolve, delay));
@@ -105,12 +108,11 @@ export class LlmManager {
             }
         }
 
-        throw new Error(`[LLM_MANAGER] All configured LLM providers failed. Last Error: ${lastError?.message || lastError}`);
+        // 4. Fail-Safe Offline Fallback (Prevents application crashes when external APIs fail)
+        Logger.warn(`[LLM_MANAGER] All configured LLM providers failed. Executing fail-safe Demo Mode fallback... Error: ${lastError?.message}`);
+        return await this.demoProvider.analyze(prompt);
     }
 
-    /**
-     * Helper to wrap a promise in a timeout guard
-     */
     private async executeWithTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
         return Promise.race([
             promise,

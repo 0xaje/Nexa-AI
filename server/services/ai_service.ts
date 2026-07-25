@@ -1,14 +1,20 @@
 import { NormalizedSignal } from './signal_ingestion';
 import { llmManager } from './llm/manager';
 import { Logger } from '../utils/logger';
+import { CoordinatorAgent } from '../orchestration/CoordinatorAgent';
 
 /**
  * Nexa AI Intelligence Service
- * Handles prompt generation, confidence scoring, and decision analysis via LLM.
+ * Orchestrates multi-agent AI analysis via CoordinatorAgent and LLM providers.
  */
 export class AIService {
+    static async processUserQuery(query: string) {
+        Logger.info(`[AI_SERVICE] Processing user query through CoordinatorAgent: "${query}"`);
+        return await CoordinatorAgent.processQuery(query);
+    }
+
     static async generateMarketProposal(signal: NormalizedSignal) {
-        Logger.info(`[AI_SERVICE] Generating proposal via LLM for ${signal.category.toUpperCase()}: ${signal.topic.substring(0, 50)}...`);
+        Logger.info(`[AI_SERVICE] Generating proposal via LLM & CoordinatorAgent for ${signal.category.toUpperCase()}: ${signal.topic.substring(0, 50)}...`);
         
         const prompt = `
 Task: Formulate a binary structured intelligence proposal and an Intelligence Report from the incoming real-world signal.

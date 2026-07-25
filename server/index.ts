@@ -25,6 +25,7 @@ import { reputationService } from './services/reputation_service';
 import { exec } from 'child_process';
 import { ProviderFactory } from '../services/providerFactory';
 import { indexer } from './indexer';
+import { OKXAgentAdapter } from './adapters/okx_agent_adapter';
 
 Logger.start(`Initializing ${ProtocolMetadata.protocolName} Autonomous Backend...`);
 
@@ -104,10 +105,14 @@ bootstrap().catch((err) => {
 
 // HTTP Server to accept verifiable transparency logs from Frontend
 const server = http.createServer(async (req, res) => {
-    // Enable CORS
+    // Enable CORS & Security Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
 
     if (req.method === 'OPTIONS') {
         res.writeHead(200);
@@ -320,6 +325,46 @@ const server = http.createServer(async (req, res) => {
             res.writeHead(500);
             res.end(JSON.stringify({ error: e.message }));
         }
+        return;
+    }
+
+    // OKX AI Agent Service Provider Public REST API Endpoints
+    if (req.method === 'GET' && req.url === '/api/v1/okx/health') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(OKXAgentAdapter.getHealth()));
+        return;
+    }
+
+    if (req.method === 'GET' && req.url === '/api/v1/okx/version') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(OKXAgentAdapter.getVersion()));
+        return;
+    }
+
+    if (req.method === 'GET' && req.url === '/api/v1/okx/metadata') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(OKXAgentAdapter.getMetadata()));
+        return;
+    }
+
+    if (req.method === 'POST' && req.url === '/api/v1/okx/agent') {
+        let body = '';
+        req.on('data', chunk => { body += chunk.toString(); });
+        req.on('end', async () => {
+            try {
+                const reqPayload = JSON.parse(body || '{}');
+                const { statusCode, payload } = await OKXAgentAdapter.processAgentRequest(reqPayload);
+                res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(payload));
+            } catch (err: any) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({
+                    success: false,
+                    provider: "Nexa AI",
+                    error: { code: "INVALID_JSON", message: "Malformed JSON request payload." }
+                }));
+            }
+        });
         return;
     }
 
