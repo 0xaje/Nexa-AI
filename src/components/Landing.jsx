@@ -10,6 +10,36 @@ const examplePrompts = [
   { label: 'Generate prediction idea', icon: 'auto_awesome', query: "Generate a verifiable prediction proposal for AI sector tokens" }
 ];
 
+const recentAnalyses = [
+  {
+    title: "Ethereum Layer 2 Scaling Audit",
+    category: "TOKEN RESEARCH",
+    date: "Updated 2h ago",
+    confidence: "96% Confidence",
+    summary: "Dencun post-upgrade blob volume increased by +34%. L2 TVL reached $48.2B ATH across Arbitrum, Base, and Optimism with low transaction friction.",
+    badge: "BULLISH ACCUMULATION",
+    badgeColor: "bg-bullish-green/10 text-bullish-green border-bullish-green/20"
+  },
+  {
+    title: "Solana Liquidity & Active Address Analysis",
+    category: "MARKET INTELLIGENCE",
+    date: "Updated 4h ago",
+    confidence: "92% Confidence",
+    summary: "Daily active fee-paying addresses stabilized above 4.8M. Order book depth provides a 14.2% downside volatility buffer against short-term market swings.",
+    badge: "MODERATE RISKS",
+    badgeColor: "bg-amber-500/10 text-amber-500 border-amber-500/20"
+  },
+  {
+    title: "Bitcoin ETF Net Inflow & Reserve Telemetry",
+    category: "RISK ANALYSIS",
+    date: "Updated 1h ago",
+    confidence: "98% Confidence",
+    summary: "Institutional net inflows exceeded $420M daily. Exchange supply reserves hit a multi-year low while hashrate reached an all-time high of 720 EH/s.",
+    badge: "STRONG ACCUMULATION",
+    badgeColor: "bg-bullish-green/10 text-bullish-green border-bullish-green/20"
+  }
+];
+
 export default function Landing() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState('evidence');
@@ -20,7 +50,7 @@ export default function Landing() {
       id: 'evidence',
       title: '1. Signal Ingestion & Evidence',
       subtitle: 'Multi-Source Intelligence Packages',
-      description: 'Signals from CoinGecko, HackerNews, and blockchain metrics are collected and normalized into structured Evidence Packages with cryptographic verification.',
+      description: 'Signals from CoinGecko, market feeds, news telemetry, and blockchain metrics are collected and normalized into structured Evidence Packages with cryptographic verification.',
       badge: 'signal ingestion',
       details: [
         'Multi-feed Data Pipeline: Ingests price telemetry, news sentiment, and volume shifts.',
@@ -96,13 +126,13 @@ console.log("Decision Integrity:", isValid ? "VERIFIED" : "FAILED");`
   };
 
   return (
-    <main className="relative pt-28 pb-16 min-h-[calc(100vh-120px)] flex flex-col justify-center items-center px-4 md:px-8 flex-grow w-full max-w-5xl mx-auto z-10">
-      <div className="w-full text-center flex flex-col items-center flex-grow justify-center max-w-4xl">
+    <main className="relative pt-28 pb-16 min-h-[calc(100vh-120px)] flex flex-col justify-center items-center px-4 md:px-8 flex-grow w-full max-w-6xl mx-auto z-10">
+      <div className="w-full text-center flex flex-col items-center flex-grow justify-center max-w-5xl">
         
         {/* Top Product Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/25 mb-6 bg-surface shadow-sm text-[9.5px] font-mono font-bold tracking-[0.25em] text-primary uppercase">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-          NEXA AI · CRYPTO INTELLIGENCE
+          NEXA AI · ENTERPRISE CRYPTO INTELLIGENCE
         </div>
         
         {/* Main Hero H1 */}
@@ -112,16 +142,16 @@ console.log("Decision Integrity:", isValid ? "VERIFIED" : "FAILED");`
         
         {/* Subtitle H2 */}
         <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-on-surface-variant mb-6 tracking-tight font-display">
-          Your AI Crypto Intelligence Agent
+          Enterprise AI Crypto Intelligence Agent
         </h2>
 
         {/* Short Description */}
         <p className="max-w-2xl mx-auto text-on-surface-variant text-xs sm:text-sm md:text-base font-medium leading-relaxed mb-8 opacity-90 px-4">
-          Nexa AI brings multi-agent AI research, real-time risk scoring, token intelligence, and verifiable market predictions to your fingertips.
+          Nexa AI unifies multi-agent research, real-time risk scoring, tokenomics audits, and verifiable market predictions in a single natural language platform.
         </p>
 
         {/* Primary & Secondary Action CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4 w-full mb-10">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4 w-full mb-12">
           <button 
             className="w-full sm:w-auto px-8 py-4 bg-primary text-white rounded-2xl font-extrabold text-xs tracking-[0.15em] uppercase hover:bg-on-surface hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 font-mono"
             onClick={() => navigate('/chat')}
@@ -142,20 +172,20 @@ console.log("Decision Integrity:", isValid ? "VERIFIED" : "FAILED");`
           </button>
         </div>
 
-        {/* Interactive Example Prompts Bar */}
-        <div className="w-full max-w-3xl mb-14 p-4 md:p-5 bg-surface/80 border border-outline-variant rounded-2xl shadow-md backdrop-blur-md text-left">
-          <div className="flex items-center gap-2 mb-3 px-1">
+        {/* SECTION 1: Suggested Research Questions (Interactive Prompt Chips) */}
+        <div className="w-full max-w-4xl mb-16 p-5 md:p-6 bg-surface/80 border border-outline-variant rounded-2xl shadow-md backdrop-blur-md text-left">
+          <div className="flex items-center gap-2 mb-3.5 px-1">
             <span className="material-symbols-outlined text-primary text-base">auto_awesome</span>
             <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-on-surface-variant">
-              Try asking Nexa AI:
+              Suggested Research Questions:
             </span>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2.5">
             {examplePrompts.map((item, idx) => (
               <button
                 key={idx}
                 onClick={() => handlePromptClick(item.query)}
-                className="px-3.5 py-2 rounded-xl bg-surface-variant/40 border border-outline-variant hover:border-primary/40 hover:bg-primary/10 text-on-surface hover:text-primary transition-all text-xs font-medium flex items-center gap-2 group shrink-0"
+                className="px-4 py-2.5 rounded-xl bg-surface-variant/40 border border-outline-variant hover:border-primary/40 hover:bg-primary/10 text-on-surface hover:text-primary transition-all text-xs font-medium flex items-center gap-2 group shrink-0"
               >
                 <span className="material-symbols-outlined text-xs text-primary group-hover:scale-110 transition-transform">
                   {item.icon}
@@ -169,102 +199,259 @@ console.log("Decision Integrity:", isValid ? "VERIFIED" : "FAILED");`
           </div>
         </div>
 
-        {/* Highlight 4 Core Capabilities */}
-        <div className="w-full max-w-4xl mb-16">
-          <div className="text-center mb-8">
+        {/* SECTION 2: Why Nexa AI (Comparison Grid) */}
+        <div className="w-full max-w-5xl mb-20 text-left">
+          <div className="text-center mb-10">
             <span className="text-[9.5px] font-bold tracking-[0.2em] text-primary uppercase font-mono mb-1 block">
-              AI INTELLIGENCE SUITE
+              PRODUCT DIFFERENTIATION
             </span>
-            <h2 className="serif-heading text-2xl md:text-4xl text-on-surface font-extrabold">
-              4 Core Capabilities
+            <h2 className="serif-heading text-3xl md:text-4xl text-on-surface font-extrabold">
+              Why Nexa AI
+            </h2>
+            <p className="text-xs text-on-surface-variant max-w-xl mx-auto mt-2 font-medium">
+              Eliminate fragmented crypto tools and unverified hype with autonomous, evidence-backed intelligence.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 bg-surface-variant/20 rounded-2xl border border-outline-variant/60 space-y-4">
+              <div className="flex items-center gap-2 text-on-surface-variant text-xs font-mono font-bold uppercase tracking-wider">
+                <span className="material-symbols-outlined text-amber-500 text-sm">cancel</span>
+                Traditional Crypto Research Tools
+              </div>
+              <ul className="space-y-3 text-xs text-on-surface-variant leading-relaxed">
+                <li className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-xs text-on-surface-variant/50 mt-0.5">remove</span>
+                  <span>Fragmented dashboards requiring manual spreadsheet tracking across 10+ tabs.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-xs text-on-surface-variant/50 mt-0.5">remove</span>
+                  <span>Unverified social media commentary and black-box price prediction algorithms.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-xs text-on-surface-variant/50 mt-0.5">remove</span>
+                  <span>Lack of objective risk controls or order book liquidity safeguards.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="p-6 bg-surface rounded-2xl border border-primary/40 shadow-sm space-y-4">
+              <div className="flex items-center gap-2 text-primary text-xs font-mono font-bold uppercase tracking-wider">
+                <span className="material-symbols-outlined text-bullish-green text-sm">check_circle</span>
+                Nexa AI Enterprise Advantage
+              </div>
+              <ul className="space-y-3 text-xs text-on-surface leading-relaxed font-medium">
+                <li className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-xs text-primary mt-0.5">check</span>
+                  <span>Autonomous 5-agent quorum synthesizing market, risk, and tokenomics telemetry.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-xs text-primary mt-0.5">check</span>
+                  <span>IPFS-anchored evidence packages with verifiable SHA-256 cryptographic fingerprints.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-xs text-primary mt-0.5">check</span>
+                  <span>Standardized 7-part intelligence reports with explicit, un-exaggerated confidence scores.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 3: How It Works (3-Step Enterprise Workflow) */}
+        <div className="w-full max-w-5xl mb-20 text-left">
+          <div className="text-center mb-10">
+            <span className="text-[9.5px] font-bold tracking-[0.2em] text-primary uppercase font-mono mb-1 block">
+              SYSTEM ARCHITECTURE
+            </span>
+            <h2 className="serif-heading text-3xl md:text-4xl text-on-surface font-extrabold">
+              How It Works
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* 1. Market Intelligence */}
-            <div 
-              onClick={() => navigate('/intelligence')}
-              className="p-6 bg-surface rounded-2xl border border-outline-variant hover:border-primary/50 transition-all cursor-pointer group flex flex-col justify-between shadow-sm hover:shadow-md text-left"
-            >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 bg-surface rounded-2xl border border-outline-variant shadow-sm flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <span className="material-symbols-outlined text-2xl">bar_chart</span>
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center text-sm font-mono font-bold mb-4">
+                  01
                 </div>
-                <h3 className="font-bold text-on-surface text-lg mb-2 font-display">1. Market Intelligence</h3>
-                <p className="text-xs text-on-surface-variant leading-relaxed font-medium">
-                  Real-time market signals continuously evaluated by Analyst, Risk, and Compliance AI agents to surface high-confidence trends.
+                <h3 className="font-bold text-on-surface text-base mb-2 font-display">Prompt & Intent Routing</h3>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  The user submits a query via natural language. Master CoordinatorAgent classifies intent into Research, Risk, Market Signals, or Predictions.
                 </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-primary uppercase tracking-wider mt-5">
-                <span>Explore Market Intelligence</span>
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </div>
             </div>
 
-            {/* 2. Risk Analysis */}
-            <div 
-              onClick={() => navigate('/risk')}
-              className="p-6 bg-surface rounded-2xl border border-outline-variant hover:border-primary/50 transition-all cursor-pointer group flex flex-col justify-between shadow-sm hover:shadow-md text-left"
-            >
+            <div className="p-6 bg-surface rounded-2xl border border-outline-variant shadow-sm flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <span className="material-symbols-outlined text-2xl">shield</span>
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center text-sm font-mono font-bold mb-4">
+                  02
                 </div>
-                <h3 className="font-bold text-on-surface text-lg mb-2 font-display">2. Risk Analysis</h3>
-                <p className="text-xs text-on-surface-variant leading-relaxed font-medium">
-                  Multi-factor risk scoring, volatility matrices, order book safeguards, and interactive position management tools.
+                <h3 className="font-bold text-on-surface text-base mb-2 font-display">Swarm Consensus & Tools</h3>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  Specialized sub-agents execute modular tools (MarketDataTool, NewsTool, TokenResearchTool) and debate risk parameters.
                 </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-primary uppercase tracking-wider mt-5">
-                <span>Analyze Risk Factors</span>
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </div>
             </div>
 
-            {/* 3. Token Research */}
-            <div 
-              onClick={() => navigate('/tokens')}
-              className="p-6 bg-surface rounded-2xl border border-outline-variant hover:border-primary/50 transition-all cursor-pointer group flex flex-col justify-between shadow-sm hover:shadow-md text-left"
-            >
+            <div className="p-6 bg-surface rounded-2xl border border-outline-variant shadow-sm flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <span className="material-symbols-outlined text-2xl">token</span>
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center text-sm font-mono font-bold mb-4">
+                  03
                 </div>
-                <h3 className="font-bold text-on-surface text-lg mb-2 font-display">3. Token Research</h3>
-                <p className="text-xs text-on-surface-variant leading-relaxed font-medium">
-                  Deep-dive research for BTC, ETH, SOL, TAO, and top crypto assets with growth driver analysis and multi-agent scores.
+                <h3 className="font-bold text-on-surface text-base mb-2 font-display">Verifiable Output & IPFS</h3>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  Nexa AI outputs a standardized 7-part intelligence report and anchors cryptographic evidence fingerprints to IPFS.
                 </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-primary uppercase tracking-wider mt-5">
-                <span>Research Tokens</span>
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-              </div>
-            </div>
-
-            {/* 4. Prediction Generator */}
-            <div 
-              onClick={() => navigate('/lab')}
-              className="p-6 bg-surface rounded-2xl border border-outline-variant hover:border-primary/50 transition-all cursor-pointer group flex flex-col justify-between shadow-sm hover:shadow-md text-left"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <span className="material-symbols-outlined text-2xl">auto_awesome</span>
-                </div>
-                <h3 className="font-bold text-on-surface text-lg mb-2 font-display">4. Prediction Generator</h3>
-                <p className="text-xs text-on-surface-variant leading-relaxed font-medium">
-                  Generate verifiable AI prediction proposals backed by multi-agent debate, IPFS evidence packaging, and on-chain settlement.
-                </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-primary uppercase tracking-wider mt-5">
-                <span>Launch Prediction Engine</span>
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Guided AI Intelligence Simulator */}
-        <div id="demo-sandbox" className="w-full max-w-3xl mb-12 p-6 md:p-8 bg-surface border border-outline rounded-2xl text-left shadow-lg">
+        {/* SECTION 4: Multi-Agent Intelligence (5 Agents Breakdown) */}
+        <div className="w-full max-w-5xl mb-20 text-left">
+          <div className="text-center mb-10">
+            <span className="text-[9.5px] font-bold tracking-[0.2em] text-primary uppercase font-mono mb-1 block">
+              AUTONOMOUS SUB-AGENTS
+            </span>
+            <h2 className="serif-heading text-3xl md:text-4xl text-on-surface font-extrabold">
+              Multi-Agent Intelligence Suite
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="p-5 bg-surface rounded-2xl border border-outline-variant shadow-sm">
+              <span className="material-symbols-outlined text-primary text-2xl mb-3">hub</span>
+              <h3 className="font-bold text-on-surface text-sm mb-1 font-display">CoordinatorAgent</h3>
+              <p className="text-[11px] text-on-surface-variant leading-relaxed">
+                Master orchestrator & intent router classifying queries and synthesizing unified agent reports.
+              </p>
+            </div>
+
+            <div className="p-5 bg-surface rounded-2xl border border-outline-variant shadow-sm">
+              <span className="material-symbols-outlined text-primary text-2xl mb-3">search</span>
+              <h3 className="font-bold text-on-surface text-sm mb-1 font-display">ResearchAgent</h3>
+              <p className="text-[11px] text-on-surface-variant leading-relaxed">
+                Analyzes tokenomics models, emission schedules, developer commit velocity, and fundamental growth drivers.
+              </p>
+            </div>
+
+            <div className="p-5 bg-surface rounded-2xl border border-outline-variant shadow-sm">
+              <span className="material-symbols-outlined text-primary text-2xl mb-3">bar_chart</span>
+              <h3 className="font-bold text-on-surface text-sm mb-1 font-display">MarketIntelligenceAgent</h3>
+              <p className="text-[11px] text-on-surface-variant leading-relaxed">
+                Evaluates real-time price feeds, 24h DEX volume shifts, news telemetry, and social sentiment ratios.
+              </p>
+            </div>
+
+            <div className="p-5 bg-surface rounded-2xl border border-outline-variant shadow-sm">
+              <span className="material-symbols-outlined text-primary text-2xl mb-3">shield</span>
+              <h3 className="font-bold text-on-surface text-sm mb-1 font-display">RiskAgent</h3>
+              <p className="text-[11px] text-on-surface-variant leading-relaxed">
+                Calculates volatility index scores, audits liquidity depth, and enforces order book downside safeguards.
+              </p>
+            </div>
+
+            <div className="p-5 bg-surface rounded-2xl border border-outline-variant shadow-sm">
+              <span className="material-symbols-outlined text-primary text-2xl mb-3">auto_awesome</span>
+              <h3 className="font-bold text-on-surface text-sm mb-1 font-display">PredictionAgent</h3>
+              <p className="text-[11px] text-on-surface-variant leading-relaxed">
+                Structures verifiable prediction questions, packages evidence payloads for IPFS, and computes outcome probabilities.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 5: Evidence-Based Analysis & Privacy/Security (Grid) */}
+        <div className="w-full max-w-5xl mb-20 text-left grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Evidence-Based Analysis */}
+          <div className="p-6 bg-surface rounded-2xl border border-outline-variant shadow-sm">
+            <div className="flex items-center gap-2 text-primary text-xs font-mono font-bold uppercase tracking-wider mb-4">
+              <span className="material-symbols-outlined text-primary text-lg">verified</span>
+              Evidence-Based Analysis
+            </div>
+            <ul className="space-y-3 text-xs text-on-surface-variant leading-relaxed">
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                <span><strong>CoinGecko Real-Time Telemetry</strong>: Ingests live prices, 24h volume shifts, and DEX depth.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                <span><strong>GitHub Commit Tracking</strong>: Audits active repository activity and developer release frequency.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                <span><strong>SHA-256 Fingerprints</strong>: Computes deterministic evidence hashes prior to swarm debate.</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Privacy & Security */}
+          <div className="p-6 bg-surface rounded-2xl border border-outline-variant shadow-sm">
+            <div className="flex items-center gap-2 text-primary text-xs font-mono font-bold uppercase tracking-wider mb-4">
+              <span className="material-symbols-outlined text-primary text-lg">lock</span>
+              Privacy & Security
+            </div>
+            <ul className="space-y-3 text-xs text-on-surface-variant leading-relaxed">
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                <span><strong>Non-Custodial Architecture</strong>: Zero private key or seed phrase storage.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                <span><strong>Client-Side Wallet Signatures</strong>: Web3 signatures for transaction settlement.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                <span><strong>24-Hour Dispute Timelock</strong>: Optimistic verification window before prediction execution.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* SECTION 6: Recent Example Analyses */}
+        <div className="w-full max-w-5xl mb-20 text-left">
+          <div className="text-center mb-10">
+            <span className="text-[9.5px] font-bold tracking-[0.2em] text-primary uppercase font-mono mb-1 block">
+              RESEARCH PREVIEWS
+            </span>
+            <h2 className="serif-heading text-3xl md:text-4xl text-on-surface font-extrabold">
+              Recent Example Analyses
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {recentAnalyses.map((item, idx) => (
+              <div 
+                key={idx}
+                onClick={() => navigate('/chat')}
+                className="p-6 bg-surface rounded-2xl border border-outline-variant hover:border-primary/40 transition-all cursor-pointer flex flex-col justify-between shadow-sm group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-[9px] font-mono font-bold text-primary uppercase tracking-wider">{item.category}</span>
+                    <span className={`px-2 py-0.5 rounded text-[8px] font-mono font-bold uppercase border ${item.badgeColor}`}>
+                      {item.badge}
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-on-surface text-base mb-2 font-display group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed mb-4">
+                    {item.summary}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between pt-4 border-t border-outline-variant/50 text-[10px] font-mono text-on-surface-variant">
+                  <span>{item.confidence}</span>
+                  <span>{item.date}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* SECTION 7: Guided AI Intelligence Simulator */}
+        <div id="demo-sandbox" className="w-full max-w-4xl mb-16 p-6 md:p-8 bg-surface border border-outline rounded-2xl text-left shadow-lg">
           <div className="flex justify-between items-center mb-6 border-b border-outline-variant/60 pb-4">
             <div>
               <span className="text-[8px] font-bold tracking-[0.2em] text-primary uppercase font-mono mb-1 block">LIVE DEMO SANDBOX</span>
