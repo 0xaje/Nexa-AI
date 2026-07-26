@@ -18,13 +18,12 @@ Nexa AI is an autonomous, multi-agent crypto intelligence platform and official 
 
 Nexa AI implements the official OKX Agent-to-Agent (A2A) ASP protocol specifications configured via [server/okx/asp.config.ts](file:///home/oyeolorun/AiraMarKet/server/okx/asp.config.ts):
 
-| Endpoint | Method | Description | Public Route Alias |
+| Endpoint | Method | Description | Public Live URL |
 |---|---|---|---|
-| `/api/v1/okx/health` | `GET` | Swarm node readiness & service diagnostics | `/health` |
-| `/api/v1/okx/version` | `GET` | ASP API versioning & build metadata | `/version` |
-| `/api/v1/okx/metadata` | `GET` | Complete ASP registration metadata & capabilities | `/metadata` |
-| `/api/v1/okx/manifest` | `GET` | SHA-256 integrity-hashed ASP manifest | `/manifest` |
-| `/api/v1/okx/agent` | `POST` | Execute 10s SLA-guarded A2A query pipeline | `/agent` |
+| `/api/v1/okx/health` | `GET` | Swarm node readiness & service diagnostics | [https://nexa-ai-sepia.vercel.app/health](https://nexa-ai-sepia.vercel.app/health) |
+| `/api/v1/okx/version` | `GET` | ASP API versioning & build metadata | [https://nexa-ai-sepia.vercel.app/version](https://nexa-ai-sepia.vercel.app/version) |
+| `/api/v1/okx/metadata` | `GET` | Complete ASP registration metadata & capabilities | [https://nexa-ai-sepia.vercel.app/metadata](https://nexa-ai-sepia.vercel.app/metadata) |
+| `/api/v1/okx/agent` | `POST` | Execute 10s SLA-guarded A2A query pipeline | [https://nexa-ai-sepia.vercel.app/agent](https://nexa-ai-sepia.vercel.app/agent) |
 
 ---
 
