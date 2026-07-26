@@ -71,8 +71,8 @@ function App() {
   };
 
   const navItems = [
-    { id: 'chat',     route: '/chat',     label: 'Chat',     icon: 'chat',          aliases: ['', 'chat', 'landing'] },
-    { id: 'research', route: '/research', label: 'Research', icon: 'biotech',       aliases: ['research', 'tokens'] },
+    { id: 'research', route: '/',         label: 'Research', icon: 'biotech',       aliases: ['', 'research', 'tokens', 'landing'] },
+    { id: 'chat',     route: '/chat',     label: 'Chat',     icon: 'chat',          aliases: ['chat'] },
     { id: 'markets',  route: '/markets',  label: 'Markets',  icon: 'query_stats',   aliases: ['markets', 'feed', 'intelligence'] },
     { id: 'history',  route: '/history',  label: 'History',  icon: 'history',       aliases: ['history', 'portfolio'] },
     { id: 'explorer', route: '/explorer', label: 'Explorer', icon: 'manage_search', aliases: ['explorer', 'transparency'] },
@@ -86,7 +86,7 @@ function App() {
       <nav className="hidden md:flex fixed left-0 top-0 h-full w-64 flex-col py-base border-r border-outline-variant/20 bg-surface-container-lowest z-50">
         <div 
           className="px-gutter mb-base flex items-center gap-base cursor-pointer"
-          onClick={() => navigate('/landing')}
+          onClick={() => navigate('/')}
         >
           <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary via-primary-container to-tertiary flex items-center justify-center text-on-primary font-bold shadow-md">
             <span className="material-symbols-outlined text-xl">auto_awesome</span>
@@ -316,8 +316,8 @@ function App() {
       {/* Main Content View Container */}
       <main className="fixed inset-0 left-0 md:left-64 top-16 overflow-y-auto bg-background">
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/landing" element={<Landing />} />
+          <Route path="/" element={<Tokens />} />
+          <Route path="/landing" element={<Tokens />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/about" element={<Landing />} />
           <Route path="/research" element={<Tokens />} />

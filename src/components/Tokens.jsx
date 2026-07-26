@@ -292,6 +292,7 @@ function TokenChip({ token, selected, onClick }) {
 export default function Tokens() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [researchInput, setResearchInput] = useState('');
   const [selectedToken, setSelectedToken] = useState(tokenDatabase[1]); // ETH default
   const [activeTab, setActiveTab] = useState('analysis'); // 'analysis' | 'overview'
 
@@ -309,6 +310,11 @@ export default function Tokens() {
     setActiveTab('analysis');
   };
 
+  const handleExecuteResearch = (query) => {
+    if (!query || !query.trim()) return;
+    navigate('/chat', { state: { initialPrompt: query } });
+  };
+
   const sourceIcons = { DUNE_ANALYTICS: 'link', L2_BEAT: 'link', NANSEN_QUERY: 'hub', NEXA_LLM_V4: 'terminal', GLASSNODE: 'link', COINMETRICS: 'link', CME_GAPS: 'link', HELIUS_RPC: 'link', STEP_FINANCE: 'link', TAO_STATS: 'link', TAOSTATS_IO: 'link' };
 
   return (
@@ -319,46 +325,95 @@ export default function Tokens() {
       ══════════════════════════════════════════ */}
       <section className="flex-1 flex flex-col min-w-0 border-r border-outline-variant/10 overflow-hidden">
 
-        {/* ── Token Picker Bar ── */}
-        <div className="px-6 md:px-10 pt-5 pb-3 border-b border-outline-variant/10 bg-background/95 backdrop-blur-sm shrink-0">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-            <div>
-              <h1 className="font-serif text-lg font-medium text-on-surface leading-tight">Research Workspace</h1>
-              <p className="font-mono text-[10px] text-on-surface-variant/50 uppercase tracking-wider mt-0.5">
-                Institutional-grade AI-driven token analysis
-              </p>
-            </div>
-            {/* Action CTAs */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => navigate('/lab')}
-                className="px-3.5 py-1.5 bg-primary text-white hover:bg-primary/90 rounded-lg text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-sm shrink-0"
-              >
-                <span className="material-symbols-outlined text-[16px]">add_circle</span>
-                <span>Create Prediction</span>
-              </button>
-              <div className="relative w-full sm:w-48">
-                <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[15px] text-on-surface-variant/50">search</span>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search token..."
-                  className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1.5 text-[11px] font-mono text-on-surface placeholder:text-on-surface-variant/40 focus:ring-1 focus:ring-primary/40 outline-none transition-all"
-                />
+        {/* ── Large Hero Research Input & Pipeline Header ── */}
+        <div className="px-6 md:px-10 pt-5 pb-4 border-b border-outline-variant/10 bg-surface/90 backdrop-blur-md shrink-0">
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full mb-1">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                  <span className="font-mono text-[10px] text-primary uppercase tracking-widest font-bold">Nexa AI Research Engine</span>
+                </div>
+                <h1 className="font-serif text-xl sm:text-2xl font-medium text-on-surface leading-tight">
+                  Research Workspace
+                </h1>
+              </div>
+
+              {/* Action CTAs */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => navigate('/lab')}
+                  className="px-3.5 py-1.5 bg-primary text-white hover:bg-primary/90 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-sm shrink-0"
+                >
+                  <span className="material-symbols-outlined text-[16px]">add_circle</span>
+                  <span>Create Prediction</span>
+                </button>
               </div>
             </div>
-          </div>
-          {/* Token chips */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-            {filteredTokens.map(token => (
-              <TokenChip
-                key={token.symbol}
-                token={token}
-                selected={selectedToken.symbol === token.symbol}
-                onClick={() => handleSelectToken(token)}
-              />
-            ))}
+
+            {/* Large Search / Query Input Box */}
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-primary/15 rounded-2xl blur-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="relative bg-surface-container-low border border-outline-variant/30 rounded-2xl p-2.5 sm:p-3.5 shadow-md group-focus-within:border-primary/40 transition-colors flex items-center gap-3">
+                <span className="material-symbols-outlined text-primary text-xl pl-1 shrink-0">biotech</span>
+                <input
+                  type="text"
+                  value={researchInput}
+                  onChange={e => setResearchInput(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      handleExecuteResearch(researchInput);
+                    }
+                  }}
+                  placeholder="Inquire Nexa AI... What would you like to research today?"
+                  className="w-full bg-transparent border-none text-xs sm:text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none font-sans"
+                />
+                <button
+                  onClick={() => handleExecuteResearch(researchInput)}
+                  disabled={!researchInput.trim()}
+                  className="px-4 py-2 bg-primary text-white disabled:opacity-40 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 hover:bg-primary/90 transition-all shrink-0 shadow-sm"
+                >
+                  <span>Research</span>
+                  <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Pipeline Step Flow */}
+            <div className="flex items-center justify-between text-[9.5px] font-mono text-on-surface-variant/70 pt-0.5 px-1 overflow-x-auto no-scrollbar">
+              <div className="flex items-center gap-1.5 text-primary font-bold shrink-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                <span>1. Prompt Input</span>
+              </div>
+              <span className="text-outline-variant shrink-0">→</span>
+              <div className="flex items-center gap-1 shrink-0">
+                <span className="material-symbols-outlined text-xs">biotech</span>
+                <span>2. AI Research</span>
+              </div>
+              <span className="text-outline-variant shrink-0">→</span>
+              <div className="flex items-center gap-1 shrink-0">
+                <span className="material-symbols-outlined text-xs">fact_check</span>
+                <span>3. Evidence Audit</span>
+              </div>
+              <span className="text-outline-variant shrink-0">→</span>
+              <div className="flex items-center gap-1 text-bullish-green font-bold shrink-0">
+                <span className="material-symbols-outlined text-xs">gavel</span>
+                <span>4. Consensus Decision</span>
+              </div>
+            </div>
+
+            {/* Token Selector Chips */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+              <span className="font-mono text-[10px] text-outline uppercase tracking-wider shrink-0">Featured:</span>
+              {filteredTokens.map(token => (
+                <TokenChip
+                  key={token.symbol}
+                  token={token}
+                  selected={selectedToken.symbol === token.symbol}
+                  onClick={() => handleSelectToken(token)}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
