@@ -34,8 +34,7 @@ export default function Terminal() {
   const [selectedDirection, setSelectedDirection] = useState('YES');
   const [activeTab, setActiveTab] = useState('PROBABILITY');
   const [activeChartRange, setActiveChartRange] = useState('4H');
-  const [chatText, setChatText] = useState('');
-  const [messages, setMessages] = useState([]);
+
 
   // Auto-fetch latest on-chain market if activeMarket is not set or missing realId
   const { data: fallbackOnChainMarkets } = useReadContract({
@@ -90,20 +89,7 @@ export default function Terminal() {
     query: { enabled: !!currentMarket.realId && !!walletAddress }
   });
 
-  const handleSendChat = (e) => {
-    e.preventDefault();
-    if (!chatText.trim()) return;
-    const newMessageObj = {
-      id: Date.now(),
-      type: 'user',
-      sender: profileData.nickname,
-      time: 'JUST NOW',
-      avatar: profileData.picture,
-      content: chatText
-    };
-    setMessages(prev => [newMessageObj, ...prev]);
-    setChatText('');
-  };
+
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -177,9 +163,8 @@ export default function Terminal() {
          });
          // Add a 20% safety buffer to prevent failed trade txs
          gasLimit = estimatedGas + (estimatedGas * 20n) / 100n;
-         console.log(`[DYNAMIC_GAS] Estimated gas: ${estimatedGas}, with buffer: ${gasLimit}`);
-       } catch (gasErr) {
-         console.warn("[DYNAMIC_GAS] Gas estimation failed, falling back to wallet default:", gasErr);
+       } catch {
+         // Gas estimation failed — wallet will use its own estimate
        }
 
        const hash = await writeContractAsync({
@@ -194,7 +179,6 @@ export default function Terminal() {
        
        useAppStore.getState().showToast("Position Executed", `Successfully purchased ${selectedDirection} shares for ${tradeAmount} ${currencySymbol}.`, "success", hash);
     } catch (err) {
-       console.error(err);
        let msg = err.shortMessage || err.message || "Transaction failed";
        if (msg.includes("User rejected") || msg.includes("user rejected")) {
           msg = "Transaction was canceled by user in wallet.";
