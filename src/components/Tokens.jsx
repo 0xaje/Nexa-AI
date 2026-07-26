@@ -364,6 +364,32 @@ export default function Tokens() {
 
   const sourceIcons = { DUNE_ANALYTICS: 'link', L2_BEAT: 'link', NANSEN_QUERY: 'hub', NEXA_LLM_V4: 'terminal', GLASSNODE: 'link', COINMETRICS: 'link', CME_GAPS: 'link', HELIUS_RPC: 'link', STEP_FINANCE: 'link', TAO_STATS: 'link', TAOSTATS_IO: 'link' };
 
+  const handleExportMarkdown = () => {
+    const content = `# Nexa AI Research Report: ${selectedToken.name} (${selectedToken.symbol})\n\n## Headline\n${selectedToken.headline}\n\n## Executive Summary\n${selectedToken.executiveSummary}\n\n## Key Growth Drivers\n${selectedToken.keyDrivers.map(d => `- ${d}`).join('\n')}\n\n## Risk Factors\n${selectedToken.riskFactors.map(r => `- ${r}`).join('\n')}\n\n---\nExported from Nexa AI Institutional Workspace`;
+    const blob = new Blob([content], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nexa-research-${selectedToken.symbol.toLowerCase()}.md`;
+    a.click();
+    useAppStore.getState().showToast("Exported Markdown", `Saved nexa-research-${selectedToken.symbol.toLowerCase()}.md`, "success");
+  };
+
+  const handleExportJSON = () => {
+    const content = JSON.stringify(selectedToken, null, 2);
+    const blob = new Blob([content], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nexa-research-${selectedToken.symbol.toLowerCase()}.json`;
+    a.click();
+    useAppStore.getState().showToast("Exported JSON", `Saved nexa-research-${selectedToken.symbol.toLowerCase()}.json`, "success");
+  };
+
+  const handleExportPDF = () => {
+    window.print();
+  };
+
   return (
     <div className="flex flex-col md:flex-row w-full h-[calc(100vh-64px)] overflow-hidden bg-background">
 
@@ -415,6 +441,33 @@ export default function Tokens() {
             </button>
           </div>
 
+          {/* Quick Start Templates */}
+          <div className="space-y-1.5 pt-1">
+            <span className="font-mono text-[10px] text-outline uppercase tracking-wider block font-bold">Quick Templates:</span>
+            <div className="flex flex-wrap gap-1.5">
+              {[
+                { label: 'Investment Research', prompt: 'Investment Research report for top AI & L1 crypto protocols' },
+                { label: 'Token Analysis', prompt: 'Deep-dive token analysis on valuation, utility & tokenomics' },
+                { label: 'Risk Assessment', prompt: 'Institutional risk assessment on smart contract & volatility hazards' },
+                { label: 'Prediction', prompt: 'Verifiable prediction forecast for market sentiment & price targets' },
+                { label: 'Portfolio Review', prompt: 'Portfolio review on active yield positions & exposure' },
+                { label: 'Market Summary', prompt: 'Executive summary of macro crypto market movements today' }
+              ].map((tpl) => (
+                <button
+                  key={tpl.label}
+                  onClick={() => {
+                    setResearchInput(tpl.prompt);
+                    handleExecuteResearch(tpl.prompt);
+                  }}
+                  className="px-3 py-1 rounded-lg bg-surface-container border border-outline-variant/30 hover:border-primary/50 text-xs font-mono text-on-surface-variant hover:text-primary transition-all text-left flex items-center gap-1 shrink-0"
+                >
+                  <span className="material-symbols-outlined text-[13px] text-primary">description</span>
+                  <span>{tpl.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Featured Token Chips */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
             <span className="font-mono text-[10px] text-outline uppercase tracking-wider shrink-0">Featured:</span>
@@ -429,35 +482,81 @@ export default function Tokens() {
           </div>
         </div>
 
-        {/* ── Agent Status Banner ── */}
-        <div className="px-6 md:px-10 py-3 border-b border-outline-variant/10 bg-surface-container-lowest/60 shrink-0">
-          <div className="flex flex-wrap gap-2">
-            <AgentBadge icon="check_circle" label="Research Agent" active={true} />
-            <AgentBadge icon="check_circle" label="Market Intelligence" active={true} />
-            <AgentBadge icon="check_circle" label="Sentiment Analysis" active={true} />
-            <AgentBadge icon="hourglass_empty" label="Aggregating On-Chain Data..." active={false} />
+        {/* ── Research Timeline Stepper & Tool Indicators ── */}
+        <div className="px-6 md:px-10 py-3.5 border-b border-outline-variant/10 bg-surface-container-low shrink-0 space-y-2.5">
+          {/* Live Timeline Stepper */}
+          <div className="flex items-center justify-between font-mono text-[10px] text-on-surface-variant">
+            <span className="font-bold text-primary flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              Research Started
+            </span>
+            <span className="text-outline-variant">↓</span>
+            <span className="font-bold text-on-surface">Market Data</span>
+            <span className="text-outline-variant">↓</span>
+            <span className="font-bold text-on-surface">Sentiment</span>
+            <span className="text-outline-variant">↓</span>
+            <span className="font-bold text-on-surface">Risk</span>
+            <span className="text-outline-variant">↓</span>
+            <span className="font-bold text-on-surface">Consensus</span>
+            <span className="text-outline-variant">↓</span>
+            <span className="font-bold text-bullish-green flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px]">check_circle</span>
+              Done
+            </span>
+          </div>
+
+          {/* Tool Indicators */}
+          <div className="flex flex-wrap gap-2 pt-1 border-t border-outline-variant/20">
+            <span className="px-2 py-0.5 rounded bg-surface border border-outline-variant/30 font-mono text-[9.5px] text-on-surface font-bold flex items-center gap-1">
+              <span>Market Data</span> <span className="text-bullish-green font-extrabold">✓</span>
+            </span>
+            <span className="px-2 py-0.5 rounded bg-surface border border-outline-variant/30 font-mono text-[9.5px] text-on-surface font-bold flex items-center gap-1">
+              <span>News</span> <span className="text-bullish-green font-extrabold">✓</span>
+            </span>
+            <span className="px-2 py-0.5 rounded bg-surface border border-outline-variant/30 font-mono text-[9.5px] text-on-surface font-bold flex items-center gap-1">
+              <span>Risk</span> <span className="text-bullish-green font-extrabold">✓</span>
+            </span>
+            <span className="px-2 py-0.5 rounded bg-surface border border-outline-variant/30 font-mono text-[9.5px] text-on-surface font-bold flex items-center gap-1">
+              <span>Prediction</span> <span className="text-bullish-green font-extrabold">✓</span>
+            </span>
           </div>
         </div>
 
-        {/* ── View Tabs ── */}
-        <div className="px-6 md:px-10 pt-4 flex items-center gap-1 shrink-0">
-          {[
-            { id: 'analysis', label: 'AI Analysis', icon: 'psychology' },
-            { id: 'overview', label: 'Asset Overview', icon: 'account_balance' },
-          ].map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded text-[11px] font-mono font-bold uppercase tracking-wider transition-all ${
-                activeTab === tab.id
-                  ? 'bg-surface-container-high text-primary border-b-2 border-primary'
-                  : 'text-on-surface-variant hover:text-on-surface'
-              }`}
-            >
-              <span className="material-symbols-outlined text-[14px]">{tab.icon}</span>
-              {tab.label}
+        {/* ── View Tabs & Export Report Bar ── */}
+        <div className="px-6 md:px-10 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+          <div className="flex items-center gap-1">
+            {[
+              { id: 'analysis', label: 'AI Analysis', icon: 'psychology' },
+              { id: 'overview', label: 'Asset Overview', icon: 'account_balance' },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded text-[11px] font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-surface-container-high text-primary border-b-2 border-primary'
+                    : 'text-on-surface-variant hover:text-on-surface'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[14px]">{tab.icon}</span>
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Export Report Buttons */}
+          <div className="flex items-center gap-1.5 font-mono text-xs">
+            <span className="text-on-surface-variant text-[10px] font-bold uppercase mr-1 hidden sm:inline">Export:</span>
+            <button onClick={handleExportMarkdown} className="px-2.5 py-1 bg-surface-container-high hover:bg-primary/20 text-on-surface text-[10px] font-bold rounded-lg uppercase transition-all border border-outline-variant/30 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px]">code</span> Markdown
             </button>
-          ))}
+            <button onClick={handleExportPDF} className="px-2.5 py-1 bg-surface-container-high hover:bg-primary/20 text-on-surface text-[10px] font-bold rounded-lg uppercase transition-all border border-outline-variant/30 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px]">picture_as_pdf</span> PDF
+            </button>
+            <button onClick={handleExportJSON} className="px-2.5 py-1 bg-surface-container-high hover:bg-primary/20 text-on-surface text-[10px] font-bold rounded-lg uppercase transition-all border border-outline-variant/30 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px]">data_object</span> JSON
+            </button>
+          </div>
         </div>
 
         {/* ── Scrollable Content ── */}
