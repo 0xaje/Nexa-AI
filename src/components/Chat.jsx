@@ -32,6 +32,14 @@ const samplePrompts = [
   { label: "Solana active address prediction", category: "Predictions", prompt: "Predict whether Solana daily active fee-paying addresses will exceed 5M by Q4." }
 ];
 
+const heroPromptChips = [
+  { label: 'Analyze SOL Volume',    prompt: 'Analyze Solana on-chain volume trends and institutional flows.' },
+  { label: 'Market Heatmap',        prompt: 'Give me a sector sentiment heatmap across L1, DeFi, AI tokens, and RWA.' },
+  { label: 'Institutional Flows',   prompt: 'What are the current institutional inflow and outflow trends across major exchanges?' },
+  { label: 'BTC Risk Matrix',       prompt: 'Evaluate Bitcoin downside risk indicators and macro correlation factors.' },
+  { label: 'AI Token Intelligence', prompt: 'Give me a multi-agent intelligence report on top decentralized AI tokens.' },
+];
+
 const initialChatMessages = [
   {
     id: 1,
@@ -310,6 +318,154 @@ export default function Chat() {
       return part;
     });
   };
+
+  /* Hero state = only the initial agent greeting is present */
+  const isHeroState = messages.length === 1 && messages[0].id === 1;
+
+  if (isHeroState) {
+    return (
+      <div className="flex flex-col w-full min-h-[calc(100vh-64px)] bg-background relative z-10">
+
+        {/* ── Hero Content ── */}
+        <div className="flex-1 flex flex-col items-center justify-center px-5 sm:px-8 pt-12 pb-32">
+
+          {/* Headline */}
+          <div className="mb-8 text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full mb-4">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+              <span className="font-mono text-[10px] text-primary uppercase tracking-widest">Multi-Agent Intelligence Online</span>
+            </div>
+            <h1 className="font-serif text-3xl sm:text-4xl font-medium text-on-surface mb-2 leading-tight">
+              Institutional Intelligence
+            </h1>
+            <p className="text-on-surface-variant text-sm sm:text-base opacity-70">
+              Analyze. Predict. Execute.
+            </p>
+          </div>
+
+          {/* Central AI Input */}
+          <div className="relative w-full max-w-2xl mb-6 group">
+            {/* Glow ring */}
+            <div className="absolute -inset-0.5 bg-primary/10 rounded-xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="relative bg-surface-container border border-outline-variant/20 rounded-xl p-4 shadow-2xl group-focus-within:border-primary/30 transition-colors">
+              <textarea
+                value={inputQuery}
+                onChange={e => setInputQuery(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+                placeholder="Inquire Nexa AI..."
+                rows={4}
+                className="w-full bg-transparent border-none focus:ring-0 outline-none text-base text-on-surface placeholder:text-on-surface-variant/40 resize-none leading-relaxed"
+              />
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-outline-variant/10">
+                <div className="flex gap-4">
+                  <button className="text-on-surface-variant hover:text-primary transition-colors">
+                    <span className="material-symbols-outlined text-[20px]">attach_file</span>
+                  </button>
+                  <button className="text-on-surface-variant hover:text-primary transition-colors">
+                    <span className="material-symbols-outlined text-[20px]">language</span>
+                  </button>
+                </div>
+                <button
+                  onClick={() => handleSend()}
+                  disabled={!inputQuery.trim() || isAnalyzing}
+                  className="bg-primary disabled:opacity-50 text-on-primary px-5 py-2 rounded-lg font-mono font-bold text-[11px] uppercase tracking-widest flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all"
+                >
+                  <span>Send</span>
+                  <span className="material-symbols-outlined text-[15px]">send</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Suggestion Chips */}
+          <div className="w-full max-w-2xl mb-8">
+            <div className="flex items-center justify-between mb-2 px-1">
+              <span className="font-mono text-[10px] text-outline uppercase tracking-widest">Inference Suggestions</span>
+            </div>
+            <div className="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
+              {heroPromptChips.map((chip, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSend(chip.prompt)}
+                  className="flex-shrink-0 px-4 py-2.5 bg-surface-container border border-outline-variant/20 hover:bg-surface-container-high hover:border-primary/30 rounded-lg transition-all group"
+                >
+                  <span className="text-sm text-on-surface-variant group-hover:text-primary transition-colors whitespace-nowrap">
+                    {chip.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* System Confidence Meter */}
+          <div className="w-full max-w-2xl">
+            <div className="bg-surface-container border border-outline-variant/15 rounded-lg p-4 flex items-center justify-between">
+              <div className="flex flex-col">
+                <span className="font-mono text-[10px] text-on-surface-variant/60 uppercase tracking-wider">System Confidence</span>
+                <span className="font-serif text-2xl font-medium text-primary mt-0.5">98.4%</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex gap-[3px]">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-1 h-5 rounded-full ${ i < 9 ? 'bg-primary' : 'bg-outline-variant/30' }`}
+                    />
+                  ))}
+                </div>
+                <div className="hidden sm:flex flex-col items-end">
+                  <span className="font-mono text-[10px] text-on-surface-variant/60 uppercase tracking-wider">Agents</span>
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <span className="w-1.5 h-1.5 bg-bullish-green rounded-full animate-pulse" />
+                    <span className="font-mono text-[10px] text-bullish-green">All Online</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Agent status row */}
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {[
+                { icon: 'psychology',        label: 'Analyst Agent',    status: 'ACTIVE' },
+                { icon: 'shield',            label: 'Risk Agent',       status: 'ACTIVE' },
+                { icon: 'verified_user',     label: 'Compliance Agent', status: 'ACTIVE' },
+              ].map(agent => (
+                <div key={agent.label} className="flex items-center gap-2 px-3 py-2 bg-surface-container-low border border-outline-variant/10 rounded">
+                  <span className="material-symbols-outlined text-primary text-[14px]">{agent.icon}</span>
+                  <div className="min-w-0">
+                    <div className="font-mono text-[9px] text-on-surface-variant/60 uppercase tracking-wider truncate">{agent.label}</div>
+                    <div className="font-mono text-[9px] text-bullish-green font-bold">{agent.status}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Recent Sessions ── (visible on desktop only) */}
+        <div className="hidden lg:flex items-center gap-3 px-8 pb-6 pt-2 border-t border-outline-variant/10 overflow-x-auto no-scrollbar">
+          <span className="font-mono text-[10px] text-outline uppercase tracking-widest shrink-0">Recent:</span>
+          {sessions.slice(0, 4).map(session => (
+            <button
+              key={session.id}
+              onClick={() => {
+                setActiveSessionId(session.id);
+                handleSend(session.preview.substring(0, 80));
+              }}
+              className="flex-shrink-0 px-3 py-1.5 bg-surface-container border border-outline-variant/20 hover:border-primary/30 rounded-lg font-mono text-[10px] text-on-surface-variant hover:text-primary transition-all"
+            >
+              {session.title}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-20 pb-16 md:pb-0 flex w-full min-h-[calc(100vh-80px)] bg-background relative z-10 overflow-hidden">
