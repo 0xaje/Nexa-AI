@@ -93,6 +93,17 @@
           scrollbar-width: none;
       }
 
+      /* Thin custom scrollbar for research panel */
+      .custom-scrollbar-thin::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar-thin::-webkit-scrollbar-thumb {
+          background: #393431;
+          border-radius: 10px;
+      }
+
+      /* Streaming cursor blink */
+      @keyframes blink { 50% { opacity: 0; } }
+
       /* Custom Range Thumb */
       input[type=range]::-webkit-slider-thumb {
           -webkit-appearance: none;
