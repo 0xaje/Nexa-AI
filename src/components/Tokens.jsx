@@ -328,16 +328,25 @@ export default function Tokens() {
                 Institutional-grade AI-driven token analysis
               </p>
             </div>
-            {/* Search */}
-            <div className="relative w-full sm:w-56">
-              <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[15px] text-on-surface-variant/50">search</span>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Search token..."
-                className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1.5 text-[11px] font-mono text-on-surface placeholder:text-on-surface-variant/40 focus:ring-1 focus:ring-primary/40 outline-none transition-all"
-              />
+            {/* Action CTAs */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate('/lab')}
+                className="px-3.5 py-1.5 bg-primary text-white hover:bg-primary/90 rounded-lg text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-sm shrink-0"
+              >
+                <span className="material-symbols-outlined text-[16px]">add_circle</span>
+                <span>Create Prediction</span>
+              </button>
+              <div className="relative w-full sm:w-48">
+                <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[15px] text-on-surface-variant/50">search</span>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  placeholder="Search token..."
+                  className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1.5 text-[11px] font-mono text-on-surface placeholder:text-on-surface-variant/40 focus:ring-1 focus:ring-primary/40 outline-none transition-all"
+                />
+              </div>
             </div>
           </div>
           {/* Token chips */}
@@ -532,20 +541,20 @@ export default function Tokens() {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="flex gap-3 pb-4">
+                <div className="flex flex-col sm:flex-row gap-3 pb-4">
                   <button
-                    onClick={() => navigate('/chat')}
-                    className="flex-1 py-2.5 bg-primary text-on-primary rounded font-mono text-[11px] font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-1.5"
+                    onClick={() => navigate('/chat', { state: { initialPrompt: `Analyze ${selectedToken.name} (${selectedToken.symbol}) market metrics and risk vectors.` } })}
+                    className="flex-1 py-2.5 bg-surface-container-high border border-outline-variant/40 hover:border-primary/40 text-on-surface rounded font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
                   >
                     <span className="material-symbols-outlined text-[15px]">chat</span>
                     Ask AI Agent About {selectedToken.symbol}
                   </button>
                   <button
                     onClick={() => navigate('/lab')}
-                    className="px-4 py-2.5 bg-surface-container-high border border-outline-variant/30 text-on-surface rounded font-mono text-[11px] font-bold uppercase tracking-wider hover:border-primary/40 transition-all flex items-center justify-center gap-1.5"
+                    className="flex-1 py-2.5 bg-primary text-white hover:bg-primary/90 rounded font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-sm"
                   >
-                    <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
-                    Predict
+                    <span className="material-symbols-outlined text-[15px]">science</span>
+                    Create Prediction Market
                   </button>
                 </div>
               </>

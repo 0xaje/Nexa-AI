@@ -71,13 +71,12 @@ function App() {
   };
 
   const navItems = [
-    { id: 'chat',     route: '/chat',     label: 'Chat',        icon: 'chat',          aliases: ['', 'chat', 'landing'] },
-    { id: 'research', route: '/research', label: 'Research',    icon: 'biotech',       aliases: ['research', 'tokens'] },
-    { id: 'markets',  route: '/markets',  label: 'Markets',     icon: 'query_stats',   aliases: ['markets', 'feed', 'intelligence'] },
-    { id: 'insights', route: '/insights', label: 'Trade',       icon: 'candlestick_chart', aliases: ['insights', 'terminal', 'risk'] },
-    { id: 'history',  route: '/history',  label: 'History',     icon: 'history',       aliases: ['history', 'portfolio'] },
-    { id: 'settings', route: '/settings', label: 'Settings',    icon: 'settings',      aliases: ['settings'] },
-    { id: 'lab',      route: '/lab',      label: 'Creator Lab', icon: 'science',       aliases: ['lab', 'creator'] },
+    { id: 'chat',     route: '/chat',     label: 'Chat',     icon: 'chat',          aliases: ['', 'chat', 'landing'] },
+    { id: 'research', route: '/research', label: 'Research', icon: 'biotech',       aliases: ['research', 'tokens'] },
+    { id: 'markets',  route: '/markets',  label: 'Markets',  icon: 'query_stats',   aliases: ['markets', 'feed', 'intelligence'] },
+    { id: 'history',  route: '/history',  label: 'History',  icon: 'history',       aliases: ['history', 'portfolio'] },
+    { id: 'explorer', route: '/explorer', label: 'Explorer', icon: 'manage_search', aliases: ['explorer', 'transparency'] },
+    { id: 'settings', route: '/settings', label: 'Settings', icon: 'settings',      aliases: ['settings'] },
   ];
 
   return (
