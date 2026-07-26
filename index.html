@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -21,31 +21,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <style>
-      /* Nexa AI Institutional Intelligence CSS Tokens */
-      :root, html.dark {
-          --background: #161311;
-          --surface: #161311;
-          --surface-container-lowest: #110d0c;
-          --surface-container-low: #1f1b19;
-          --surface-container: #231f1d;
-          --surface-container-high: #2e2927;
-          --surface-container-highest: #393431;
-          --surface-variant: #393431;
-          --surface-bright: #3d3836;
-          --surface-dim: #161311;
-          --primary: #ffb4a2;
-          --primary-container: #dd7257;
-          --on-primary-container: #550f00;
-          --on-primary: #5f1503;
-          --secondary: #d2c4b8;
-          --tertiary: #ffb5a0;
-          --tertiary-container: #ce7b63;
-          --text-main: #eae1dd;
-          --text-muted: #dcc0ba;
-          --on-surface: #eae1dd;
-          --on-surface-variant: #dcc0ba;
-          --outline: #a48b85;
-          --outline-variant: #56423d;
+      /* Nexa AI Institutional Intelligence CSS Tokens — Light Mode */
+      :root {
+          --background: #fdf8f6;
+          --surface: #ffffff;
+          --surface-container-lowest: #ffffff;
+          --surface-container-low: #fdf0ec;
+          --surface-container: #f5ede9;
+          --surface-container-high: #ede4e0;
+          --surface-container-highest: #e6dbd7;
+          --surface-variant: #f3e5e1;
+          --surface-bright: #ffffff;
+          --surface-dim: #e8dbd7;
+          --primary: #9d4327;
+          --primary-container: #ffdbd2;
+          --on-primary-container: #3c0800;
+          --on-primary: #ffffff;
+          --secondary: #77574e;
+          --tertiary: #8b4a38;
+          --tertiary-container: #ffdbd1;
+          --text-main: #231916;
+          --text-muted: #5c3d37;
+          --on-surface: #231916;
+          --on-surface-variant: #53433f;
+          --outline: #857370;
+          --outline-variant: #d8c2bc;
       }
 
       html, body, #root {
@@ -56,8 +56,8 @@
           display: flex;
           flex-direction: column;
           box-sizing: border-box;
-          background-color: #161311;
-          color: #eae1dd;
+          background-color: #fdf8f6;
+          color: #231916;
           -webkit-font-smoothing: antialiased;
       }
       body {
@@ -69,16 +69,16 @@
           font-family: 'Newsreader', serif;
       }
       .glass-border {
-          border: 1px solid rgba(164, 139, 133, 0.2);
+          border: 1px solid rgba(133, 115, 112, 0.2);
       }
       .institutional-card {
-          background-color: #1f1b19;
-          border: 1px solid rgba(164, 139, 133, 0.15);
+          background-color: #fdf0ec;
+          border: 1px solid rgba(133, 115, 112, 0.15);
           transition: all 0.2s ease-in-out;
       }
       .institutional-card:hover {
-          border-color: rgba(255, 180, 162, 0.35);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+          border-color: rgba(157, 67, 39, 0.35);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.08);
       }
       .material-symbols-outlined {
           font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
@@ -97,7 +97,7 @@
       .custom-scrollbar-thin::-webkit-scrollbar { width: 4px; }
       .custom-scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
       .custom-scrollbar-thin::-webkit-scrollbar-thumb {
-          background: #393431;
+          background: #d8c2bc;
           border-radius: 10px;
       }
 
@@ -110,10 +110,10 @@
           height: 18px;
           width: 18px;
           border-radius: 50%;
-          background: #ffb4a2;
+          background: #9d4327;
           cursor: pointer;
-          border: 3px solid #161311;
-          box-shadow: 0 2px 8px rgba(255, 180, 162, 0.3);
+          border: 3px solid #fdf8f6;
+          box-shadow: 0 2px 8px rgba(157, 67, 39, 0.3);
       }
     </style>
     <script id="tailwind-config">
@@ -122,55 +122,55 @@
         theme: {
           extend: {
             colors: {
-              "surface": "#161311",
-              "surface-container-high": "#2e2927",
-              "surface-tint": "#ffb4a2",
+              "surface": "#ffffff",
+              "surface-container-high": "#ede4e0",
+              "surface-tint": "#9d4327",
               "on-primary-fixed": "#3c0800",
-              "error": "#ffb4ab",
-              "on-surface-variant": "#dcc0ba",
-              "on-tertiary": "#571e0d",
-              "surface-container": "#231f1d",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#53433f",
+              "on-tertiary": "#ffffff",
+              "surface-container": "#f5ede9",
               "tertiary-fixed": "#ffdbd1",
               "on-secondary-fixed-variant": "#4f453c",
-              "surface-dim": "#161311",
-              "inverse-surface": "#eae1dd",
-              "background": "#161311",
-              "surface-container-lowest": "#110d0c",
-              "error-container": "#93000a",
-              "surface-container-low": "#1f1b19",
+              "surface-dim": "#e8dbd7",
+              "inverse-surface": "#392e2b",
+              "background": "#fdf8f6",
+              "surface-container-lowest": "#ffffff",
+              "error-container": "#ffdad6",
+              "surface-container-low": "#fdf0ec",
               "on-primary-fixed-variant": "#7e2b16",
               "on-tertiary-fixed": "#3b0900",
-              "on-error-container": "#ffdad6",
-              "primary-container": "#dd7257",
+              "on-error-container": "#410002",
+              "primary-container": "#ffdbd2",
               "primary-fixed-dim": "#ffb4a2",
               "secondary-fixed": "#efe0d4",
-              "surface-bright": "#3d3836",
-              "on-surface": "#eae1dd",
+              "surface-bright": "#ffffff",
+              "on-surface": "#231916",
               "secondary-fixed-dim": "#d2c4b8",
-              "on-primary": "#5f1503",
-              "on-secondary": "#372f27",
-              "on-tertiary-container": "#4e1707",
-              "tertiary": "#ffb5a0",
+              "on-primary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#3b0900",
+              "tertiary": "#8b4a38",
               "primary-fixed": "#ffdbd2",
-              "primary": "#ffb4a2",
-              "surface-variant": "#393431",
-              "on-error": "#690005",
-              "on-background": "#eae1dd",
-              "tertiary-container": "#ce7b63",
-              "secondary": "#d2c4b8",
-              "inverse-on-surface": "#342f2d",
-              "on-primary-container": "#550f00",
+              "primary": "#9d4327",
+              "surface-variant": "#f3e5e1",
+              "on-error": "#ffffff",
+              "on-background": "#231916",
+              "tertiary-container": "#ffdbd1",
+              "secondary": "#77574e",
+              "inverse-on-surface": "#ffede8",
+              "on-primary-container": "#3c0800",
               "on-secondary-fixed": "#221a13",
-              "surface-container-highest": "#393431",
+              "surface-container-highest": "#e6dbd7",
               "tertiary-fixed-dim": "#ffb5a0",
-              "outline-variant": "#56423d",
+              "outline-variant": "#d8c2bc",
               "on-tertiary-fixed-variant": "#743421",
-              "inverse-primary": "#9d422b",
-              "on-secondary-container": "#c0b3a7",
-              "secondary-container": "#4f453c",
-              "outline": "#a48b85",
-              "bullish-green": "#10b981",
-              "bearish-red": "#ef4444"
+              "inverse-primary": "#ffb4a2",
+              "on-secondary-container": "#2c170e",
+              "secondary-container": "#ffdbd2",
+              "outline": "#857370",
+              "bullish-green": "#12a87a",
+              "bearish-red": "#dc2626"
             },
             borderRadius: {
               "DEFAULT": "0.125rem",
