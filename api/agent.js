@@ -1,4 +1,4 @@
-export default async function handler(req: any, res: any) {
+export default async function handler(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -36,7 +36,7 @@ export default async function handler(req: any, res: any) {
             timestamp: Date.now(),
             error: null
         });
-    } catch (err: any) {
+    } catch (err) {
         res.status(400).json({
             success: false,
             provider: "Nexa AI / OKX A2A Agent Service Provider",
