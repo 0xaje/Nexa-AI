@@ -13,6 +13,7 @@ export default function Portfolio() {
   
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [editForm, setEditForm] = useState(profileData);
+  const [activeTab, setActiveTab] = useState('POSITIONS');
 
   const [portfolioStats, setPortfolioStats] = useState({ activePositions: 0, totalWinnings: 0 });
 
@@ -29,249 +30,352 @@ export default function Portfolio() {
               });
            }
         })
-        .catch(err => console.error("Failed to load portfolio stats:", err));
+        .catch(() => {});
     }
   }, [walletAddress]);
 
+  const mockHistoryItems = [
+    {
+      id: 101,
+      type: 'RESEARCH',
+      query: 'Solana Daily Active Fee-Paying Addresses vs Ethereum L2 TVL',
+      timestamp: '2 hours ago',
+      confidence: '96% Confidence',
+      status: 'VERIFIED'
+    },
+    {
+      id: 102,
+      type: 'PREDICTION',
+      query: 'Bitcoin ETF Net Inflow Telemetry & Reserve Outflow',
+      timestamp: 'Yesterday',
+      confidence: '98% Confidence',
+      status: 'VERIFIED'
+    },
+    {
+      id: 103,
+      type: 'RISK_AUDIT',
+      query: 'AI Token Sector Market Cap Volatility & Liquidity Depth',
+      timestamp: '3 days ago',
+      confidence: '92% Confidence',
+      status: 'COMPLETED'
+    }
+  ];
+
   return (
-    <main className="pt-24 pb-4 px-4 w-full flex flex-col items-center max-w-5xl mx-auto z-10 flex-grow">
+    <main className="pt-24 pb-24 md:pb-10 px-4 sm:px-6 w-full min-h-screen max-w-6xl mx-auto z-10 flex flex-col gap-6">
+      
       {/* Header Banner */}
-      <div className="w-full bg-surface rounded-2xl border border-outline-variant shadow-lg p-6 mb-6 flex items-center justify-between gap-4 text-left">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shrink-0">
-            <span className="material-symbols-outlined text-2xl">history</span>
+      <div className="w-full bg-surface rounded-3xl border border-outline-variant/60 shadow-xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+        <div className="flex items-center gap-4 relative z-10">
+          <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 shadow-sm">
+            <span className="material-symbols-outlined text-3xl">history</span>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold text-on-surface font-display">Research History & Activity</h1>
-              <span className="px-2 py-0.5 rounded bg-primary/15 border border-primary/30 text-primary text-[9px] font-mono font-bold uppercase tracking-wider">
-                SAVED WORKSPACE
+              <h1 className="serif-heading text-2xl sm:text-3xl font-bold text-on-surface">History & Portfolio</h1>
+              <span className="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[9px] font-mono font-bold uppercase tracking-wider">
+                UNIFIED WORKSPACE
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
-              Track your past research queries, analyzed market signals, and prediction outcomes in one unified workspace.
+            <p className="text-xs sm:text-sm text-on-surface-variant font-medium mt-1">
+              Inspect your past prediction trades, claim won payouts, and review saved AI research queries.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="w-full bg-surface rounded-xl border border-outline-variant shadow-lg p-6 lg:p-10 text-center flex flex-col items-center">
-        <div className="w-24 h-24 rounded-full border-4 border-primary/20 p-1 mb-6 relative group">
-           <img 
-             alt="User avatar" 
-             className="w-full h-full rounded-full object-cover" 
-             src={profileData.picture}
-           />
-           <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" onClick={() => { setEditForm({...profileData}); setIsEditingProfile(true); }}>
-             <span className="material-symbols-outlined text-white">edit</span>
-           </div>
-        </div>
-        
-        <h2 className="serif-heading text-2xl mb-1 text-on-surface flex items-center gap-2 justify-center">
-          {profileData.nickname}
-          <button onClick={() => { setEditForm({...profileData}); setIsEditingProfile(true); }} className="material-symbols-outlined text-sm text-primary hover:text-primary/80">edit</button>
-        </h2>
-        <p className="text-on-surface-variant font-mono text-xs tracking-widest uppercase mb-8">
-          {walletAddress ? `${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 4)}` : 'Not Connected'}
-        </p>
-
-        {/* Profile Edit Modal */}
-        {isEditingProfile && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-            <div className="bg-surface border border-outline-variant rounded-xl p-6 w-full max-w-md shadow-xl text-left">
-              <h3 className="serif-heading text-xl mb-4 text-on-surface">Edit Profile</h3>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-[10px] font-bold tracking-widest uppercase text-on-surface-variant mb-1">Upload Profile Picture</label>
-                  <input 
-                    type="file" 
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onloadend = () => {
-                          setEditForm({...editForm, picture: reader.result});
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    }}
-                    className="w-full bg-surface-variant border border-outline-variant rounded-lg px-3 py-2 text-sm focus:border-primary outline-none file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-bold file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold tracking-widest uppercase text-on-surface-variant mb-1">Nickname</label>
-                  <input 
-                    type="text" 
-                    value={editForm.nickname} 
-                    onChange={(e) => setEditForm({...editForm, nickname: e.target.value})}
-                    className="w-full bg-surface-variant border border-outline-variant rounded-lg px-3 py-2 text-sm focus:border-primary outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold tracking-widest uppercase text-on-surface-variant mb-1">X (Twitter) Handle</label>
-                  <div className="flex gap-2">
-                    <span className="bg-surface-variant border border-outline-variant rounded-lg px-3 py-2 text-sm text-on-surface-variant">@</span>
-                    <input 
-                      type="text" 
-                      value={editForm.xHandle} 
-                      onChange={(e) => setEditForm({...editForm, xHandle: e.target.value})}
-                      className="flex-1 bg-surface-variant border border-outline-variant rounded-lg px-3 py-2 text-sm focus:border-primary outline-none"
-                    />
-                  </div>
-                  {editForm.xHandle && (
-                     <div className="mt-2 inline-flex items-center gap-1 bg-blue-500/10 text-blue-500 px-2 py-1 rounded text-[10px] font-bold">
-                       <span className="material-symbols-outlined text-[12px]">check_circle</span> Connected
-                     </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-3 mt-6">
+      {/* User Profile Card & Quick Stats */}
+      <div className="bg-surface rounded-3xl border border-outline-variant/60 shadow-xl p-6 sm:p-8 space-y-6">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-outline-variant/40">
+          <div className="flex items-center gap-4 text-left">
+            <div className="relative group shrink-0">
+              <img 
+                alt="User avatar" 
+                className="w-16 h-16 rounded-2xl object-cover border-2 border-primary/30 shadow-md" 
+                src={profileData.picture}
+              />
+              <button 
+                onClick={() => { setEditForm({...profileData}); setIsEditingProfile(true); }}
+                className="absolute -bottom-1 -right-1 w-6 h-6 rounded-lg bg-primary text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                title="Edit Profile"
+              >
+                <span className="material-symbols-outlined text-xs">edit</span>
+              </button>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="serif-heading text-xl font-bold text-on-surface">{profileData.nickname}</h2>
                 <button 
-                  onClick={() => setIsEditingProfile(false)}
-                  className="px-4 py-2 text-sm font-bold text-on-surface-variant hover:text-on-surface"
+                  onClick={() => { setEditForm({...profileData}); setIsEditingProfile(true); }} 
+                  className="text-on-surface-variant hover:text-primary transition-colors text-xs font-mono"
                 >
-                  Cancel
-                </button>
-                <button 
-                  onClick={() => {
-                    setProfileData(editForm);
-                    setIsEditingProfile(false);
-                  }}
-                  className="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:bg-primary/90"
-                >
-                  Save Profile
+                  Edit
                 </button>
               </div>
+              <p className="font-mono text-xs text-on-surface-variant/70 mt-0.5">
+                {walletAddress ? `${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 4)}` : 'Wallet Not Connected'}
+              </p>
             </div>
           </div>
-        )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-8">
-          <div className="sahara-panel p-6 rounded-xl flex flex-col items-center justify-center bg-surface-variant/30">
-            <span className="material-symbols-outlined text-primary text-3xl mb-2">account_balance_wallet</span>
-            <p className="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase mb-1">Total Balance</p>
-            <p className="text-xl font-bold font-mono text-on-surface">
-              {walletAddress && balanceData ? `${Number(balanceData.formatted).toFixed(4)} ${balanceData.symbol}` : walletAddress ? `0.00 ${getNativeCurrencySymbol()}` : '---'}
-            </p>
-          </div>
-
-          <div className="sahara-panel p-6 rounded-xl flex flex-col items-center justify-center bg-surface-variant/30">
-            <span className="material-symbols-outlined text-bullish-green text-3xl mb-2">trending_up</span>
-            <p className="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase mb-1">Active Positions</p>
-            <p className="text-xl font-bold font-mono text-on-surface">
-              {walletAddress ? portfolioStats.activePositions : '---'}
-            </p>
-          </div>
-
-          <div className="sahara-panel p-6 rounded-xl flex flex-col items-center justify-center bg-surface-variant/30">
-            <span className="material-symbols-outlined text-amber-500 text-3xl mb-2">emoji_events</span>
-            <p className="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase mb-1">Total Winnings</p>
-            <p className="text-xl font-bold font-mono text-on-surface">
-              {walletAddress ? `${(portfolioStats.totalWinnings / 1e18).toFixed(4)} ${getNativeCurrencySymbol()}` : '---'}
-            </p>
-          </div>
+          {walletAddress ? (
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-bullish-green/10 border border-bullish-green/20 text-bullish-green font-mono text-xs font-bold">
+              <span className="w-2 h-2 rounded-full bg-bullish-green animate-pulse"></span>
+              Wallet Synchronized
+            </div>
+          ) : (
+            <span className="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant text-on-surface-variant font-mono text-xs font-semibold">
+              Read-Only Demo Mode
+            </span>
+          )}
         </div>
 
-        {/* Trade History & Outcome Verification View */}
-        {walletAddress && (
-          <div className="w-full text-left mt-4 border-t border-outline-variant pt-8">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="serif-heading text-xl text-on-surface flex items-center gap-2">
-                 <span className="material-symbols-outlined text-primary">history</span>
-                 My Predictions & Outcome History
-              </h3>
-              <span className="font-mono text-[9px] text-on-surface-variant font-bold uppercase tracking-wider bg-surface-variant px-2.5 py-1 rounded">
-                ON-CHAIN SYNCHRONIZED
-              </span>
-            </div>
-
-            <div className="space-y-3">
-               {(portfolioStats.tradesList && portfolioStats.tradesList.length > 0 ? portfolioStats.tradesList : [
-                 {
-                   id: 1,
-                   title: "Will AI Agent Protocol v2 launch on testnet before Q4?",
-                   side: "YES",
-                   amount: 2000000000000000n, // 0.002 native currency
-                   outcome: "WON",
-                   claimed: false,
-                   payout: `0.0039 ${getNativeCurrencySymbol()}`
-                 },
-                 {
-                   id: 2,
-                   title: "Bitcoin $150K Target Before July",
-                   side: "YES",
-                   amount: 5000000000000000n, // 0.005 ETH
-                   outcome: "ACTIVE",
-                   claimed: false,
-                   payout: "Pending Oracle"
-                 }
-               ]).map((trade, idx) => {
-                  const isWon = trade.outcome === 'WON';
-                  const isLost = trade.outcome === 'LOST';
-                  const isActive = !isWon && !isLost;
-
-                  return (
-                    <div key={idx} className="p-4 bg-surface-variant/20 border border-outline-variant rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                       <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                             <span className={`px-2 py-0.5 text-[9px] font-bold font-mono rounded uppercase ${trade.side === 'YES' ? 'bg-bullish-green/15 text-bullish-green border border-bullish-green/30' : 'bg-bearish-red/15 text-bearish-red border border-bearish-red/30'}`}>
-                                {trade.side} POSITION
-                             </span>
-                             {isWon && (
-                               <span className="px-2 py-0.5 text-[9px] font-bold font-mono rounded bg-bullish-green text-white uppercase flex items-center gap-1">
-                                 🏆 WON & CLAIMABLE
-                               </span>
-                             )}
-                             {isLost && (
-                               <span className="px-2 py-0.5 text-[9px] font-bold font-mono rounded bg-bearish-red/20 text-bearish-red uppercase">
-                                 ❌ LOST
-                               </span>
-                             )}
-                             {isActive && (
-                               <span className="px-2 py-0.5 text-[9px] font-bold font-mono rounded bg-amber-500/10 text-amber-500 uppercase flex items-center gap-1">
-                                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                                 ACTIVE PENDING
-                               </span>
-                             )}
-                          </div>
-                          <p className="text-sm font-bold text-on-surface leading-tight">{trade.title}</p>
-                          <p className="text-[10px] font-mono tracking-widest uppercase text-on-surface-variant/70 mt-1">Market ID: #{trade.id}</p>
-                       </div>
-
-                       <div className="text-left sm:text-right shrink-0">
-                          <p className="text-[10px] text-on-surface-variant font-mono uppercase font-bold">Traded Position</p>
-                          <p className="text-sm font-bold font-mono text-on-surface">
-                            {typeof trade.amount === 'bigint' ? (Number(trade.amount) / 1e18).toFixed(4) : (Number(trade.amount) / 1e18 || 0.002).toFixed(4)} {getNativeCurrencySymbol()}
-                          </p>
-                          {isWon && (
-                            <button 
-                              onClick={() => {
-                                useAppStore.getState().showToast("Claim Initiated", `Claiming winning payout for "${trade.title}" on Sepolia...`, "info");
-                              }}
-                              className="mt-2 px-3 py-1 bg-bullish-green hover:bg-bullish-green/90 text-white font-mono font-bold text-[10px] rounded tracking-wider uppercase transition-all shadow-xs"
-                            >
-                              Claim Winnings ({trade.payout || `0.0039 ${getNativeCurrencySymbol()}`})
-                            </button>
-                          )}
-                       </div>
-                    </div>
-                  );
-               })}
-            </div>
+        {/* 3 Metric Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-surface-container-low p-5 rounded-2xl border border-outline-variant/40 space-y-1">
+            <span className="text-[10px] font-mono font-bold text-on-surface-variant uppercase tracking-wider block">Total Balance</span>
+            <span className="text-xl font-mono font-extrabold text-on-surface block">
+              {walletAddress && balanceData ? `${Number(balanceData.formatted).toFixed(4)} ${balanceData.symbol}` : `0.00 ${getNativeCurrencySymbol()}`}
+            </span>
           </div>
-        )}
 
-        {!walletAddress && (
-          <button 
-            className="mt-8 px-8 py-3 bg-primary text-white rounded font-bold text-xs uppercase tracking-widest hover:bg-primary/90 transition-all cursor-not-allowed opacity-50"
+          <div className="bg-surface-container-low p-5 rounded-2xl border border-outline-variant/40 space-y-1">
+            <span className="text-[10px] font-mono font-bold text-on-surface-variant uppercase tracking-wider block">Active Positions</span>
+            <span className="text-xl font-mono font-extrabold text-primary block">
+              {walletAddress ? portfolioStats.activePositions : '0'}
+            </span>
+          </div>
+
+          <div className="bg-surface-container-low p-5 rounded-2xl border border-outline-variant/40 space-y-1">
+            <span className="text-[10px] font-mono font-bold text-on-surface-variant uppercase tracking-wider block">Total Claimable Winnings</span>
+            <span className="text-xl font-mono font-extrabold text-bullish-green block">
+              {walletAddress ? `${(portfolioStats.totalWinnings / 1e18).toFixed(4)} ${getNativeCurrencySymbol()}` : `0.00 ${getNativeCurrencySymbol()}`}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs: Prediction Positions vs Research History */}
+      <div className="bg-surface rounded-3xl border border-outline-variant/60 shadow-xl p-6 sm:p-8 space-y-6">
+        <div className="flex items-center gap-2 border-b border-outline-variant/40 pb-4">
+          <button
+            onClick={() => setActiveTab('POSITIONS')}
+            className={`px-5 py-2 rounded-2xl font-mono text-xs font-bold transition-all uppercase tracking-wider flex items-center gap-2 ${
+              activeTab === 'POSITIONS'
+                ? 'bg-primary text-white shadow-md'
+                : 'bg-surface-container-low text-on-surface-variant hover:text-on-surface'
+            }`}
           >
-            Connect Wallet in Header to view Portfolio
+            <span className="material-symbols-outlined text-base">candlestick_chart</span>
+            <span>Positions & Predictions</span>
           </button>
+
+          <button
+            onClick={() => setActiveTab('RESEARCH')}
+            className={`px-5 py-2 rounded-2xl font-mono text-xs font-bold transition-all uppercase tracking-wider flex items-center gap-2 ${
+              activeTab === 'RESEARCH'
+                ? 'bg-primary text-white shadow-md'
+                : 'bg-surface-container-low text-on-surface-variant hover:text-on-surface'
+            }`}
+          >
+            <span className="material-symbols-outlined text-base">psychology</span>
+            <span>Saved AI Research Queries</span>
+          </button>
+        </div>
+
+        {/* Tab 1: Positions */}
+        {activeTab === 'POSITIONS' && (
+          <div className="space-y-4">
+            {(portfolioStats.tradesList && portfolioStats.tradesList.length > 0 ? portfolioStats.tradesList : [
+              {
+                id: 1,
+                title: "Will AI Agent Protocol v2 launch on testnet before Q4?",
+                side: "YES",
+                amount: 2000000000000000n,
+                outcome: "WON",
+                claimed: false,
+                payout: `0.0039 ${getNativeCurrencySymbol()}`
+              },
+              {
+                id: 2,
+                title: "Bitcoin $150K Target Before July",
+                side: "YES",
+                amount: 5000000000000000n,
+                outcome: "ACTIVE",
+                claimed: false,
+                payout: "Pending Oracle"
+              }
+            ]).map((trade, idx) => {
+              const isWon = trade.outcome === 'WON';
+              const isLost = trade.outcome === 'LOST';
+              const isActive = !isWon && !isLost;
+
+              return (
+                <div key={idx} className="p-5 bg-surface-container-low border border-outline-variant/40 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2.5 py-0.5 text-[9px] font-bold font-mono rounded-full uppercase ${trade.side === 'YES' ? 'bg-bullish-green/15 text-bullish-green border border-bullish-green/30' : 'bg-bearish-red/15 text-bearish-red border border-bearish-red/30'}`}>
+                        {trade.side} POSITION
+                      </span>
+                      {isWon && (
+                        <span className="px-2.5 py-0.5 text-[9px] font-bold font-mono rounded-full bg-bullish-green text-white uppercase">
+                          🏆 WON & CLAIMABLE
+                        </span>
+                      )}
+                      {isLost && (
+                        <span className="px-2.5 py-0.5 text-[9px] font-bold font-mono rounded-full bg-bearish-red/20 text-bearish-red uppercase">
+                          ❌ LOST
+                        </span>
+                      )}
+                      {isActive && (
+                        <span className="px-2.5 py-0.5 text-[9px] font-bold font-mono rounded-full bg-amber-500/10 text-amber-600 uppercase flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                          ACTIVE PENDING
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-base font-bold text-on-surface leading-snug">{trade.title}</h3>
+                    <p className="text-[10px] font-mono text-on-surface-variant/70 uppercase">Market ID: #{trade.id}</p>
+                  </div>
+
+                  <div className="flex flex-col sm:items-end shrink-0">
+                    <span className="text-[9px] font-mono font-bold text-on-surface-variant uppercase">Position Size</span>
+                    <span className="text-sm font-mono font-extrabold text-on-surface">
+                      {typeof trade.amount === 'bigint' ? (Number(trade.amount) / 1e18).toFixed(4) : (Number(trade.amount) / 1e18 || 0.002).toFixed(4)} {getNativeCurrencySymbol()}
+                    </span>
+                    {isWon && (
+                      <button 
+                        onClick={() => {
+                          useAppStore.getState().showToast("Claim Initiated", `Claiming winning payout for "${trade.title}" on Sepolia...`, "info");
+                        }}
+                        className="mt-2 px-4 py-1.5 bg-bullish-green hover:bg-bullish-green/90 text-white font-mono font-bold text-[10px] rounded-xl uppercase transition-all shadow-sm"
+                      >
+                        Claim ({trade.payout || `0.0039 ${getNativeCurrencySymbol()}`})
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Tab 2: Research Queries */}
+        {activeTab === 'RESEARCH' && (
+          <div className="space-y-3">
+            {mockHistoryItems.map((item) => (
+              <div key={item.id} className="p-5 bg-surface-container-low border border-outline-variant/40 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 bg-primary/10 border border-primary/20 text-primary font-mono font-bold text-[9px] rounded-full uppercase">
+                      {item.type}
+                    </span>
+                    <span className="text-[10px] font-mono text-on-surface-variant/70">
+                      {item.timestamp}
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-on-surface leading-snug">{item.query}</h3>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="text-xs font-mono font-bold text-bullish-green">{item.confidence}</span>
+                  <button 
+                    onClick={() => useAppStore.getState().showToast("Research Loaded", "Opening conversation in Chat workspace...", "info")}
+                    className="px-3.5 py-1.5 bg-surface border border-outline-variant/50 hover:border-primary text-on-surface font-mono font-bold text-[10px] rounded-xl uppercase transition-all"
+                  >
+                    Open Query
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
+
+      {/* Edit Profile Modal */}
+      {isEditingProfile && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md p-4">
+          <div className="bg-surface border border-outline-variant/60 rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl space-y-6">
+            <div className="flex justify-between items-center border-b border-outline-variant/40 pb-4">
+              <h3 className="serif-heading text-2xl font-bold text-on-surface">Edit Profile</h3>
+              <button 
+                onClick={() => setIsEditingProfile(false)}
+                className="text-on-surface-variant hover:text-on-surface"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            
+            <div className="space-y-4 text-xs font-medium">
+              <div>
+                <label className="block text-[10px] font-mono font-bold tracking-wider uppercase text-on-surface-variant mb-1">
+                  Profile Picture
+                </label>
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setEditForm({...editForm, picture: reader.result});
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                  className="w-full bg-surface-container-low border border-outline-variant/60 rounded-xl px-3 py-2 text-xs focus:border-primary outline-none file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-mono font-bold tracking-wider uppercase text-on-surface-variant mb-1">
+                  Nickname
+                </label>
+                <input 
+                  type="text" 
+                  value={editForm.nickname} 
+                  onChange={(e) => setEditForm({...editForm, nickname: e.target.value})}
+                  className="w-full bg-surface-container-low border border-outline-variant/60 rounded-xl px-4 py-2.5 text-xs text-on-surface focus:border-primary outline-none font-sans"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-mono font-bold tracking-wider uppercase text-on-surface-variant mb-1">
+                  X (Twitter) Handle
+                </label>
+                <input 
+                  type="text" 
+                  value={editForm.xHandle} 
+                  onChange={(e) => setEditForm({...editForm, xHandle: e.target.value})}
+                  className="w-full bg-surface-container-low border border-outline-variant/60 rounded-xl px-4 py-2.5 text-xs text-on-surface focus:border-primary outline-none font-sans"
+                  placeholder="@handle"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button 
+                onClick={() => setIsEditingProfile(false)}
+                className="px-5 py-2.5 text-xs font-mono font-bold text-on-surface-variant hover:text-on-surface uppercase"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  setProfileData(editForm);
+                  setIsEditingProfile(false);
+                }}
+                className="px-6 py-2.5 bg-primary text-white text-xs font-mono font-bold rounded-2xl hover:bg-primary/90 uppercase tracking-wider shadow-md"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }

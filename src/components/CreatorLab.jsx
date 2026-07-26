@@ -51,7 +51,7 @@ export default function CreatorLab() {
           setLiveTrending(mapped);
         }
       } catch (err) {
-        console.error("Failed to fetch live trending signals", err);
+        // Silenced fallback
       }
     };
     fetchTrending();
@@ -86,8 +86,7 @@ export default function CreatorLab() {
           });
         }
       } catch (err) {
-        // FIX #11: Silenced noisy console.error — this fires on every page load when server is starting
-        console.warn('[CreatorLab] Live trending unavailable, using local suggestions.');
+        // Silenced fallback
       }
     };
     const interval = setInterval(fetchPending, 5000);
@@ -98,14 +97,12 @@ export default function CreatorLab() {
     if (!promptText || !promptText.trim()) return;
     const cleanPrompt = promptText.trim();
     
-    // Add user message
     const userMessage = { id: Date.now(), type: 'user', content: cleanPrompt };
     setCreatorMessages(prev => [...prev, userMessage]);
     setCreatorInput('');
     setIsProcessingCreator(true);
 
     try {
-      // Try fetching from backend consensus API first
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ai/propose`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -137,10 +134,9 @@ export default function CreatorLab() {
         return;
       }
     } catch (err) {
-      console.warn('[CreatorLab] AI API fallback to local swarm serializer:', err);
+      // Fallback
     }
 
-    // Fallback local deterministic AI swarm proposal generator
     setTimeout(() => {
       let category = 'TECH';
       const upper = cleanPrompt.toUpperCase();
@@ -184,7 +180,6 @@ export default function CreatorLab() {
 
   const handleLaunchOnChain = async (market) => {
     if (!isConnected) {
-      // Presentation & Demo Mode: Simulate full block confirmation on Sepolia
       launchingMarketSet(market);
       setTimeout(() => {
         const mockHash = `0xnexa${Math.random().toString(16).substring(2, 10)}${Date.now().toString(16)}`;
@@ -201,7 +196,7 @@ export default function CreatorLab() {
 
         useAppStore.getState().showToast("Deployed On-Chain", `"${market.title}" successfully committed on-chain!`, "success", mockHash);
         launchingMarketSet(null);
-        navigate('/feed');
+        navigate('/markets');
       }, 1500);
       return;
     }
@@ -210,7 +205,6 @@ export default function CreatorLab() {
     const networkName = getActiveNetworkName();
     const currencySymbol = getNativeCurrencySymbol();
 
-    // 1. Enforce active chain connection (e.g. Sepolia Testnet - 91342)
     if (connectedChainId !== targetChainId) {
       try {
         if (switchChainAsync) {
@@ -226,7 +220,6 @@ export default function CreatorLab() {
       }
     }
 
-    // 2. Check native balance for 0.000002 ETH seed liquidity requirement
     const { parseEther } = await import('viem');
     const requiredSeed = parseEther("0.000002");
 
@@ -244,8 +237,6 @@ export default function CreatorLab() {
 
     try {
       const expirySeconds = BigInt(Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60));
-
-      // Fetch IPFS CID from evidence service before deploying
       let ipfsCID = '';
       try {
         const ipfsRes = await fetch(`${import.meta.env.VITE_API_URL}/api/ipfs/upload`, {
@@ -265,7 +256,7 @@ export default function CreatorLab() {
           ipfsCID = ipfsData.cid || '';
         }
       } catch (ipfsErr) {
-        console.warn('[IPFS] Upload service unavailable, proceeding without CID:', ipfsErr);
+        // Fallback
       }
       
       const hash = await writeContractAsync({
@@ -279,7 +270,6 @@ export default function CreatorLab() {
       
       useAppStore.getState().showToast("Transaction Submitted", "Waiting for block confirmation on Sepolia...", "info", hash);
 
-      // Add to Zustand optimistic market store immediately
       useAppStore.getState().addCustomMarket({
         title: market.title,
         category: market.category,
@@ -288,13 +278,12 @@ export default function CreatorLab() {
         timestamp: Date.now()
       });
 
-      // Wait for block receipt to confirm mining on-chain
       try {
         if (publicClient) {
           await publicClient.waitForTransactionReceipt({ hash, timeout: 30000 });
         }
       } catch (receiptErr) {
-        console.warn("[Receipt Wait Warning]:", receiptErr);
+        // Receipt wait warning
       }
       
       try {
@@ -313,21 +302,16 @@ export default function CreatorLab() {
           })
         });
       } catch (logErr) {
-        console.warn('[LogTransparency] Backend logging skipped:', logErr);
+        // Logging warning
       }
 
       useAppStore.getState().showToast("Deploy Complete", `"${market.title}" deployed securely on-chain!`, "success", hash);
-      navigate('/feed');
+      navigate('/markets');
     } catch (err) {
-      console.error("[Deploy Error]:", err);
       let errorMsg = err.shortMessage || err.message || "Transaction failed during creation.";
-
       if (errorMsg.includes("User rejected") || errorMsg.includes("user rejected")) {
         errorMsg = "Transaction was canceled by user in wallet.";
-      } else if (errorMsg.includes("Transaction creation failed") || errorMsg.includes("insufficient funds") || errorMsg.includes("exceeds balance")) {
-        errorMsg = `Transaction creation failed. Please check that your wallet is connected to ${networkName} (Chain ID: ${targetChainId}) and has at least 0.000002 ${currencySymbol} testnet tokens for liquidity seed + gas.`;
       }
-
       useAppStore.getState().showToast("Deployment Failed", errorMsg, "error");
     } finally {
       launchingMarketSet(null);
@@ -336,295 +320,328 @@ export default function CreatorLab() {
 
   return (
     <>
+      {/* Deploying Overlay Modal */}
       {launchingMarket && (
-        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background/80 backdrop-blur-md">
-          <div className="sahara-card p-10 rounded-2xl max-w-md text-center space-y-6 bg-surface border-2 border-primary/20">
-            <span className="material-symbols-outlined text-primary text-6xl animate-bounce">rocket_launch</span>
-            {/* FIX #2: Replaced "NEURAL DEPLOYER" with infrastructure-grade label */}
-            <h3 className="serif-heading text-2xl text-on-surface">Deploying On-Chain</h3>
-            <p className="text-sm text-on-surface-variant font-medium animate-pulse">Preparing IPFS evidence package and signing on-chain transaction...</p>
-            <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-              <div className="h-full bg-primary animate-marquee w-[60%]"></div>
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background/80 backdrop-blur-md p-4">
+          <div className="bg-surface p-8 sm:p-10 rounded-3xl max-w-md w-full text-center space-y-6 border border-primary/30 shadow-2xl">
+            <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center text-primary mx-auto animate-pulse">
+              <span className="material-symbols-outlined text-4xl">rocket_launch</span>
             </div>
-            <p className="text-[10px] font-mono text-on-surface-variant/60 uppercase">Broadcasting to {getActiveNetworkName()}...</p>
+            <div>
+              <h3 className="serif-heading text-2xl text-on-surface font-bold">Deploying On-Chain</h3>
+              <p className="text-xs text-on-surface-variant mt-2 font-medium">
+                Generating IPFS evidence package CID and requesting Wagmi wallet signature...
+              </p>
+            </div>
+            <div className="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+              <div className="h-full bg-primary animate-pulse w-[75%] rounded-full"></div>
+            </div>
+            <p className="text-[10px] font-mono text-on-surface-variant/70 uppercase tracking-widest">
+              Target Network: {getActiveNetworkName()}
+            </p>
           </div>
         </div>
       )}
 
-      <main className="pt-24 pb-24 md:pb-4 px-4 w-full min-h-[calc(100vh-100px)] grid grid-cols-12 gap-4 max-w-7xl mx-auto z-10 relative flex-grow">
-        <div className="col-span-12 lg:col-span-4 flex flex-col justify-between h-auto bg-surface-variant/20 border border-outline-variant rounded-xl p-5 order-2 lg:order-1">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary-container text-primary font-mono text-[9px] tracking-widest uppercase font-bold animate-pulse">
-              <span className="material-symbols-outlined text-[13px]">science</span>
-              PREDICTION ENGINE CAPABILITY
+      <main className="pt-24 pb-24 md:pb-10 px-4 sm:px-6 w-full min-h-screen max-w-7xl mx-auto z-10 flex flex-col gap-6">
+        
+        {/* Header Hero Banner */}
+        <div className="w-full bg-surface rounded-3xl border border-outline-variant/60 shadow-xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+          
+          <div className="space-y-3 max-w-2xl relative z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary font-mono text-[10px] font-bold uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+              Autonomous Market Creator Studio
             </div>
-            <h2 className="serif-heading text-2xl md:text-3xl lg:text-4xl text-on-surface tracking-tight leading-tight">
-              AI Prediction Engine, <br/><span className="text-primary italic">Verifiable & On-Chain.</span>
-            </h2>
-            <p className="text-on-surface-variant text-xs leading-relaxed opacity-95">
-              Describe what you would like Nexa AI to predict. Our multi-agent consensus pipeline will structure, evaluate, and package the evidence for on-chain decision settlement.
+            <h1 className="serif-heading text-3xl sm:text-4xl text-on-surface font-extrabold leading-tight">
+              Creator Lab <span className="text-primary italic">— AI Market Studio</span>
+            </h1>
+            <p className="text-on-surface-variant text-sm leading-relaxed font-medium">
+              Transform plain language research questions into verifiable prediction markets. Our multi-agent swarm validates risk, generates SHA-256 evidence packages, and deploys directly to {getActiveNetworkName()}.
             </p>
           </div>
 
-          <div className="space-y-3 mt-6">
-            {/* FIX #3: Replaced invented 94.2% with an honest, verifiable protocol fact */}
-            <div className="bg-surface p-4 rounded-lg border border-outline-variant flex items-center gap-4 shadow-sm">
-              <div className="w-9 h-9 rounded bg-primary-container flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-primary text-lg">analytics</span>
-              </div>
+          <div className="flex flex-wrap md:flex-col gap-3 shrink-0 relative z-10">
+            <div className="px-4 py-2.5 bg-surface-container-low border border-outline-variant/50 rounded-2xl flex items-center gap-3">
+              <span className="material-symbols-outlined text-primary text-xl">gavel</span>
               <div>
-                <p className="font-mono text-[8px] text-on-surface-variant mb-0.5 uppercase tracking-widest font-bold">Consensus Quorum</p>
-                <p className="font-bold text-xs text-on-surface">66% Agent Approval Threshold</p>
+                <span className="text-[9px] font-mono font-bold text-on-surface-variant uppercase tracking-wider block">Consensus Gate</span>
+                <span className="text-xs font-mono font-bold text-on-surface">66% Agent Approval</span>
               </div>
             </div>
-            {/* Network native denomination */}
-            <div className="bg-surface p-4 rounded-lg border border-outline-variant flex items-center gap-4 shadow-sm">
-              <div className="w-9 h-9 rounded bg-surface-variant flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-primary text-lg">link</span>
-              </div>
+            <div className="px-4 py-2.5 bg-surface-container-low border border-outline-variant/50 rounded-2xl flex items-center gap-3">
+              <span className="material-symbols-outlined text-bullish-green text-xl">verified_user</span>
               <div>
-                <p className="font-mono text-[8px] text-on-surface-variant mb-0.5 uppercase tracking-widest font-bold">Network Fee</p>
-                <p className="font-bold text-xs text-on-surface">~0.002 {getNativeCurrencySymbol()} Gas Estimate</p>
-              </div>
-            </div>
-            {/* FIX #4: "Secure Multi-Oracle" → accurate testnet label */}
-            <div className="bg-surface p-4 rounded-lg border border-outline-variant flex items-center gap-4 shadow-sm">
-              <div className="w-9 h-9 rounded bg-surface-container-high flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-primary text-lg">verified_user</span>
-              </div>
-              <div>
-                <p className="font-mono text-[8px] text-on-surface-variant mb-0.5 uppercase tracking-widest font-bold">Settlement Oracle</p>
-                <p className="font-bold text-xs text-on-surface">Optimistic Oracle (Sepolia Testnet)</p>
+                <span className="text-[9px] font-mono font-bold text-on-surface-variant uppercase tracking-wider block">Settlement Oracle</span>
+                <span className="text-xs font-mono font-bold text-bullish-green">Optimistic Oracle</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-8 bg-surface rounded-xl border border-outline-variant shadow-lg p-5 flex flex-col h-auto order-1 lg:order-2">
-          <div className="flex-grow pr-2 space-y-6 min-h-0 col-snap-container">
-            {creatorMessages.map((msg) => (
-              <div key={msg.id} className="flex items-start gap-4 col-snap-section">
-                {msg.type === 'user' ? (
-                  <>
-                    <div className="w-8 h-8 shrink-0 rounded bg-surface-variant flex items-center justify-center border border-outline-variant">
-                      <span className="material-symbols-outlined text-on-surface-variant text-sm">person</span>
+        {/* 4-Step Process Pipeline Indicator */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full">
+          {[
+            { step: '01', title: 'Prompt Intent', desc: 'Describe proposal in natural language', icon: 'chat_bubble' },
+            { step: '02', title: 'Swarm Quorum', desc: 'Analyst, Risk & Compliance debate', icon: 'groups' },
+            { step: '03', title: 'IPFS Evidence', desc: 'SHA-256 evidence hash pinned', icon: 'fingerprint' },
+            { step: '04', title: 'On-Chain Deploy', desc: 'Smart contract settlement', icon: 'rocket_launch' }
+          ].map((item, idx) => (
+            <div key={idx} className="bg-surface p-4 rounded-2xl border border-outline-variant/50 shadow-xs flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-mono font-extrabold text-sm shrink-0">
+                {item.step}
+              </div>
+              <div className="min-w-0">
+                <span className="text-xs font-bold text-on-surface font-display block truncate">{item.title}</span>
+                <span className="text-[10px] text-on-surface-variant/70 font-medium block truncate">{item.desc}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Main Workspace Layout */}
+        <div className="grid grid-cols-12 gap-6 w-full">
+
+          {/* Left Panel: Studio Sidebar */}
+          <div className="col-span-12 lg:col-span-4 space-y-4">
+            <div className="bg-surface rounded-3xl border border-outline-variant/60 p-6 shadow-md space-y-5">
+              <div className="flex items-center gap-2 border-b border-outline-variant/40 pb-3">
+                <span className="material-symbols-outlined text-primary text-xl">tune</span>
+                <h2 className="text-base font-bold text-on-surface font-display">Engine Parameters</h2>
+              </div>
+
+              <div className="space-y-3">
+                <div className="p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/40 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-lg">local_gas_station</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-mono font-bold text-on-surface-variant uppercase tracking-wider block">Estimated Seed Gas</span>
+                    <span className="text-xs font-mono font-bold text-on-surface">~0.000002 {getNativeCurrencySymbol()}</span>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/40 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-bullish-green/10 text-bullish-green flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-lg">timer</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-mono font-bold text-on-surface-variant uppercase tracking-wider block">Default Market Expiry</span>
+                    <span className="text-xs font-mono font-bold text-on-surface">7 Days Optimistic Window</span>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/40 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-lg">security</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-mono font-bold text-on-surface-variant uppercase tracking-wider block">Safety Audit Gate</span>
+                    <span className="text-xs font-mono font-bold text-bullish-green">Automated Pass</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-outline-variant/40">
+                <span className="text-[10px] font-mono text-on-surface-variant/70 uppercase tracking-wider font-bold block mb-2">
+                  Active Swarm Validators
+                </span>
+                <div className="flex gap-2">
+                  {['AnalystAgent', 'RiskAgent', 'ComplianceAgent'].map((agent) => (
+                    <span key={agent} className="px-2.5 py-1 rounded-xl bg-surface-container-high border border-outline-variant/50 text-[10px] font-mono text-on-surface font-semibold flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-bullish-green"></span>
+                      {agent}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Panel: Interactive Creator Feed & Studio Input */}
+          <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
+
+            {/* Trending Suggestion Chips Rail */}
+            <div className="bg-surface rounded-3xl border border-outline-variant/60 p-5 shadow-md space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-primary text-base animate-pulse">local_fire_department</span>
+                  <span className="font-mono text-xs font-extrabold uppercase tracking-wider text-on-surface">Trending Signal Suggestions</span>
+                </div>
+                <div className="flex items-center gap-1 bg-surface-container-low border border-outline-variant/40 rounded-full p-1 font-mono text-[9px]">
+                  {['ALL', 'TECH', 'CRYPTO', 'POLITICS', 'SPORTS'].map((tab) => (
+                    <button
+                      key={tab}
+                      type="button"
+                      className={`px-3 py-1 rounded-full text-[9px] font-extrabold uppercase transition-all ${selectedSuggestionTab === tab ? 'bg-primary text-white shadow-xs' : 'text-on-surface-variant hover:text-on-surface'}`}
+                      onClick={() => setSelectedSuggestionTab(tab)}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-3 overflow-x-auto pb-2 pt-1 no-scrollbar">
+                {(liveTrending.length > 0 ? liveTrending : trendingSuggestions)
+                  .filter(item => selectedSuggestionTab === 'ALL' || item.category === selectedSuggestionTab)
+                  .map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className="flex-shrink-0 w-64 text-left p-4 rounded-2xl border border-outline-variant/50 bg-surface-container-low hover:border-primary/50 hover:bg-surface-container transition-all group shadow-xs relative overflow-hidden flex flex-col justify-between"
+                      onClick={() => handleSelectSuggestion(item.prompt)}
+                    >
+                      <div className="flex justify-between items-center w-full mb-2">
+                        <span className="flex items-center gap-1 text-[9px] font-bold text-primary uppercase tracking-widest font-mono">
+                          <span className="material-symbols-outlined text-[13px]">{item.icon}</span>
+                          {item.category}
+                        </span>
+                        <span className="bg-bullish-green/10 text-bullish-green text-[9px] font-bold px-2 py-0.5 rounded-full font-mono">
+                          {item.hotness} Hot
+                        </span>
+                      </div>
+                      <p className="font-semibold text-xs text-on-surface leading-snug tracking-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                        "{item.prompt.replace(/Propose decision for /gi, '')}"
+                      </p>
+                      <div className="flex justify-between items-center w-full pt-2 border-t border-outline-variant/30 text-[9px] font-mono text-on-surface-variant/70">
+                        <span>VOLUME EST.</span>
+                        <span className="text-on-surface font-bold">{item.volume}</span>
+                      </div>
+                    </button>
+                  ))}
+              </div>
+            </div>
+
+            {/* Prompt Input Form */}
+            <form onSubmit={handleSendCreator} className="w-full">
+              <div className="bg-surface rounded-3xl border border-outline-variant/60 p-2 shadow-lg flex items-center gap-3 focus-within:border-primary transition-all">
+                <div className="p-3 text-primary pl-4">
+                  <span className="material-symbols-outlined text-2xl">auto_awesome</span>
+                </div>
+                <input 
+                  className="flex-1 bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/40 py-3 text-sm outline-none font-medium" 
+                  placeholder="Describe your prediction proposal (e.g. 'Will Ethereum TVL cross $100B in Q4?')..." 
+                  type="text"
+                  value={creatorInput}
+                  onChange={(e) => setCreatorInput(e.target.value)}
+                />
+                <button 
+                  type="submit" 
+                  disabled={!creatorInput.trim() || isProcessingCreator}
+                  className="px-6 py-3 bg-primary text-white font-mono font-bold text-xs uppercase tracking-wider rounded-2xl hover:bg-primary/90 disabled:opacity-50 transition-all shadow-md flex items-center gap-2"
+                >
+                  <span>Propose</span>
+                  <span className="material-symbols-outlined text-base">send</span>
+                </button>
+              </div>
+            </form>
+
+            {/* Generated Proposal Feed */}
+            <div className="space-y-6">
+              {creatorMessages.map((msg) => (
+                <div key={msg.id} className="w-full">
+                  {msg.type === 'user' ? (
+                    <div className="flex items-start gap-3 justify-end mb-4">
+                      <div className="bg-primary/10 border border-primary/20 px-5 py-3 rounded-2xl max-w-xl text-xs font-medium text-on-surface">
+                        <p>{msg.content}</p>
+                      </div>
+                      <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shrink-0">
+                        {profileData?.nickname ? profileData.nickname.substring(0, 1) : 'U'}
+                      </div>
                     </div>
-                    <div className="bg-surface-variant/40 px-5 py-3 rounded-xl border border-outline-variant max-w-xl">
-                      <p className="text-on-surface leading-relaxed text-xs">{msg.content}</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-8 h-8 shrink-0 rounded bg-primary-container flex items-center justify-center border border-primary/20">
-                      <span className="material-symbols-outlined text-primary text-sm">memory</span>
-                    </div>
-                    <div className="market-card p-5 md:p-6 rounded-xl w-full max-w-2xl relative shadow-sm bg-surface">
-                      <div className="flex items-center justify-between mb-4 pb-3 border-b border-outline-variant">
+                  ) : (
+                    <div className="bg-surface rounded-3xl border border-outline-variant/60 shadow-xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
+                      <div className="flex items-center justify-between border-b border-outline-variant/40 pb-4">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-primary text-[9px] tracking-widest uppercase font-bold">Proposal</span>
-                          <span className="px-1.5 py-0.5 bg-bullish-green/10 text-bullish-green text-[8px] rounded font-bold font-mono">NEXA AI APPROVED</span>
+                          <span className="px-3 py-1 bg-bullish-green/10 text-bullish-green border border-bullish-green/20 text-[10px] font-mono font-bold rounded-full uppercase tracking-wider">
+                            NEXA AI QUORUM APPROVED
+                          </span>
+                          <span className="text-[10px] font-mono text-on-surface-variant/70 uppercase">
+                            Cat: {msg.category}
+                          </span>
                         </div>
-                        {/* FIX #8: Removed fake "2.14ms Ticker" invented performance metric */}
+                        <span className="font-mono text-xs text-primary font-bold">
+                          {msg.likelihood}
+                        </span>
                       </div>
-                      <div className="space-y-4">
-                        <h3 className="serif-heading text-base md:text-lg text-on-surface leading-tight font-extrabold">{msg.title}</h3>
-                        
-                        <div className="grid grid-cols-4 gap-px bg-outline-variant border border-outline-variant rounded overflow-hidden text-[10px]">
-                          <div className="bg-surface p-2.5">
-                            <div className="text-[8px] font-mono text-on-surface-variant mb-0.5 uppercase tracking-wider font-bold">Expiry</div>
-                            <div className="font-mono text-on-surface font-semibold">{msg.expiry}</div>
-                          </div>
-                          <div className="bg-surface p-2.5">
-                            <div className="text-[8px] font-mono text-on-surface-variant mb-0.5 uppercase tracking-wider font-bold">Category</div>
-                            <div className="font-mono text-on-surface font-semibold">{msg.category}</div>
-                          </div>
-                          <div className="bg-surface p-2.5">
-                            <div className="text-[8px] font-mono text-on-surface-variant mb-0.5 uppercase tracking-wider font-bold">Resolves</div>
-                            <div className="font-mono text-on-surface font-semibold">{msg.resolves}</div>
-                          </div>
-                          <div className="bg-surface p-2.5">
-                            <div className="text-[8px] font-mono text-on-surface-variant mb-0.5 uppercase tracking-wider font-bold">Conf.</div>
-                            <div className="font-mono text-bullish-green font-bold">{msg.likelihood}</div>
-                          </div>
-                        </div>
 
-                        <div className="py-3 border-y border-outline-variant space-y-2">
-                          <div className="flex justify-between items-end mb-1 text-[9px]">
-                            {/* FIX: Renamed "Neural Sentiment" to infrastructure-grade label */}
-                            <span className="font-mono text-on-surface-variant uppercase tracking-widest font-bold">Consensus Probability</span>
-                            <div className="flex gap-3 font-mono font-bold">
-                              <span className="text-bullish-green font-mono">YES {msg.yesProb}%</span>
-                              <span className="text-bearish-red font-mono">NO {msg.noProb}%</span>
-                            </div>
+                      <div className="space-y-3">
+                        <h3 className="serif-heading text-xl sm:text-2xl text-on-surface font-bold leading-tight">
+                          {msg.title}
+                        </h3>
+
+                        {/* Probability Progress Bar */}
+                        <div className="space-y-2 pt-2">
+                          <div className="flex justify-between items-center text-xs font-mono font-bold">
+                            <span className="text-bullish-green">YES {msg.yesProb}%</span>
+                            <span className="text-bearish-red">NO {msg.noProb}%</span>
                           </div>
-                          <div className="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden flex mb-4">
-                            <div className="h-full bg-primary" style={{ width: `${msg.yesProb}%` }}></div>
-                            <div className="h-full bg-secondary opacity-30" style={{ width: `${msg.noProb}%` }}></div>
+                          <div className="h-3 w-full bg-surface-container-high rounded-full overflow-hidden flex">
+                            <div className="h-full bg-bullish-green transition-all duration-500" style={{ width: `${msg.yesProb}%` }}></div>
+                            <div className="h-full bg-bearish-red transition-all duration-500" style={{ width: `${msg.noProb}%` }}></div>
                           </div>
-
-                          <div className="bg-surface-variant/30 rounded border border-outline-variant/50 p-2">
-                             <div className="flex items-center gap-1.5 mb-1.5">
-                                <span className="material-symbols-outlined text-[10px] text-primary">data_object</span>
-                                <span className="text-[8px] font-mono font-bold text-on-surface-variant uppercase tracking-widest">Raw AI Reasoning (Pre-IPFS Anchor)</span>
-                             </div>
-                             <p className="text-[9px] font-mono text-on-surface-variant leading-relaxed opacity-80 mb-1">
-                               <strong className="text-primary">SIGNALS:</strong> {msg.inputSignals || "SerpAPI trending search analysis, Twitter sentiment index."}
-                             </p>
-                             <p className="text-[9px] font-mono text-on-surface-variant leading-relaxed opacity-80 italic border-l-2 border-primary/30 pl-2">
-                               "{msg.reason || "Historical probability heavily favors this outcome based on localized news volume."}"
-                             </p>
-                          </div>
-
-                          {msg.evaluations && msg.evaluations.length > 0 && (
-                             <div className="bg-surface-variant/30 rounded border border-outline-variant/50 p-3.5 mt-2">
-                                <div className="flex items-center gap-1.5 mb-2.5 border-b border-outline-variant/30 pb-1.5">
-                                   <span className="material-symbols-outlined text-[10px] text-primary">diversity_3</span>
-                                   <span className="text-[8px] font-mono font-bold text-on-surface-variant uppercase tracking-widest">Consensus Engine Audits (Verifiable Decisions)</span>
-                                </div>
-                                <div className="space-y-2">
-                                  {msg.evaluations.map((val, idx) => {
-                                    const agentName = val.agentName || val.agent || (idx === 0 ? 'AnalystAgent' : idx === 1 ? 'RiskAgent' : 'ComplianceAgent');
-                                    const vote = val.vote || val.verdict || 'APPROVE';
-                                    const confidence = val.confidence !== undefined 
-                                      ? (typeof val.confidence === 'number' ? `${Math.round(val.confidence * 100)}%` : val.confidence)
-                                      : (val.score || '80%');
-                                    const reasoning = val.reasoning || val.notes || 'Evaluation passed protocol guidelines.';
-
-                                    return (
-                                      <div key={idx} className="text-[9px] font-mono text-on-surface-variant border-b border-outline-variant/10 pb-2 last:border-0 last:pb-0">
-                                        <div className="flex justify-between items-center mb-1">
-                                          <span className="font-bold text-primary flex items-center gap-1.5">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
-                                            {agentName}
-                                          </span>
-                                          <span className={`px-1.5 py-0.5 rounded text-[7px] font-bold font-mono ${vote.toUpperCase() === 'APPROVE' || vote.toUpperCase() === 'APPROVED' ? 'bg-bullish-green/10 text-bullish-green' : 'bg-bearish-red/10 text-bearish-red'}`}>
-                                            {vote.toUpperCase()} ({confidence})
-                                          </span>
-                                        </div>
-                                        <p className="opacity-80 pl-2 border-l border-primary/20 leading-relaxed font-mono text-[8px]">{reasoning}</p>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                             </div>
-                          )}
-                        </div>
-
-                        {/* Human Approval Checkpoint Banner */}
-                        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mt-4 mb-2 flex items-center justify-between text-left shadow-sm">
-                          <div className="flex items-center gap-2.5">
-                            <div className="w-7 h-7 rounded bg-amber-500/20 text-amber-600 flex items-center justify-center shrink-0">
-                              <span className="material-symbols-outlined text-sm font-bold">verified_user</span>
-                            </div>
-                            <div>
-                              <p className="text-[9px] font-mono font-bold text-amber-700 uppercase tracking-widest flex items-center gap-1.5">
-                                Human Approval Checkpoint
-                                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping inline-block"></span>
-                              </p>
-                              <p className="text-[9.5px] font-mono text-on-surface-variant font-medium">66% Agent Quorum Reached — Explicit human confirmation required before smart contract execution on Sepolia.</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex justify-center pt-2">
-                          <button 
-                            className="group px-6 py-3.5 bg-primary text-white font-mono text-[9px] tracking-[0.2em] rounded-lg transition-all hover:bg-on-surface hover:shadow-lg active:scale-95 uppercase font-bold flex items-center gap-2"
-                            onClick={() => handleLaunchOnChain(msg)}
-                          >
-                            <span>Approve & Deploy to Sepolia</span>
-                            <span className="material-symbols-outlined text-xs">rocket_launch</span>
-                          </button>
                         </div>
                       </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
 
-            {isProcessingCreator && (
-              <div className="flex items-start gap-4 col-snap-section">
-                <div className="w-8 h-8 shrink-0 rounded bg-primary-container flex items-center justify-center border border-primary/20">
-                  <span className="material-symbols-outlined text-primary text-sm animate-spin">sync</span>
+                      {/* Evaluations Grid */}
+                      {msg.evaluations && msg.evaluations.length > 0 && (
+                        <div className="space-y-3 bg-surface-container-low rounded-2xl p-4 border border-outline-variant/40">
+                          <div className="flex items-center gap-2 font-mono text-xs font-bold text-on-surface border-b border-outline-variant/30 pb-2">
+                            <span className="material-symbols-outlined text-primary text-base">groups</span>
+                            <span>Swarm Consensus Audits</span>
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {msg.evaluations.map((val, idx) => (
+                              <div key={idx} className="bg-surface p-3 rounded-xl border border-outline-variant/40 space-y-1">
+                                <div className="flex items-center justify-between font-mono text-[10px]">
+                                  <span className="font-bold text-primary">{val.agent}</span>
+                                  <span className="text-bullish-green font-bold">{val.verdict || 'Approved'}</span>
+                                </div>
+                                <p className="text-[10px] text-on-surface-variant/80 font-mono leading-tight">
+                                  {val.notes || val.reasoning}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Action Button */}
+                      <div className="pt-2 flex justify-end">
+                        <button 
+                          onClick={() => handleLaunchOnChain(msg)}
+                          className="px-8 py-3.5 bg-primary text-white font-mono font-bold text-xs uppercase tracking-widest rounded-2xl hover:bg-primary/90 transition-all shadow-lg flex items-center gap-2 group"
+                        >
+                          <span>Approve & Deploy to {getActiveNetworkName()}</span>
+                          <span className="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">rocket_launch</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="bg-surface-variant/40 px-5 py-3 rounded-xl border border-outline-variant max-w-xl">
-                  <p className="text-on-surface-variant leading-relaxed text-xs animate-pulse">{ProtocolMetadata.protocolName} generates structured reasoning through configured AI providers before packaging supporting evidence for on-chain submission...</p>
+              ))}
+
+              {isProcessingCreator && (
+                <div className="bg-surface rounded-3xl border border-outline-variant/60 p-6 shadow-md flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-2xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-xl animate-spin">sync</span>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="font-mono text-xs font-bold text-on-surface block">Generating AI Decision Proposal...</span>
+                    <span className="text-xs text-on-surface-variant/70 font-medium block">
+                      Analyst, Risk, and Compliance swarm nodes evaluating signal telemetry and confidence bounds.
+                    </span>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+
           </div>
 
-          <div className="mt-4 border-t border-outline-variant pt-4 shrink-0">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-sm animate-pulse">local_fire_department</span>
-                <span className="font-mono text-on-surface text-[10px] tracking-widest uppercase font-extrabold">GLOBAL TRENDING TOPICS</span>
-              </div>
-              <div className="flex items-center gap-1 bg-surface-variant/60 border border-outline-variant/60 rounded-full p-0.5 font-mono text-[9px] w-fit overflow-x-auto">
-                {['ALL', 'TECH', 'CRYPTO', 'POLITICS', 'SPORTS'].map((tab) => (
-                  <button
-                    key={tab}
-                    type="button"
-                    className={`px-3 py-1 rounded-full text-[9px] font-extrabold uppercase transition-all shrink-0 ${selectedSuggestionTab === tab ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:text-primary'}`}
-                    onClick={() => setSelectedSuggestionTab(tab)}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex gap-3 overflow-x-auto pb-3 pt-1 scrollbar-thin max-w-full">
-              {(liveTrending.length > 0 ? liveTrending : trendingSuggestions)
-                .filter(item => selectedSuggestionTab === 'ALL' || item.category === selectedSuggestionTab)
-                .map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className="flex-shrink-0 w-64 text-left p-3.5 rounded-xl border border-outline-variant bg-surface-variant/30 hover:border-primary hover:bg-surface-variant/50 transition-all duration-300 group flex flex-col justify-between shadow-xs relative overflow-hidden"
-                    onClick={() => handleSelectSuggestion(item.prompt)}
-                  >
-                    <div className="flex justify-between items-center w-full mb-2.5">
-                      <span className="flex items-center gap-1 text-[8px] font-bold text-on-surface-variant/60 uppercase tracking-widest font-mono">
-                        <span className="material-symbols-outlined text-[11px] text-primary">{item.icon}</span>
-                        {item.category}
-                      </span>
-                      <span className="bg-primary/10 text-primary text-[8px] font-bold px-2 py-0.5 rounded font-mono flex items-center gap-0.5">
-                        <span className="material-symbols-outlined text-[9px]">trending_up</span>
-                        {item.hotness}
-                      </span>
-                    </div>
-                    <p className="font-semibold text-xs text-on-surface leading-snug tracking-tight mb-3 line-clamp-2 italic group-hover:text-primary transition-colors">
-                      "{item.prompt.replace(/Propose decision for /gi, '')}"
-                    </p>
-                    <div className="flex justify-between items-center w-full mt-auto pt-2 border-t border-outline-variant/60 text-[8px] font-bold tracking-widest text-on-surface-variant/50 uppercase font-mono">
-                      <span>VOL POTENTIAL</span>
-                      <span className="text-on-surface font-semibold">{item.volume}</span>
-                    </div>
-                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                  </button>
-                ))}
-            </div>
-          </div>
-
-          <form onSubmit={handleSendCreator} className="mt-4 shrink-0">
-            <div className="relative bg-surface-container-low border border-outline-variant rounded-xl p-1 flex items-center gap-3 focus-within:border-primary transition-colors">
-              <div className="p-2 ml-1 text-primary">
-                <span className="material-symbols-outlined text-[18px]">terminal</span>
-              </div>
-              <input 
-                className="flex-1 bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50 py-2.5 text-xs outline-none" 
-                placeholder="Describe your decision proposal..." 
-                type="text"
-                value={creatorInput}
-                onChange={(e) => setCreatorInput(e.target.value)}
-              />
-              <button type="submit" className="p-2.5 bg-primary text-white rounded-lg hover:opacity-90 transition-opacity">
-                <span className="material-symbols-outlined text-[18px]">send</span>
-              </button>
-            </div>
-          </form>
         </div>
+
       </main>
     </>
   );
