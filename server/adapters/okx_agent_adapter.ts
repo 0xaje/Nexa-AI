@@ -1,5 +1,5 @@
 import { Logger } from '../utils/logger';
-import { CoordinatorAgent, UnifiedAgentResponse } from '../orchestration/CoordinatorAgent';
+import type { UnifiedAgentResponse } from '../orchestration/CoordinatorAgent';
 import { ProtocolMetadata } from '../../config/protocol/protocol';
 import { ASPConfig } from '../okx/asp.config';
 import { serviceCatalog } from '../services/serviceCatalog';
@@ -167,6 +167,7 @@ export class OKXAgentAdapter {
             Logger.info(`[OKX_A2A_ADAPTER] Processing request session "${sessionId}": "${query}"`);
 
             // Enforce 10s timeout protection wrapper
+            const { CoordinatorAgent } = await import('../orchestration/CoordinatorAgent');
             const agentPromise = CoordinatorAgent.processQuery(query);
             const timeoutPromise = new Promise<never>((_, reject) => {
                 setTimeout(() => reject(new Error("Request processing timeout after 10,000ms")), this.DEFAULT_TIMEOUT_MS);
