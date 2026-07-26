@@ -9,7 +9,6 @@ import useAppStore from './store/useAppStore';
 import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 
 import Landing from './components/Landing';
-import Leaderboard from './components/Leaderboard';
 import Feed from './components/Feed';
 import CreatorLab from './components/CreatorLab';
 import Terminal from './components/Terminal';
@@ -72,14 +71,13 @@ function App() {
   };
 
   const navItems = [
-    { id: 'chat', route: '/chat', label: 'Chat', icon: 'chat', aliases: ['', 'chat', 'landing'] },
-    { id: 'research', route: '/research', label: 'Research', icon: 'biotech', aliases: ['research', 'tokens'] },
-    { id: 'markets', route: '/markets', label: 'Markets', icon: 'query_stats', aliases: ['markets', 'feed', 'intelligence'] },
-    { id: 'insights', route: '/insights', label: 'Insights', icon: 'auto_graph', aliases: ['insights', 'terminal', 'risk'] },
-    { id: 'history', route: '/history', label: 'History', icon: 'history', aliases: ['history', 'portfolio'] },
-    { id: 'settings', route: '/settings', label: 'Settings', icon: 'settings', aliases: ['settings'] },
-    { id: 'lab', route: '/lab', label: 'Creator Lab', icon: 'science', aliases: ['lab', 'creator'] },
-    { id: 'leaderboard', route: '/leaderboard', label: 'Registry', icon: 'leaderboard', aliases: ['leaderboard', 'registry'] }
+    { id: 'chat',     route: '/chat',     label: 'Chat',        icon: 'chat',          aliases: ['', 'chat', 'landing'] },
+    { id: 'research', route: '/research', label: 'Research',    icon: 'biotech',       aliases: ['research', 'tokens'] },
+    { id: 'markets',  route: '/markets',  label: 'Markets',     icon: 'query_stats',   aliases: ['markets', 'feed', 'intelligence'] },
+    { id: 'insights', route: '/insights', label: 'Trade',       icon: 'candlestick_chart', aliases: ['insights', 'terminal', 'risk'] },
+    { id: 'history',  route: '/history',  label: 'History',     icon: 'history',       aliases: ['history', 'portfolio'] },
+    { id: 'settings', route: '/settings', label: 'Settings',    icon: 'settings',      aliases: ['settings'] },
+    { id: 'lab',      route: '/lab',      label: 'Creator Lab', icon: 'science',       aliases: ['lab', 'creator'] },
   ];
 
   return (
@@ -338,8 +336,6 @@ function App() {
           <Route path="/creator" element={<CreatorLab />} />
           <Route path="/transparency" element={<Explorer />} />
           <Route path="/explorer" element={<Explorer />} />
-          <Route path="/registry" element={<Leaderboard profileData={profileData} />} />
-          <Route path="/leaderboard" element={<Leaderboard profileData={profileData} />} />
         </Routes>
       </main>
 

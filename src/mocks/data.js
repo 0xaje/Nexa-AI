@@ -91,13 +91,7 @@ export const trendingSuggestions = [
   }
 ];
 
-export const getLeaderboardData = (profileNickname, profilePicture) => [
-  { rank: 1, user: "NexaWhale", avatar: "https://i.pravatar.cc/150?u=1", winRate: "89%", volume: "$4.2M", profit: "+$1.1M" },
-  { rank: 2, user: "0xQuantum", avatar: "https://i.pravatar.cc/150?u=2", winRate: "76%", volume: "$2.8M", profit: "+$890K" },
-  { rank: 3, user: "AlphaSeeker", avatar: "https://i.pravatar.cc/150?u=3", winRate: "82%", volume: "$1.9M", profit: "+$640K" },
-  { rank: 4, user: "DeepMind_X", avatar: "https://i.pravatar.cc/150?u=4", winRate: "71%", volume: "$1.5M", profit: "+$420K" },
-  { rank: 5, user: profileNickname, avatar: profilePicture, winRate: "68%", volume: "$1.2M", profit: "+$310K" },
-];
+
 
 export const feedCategories = [
   { id: 'TECH', label: 'AI & Tech', icon: 'developer_board', color: 'text-bearish' },
