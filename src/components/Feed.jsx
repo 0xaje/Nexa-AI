@@ -434,10 +434,10 @@ export default function Feed() {
             {/* Title */}
             <div>
               <h1 className="font-serif text-2xl md:text-3xl font-medium text-on-surface tracking-tight leading-tight">
-                Market Intelligence
+                Predictions & Forecasts
               </h1>
               <p className="font-mono text-[11px] text-on-surface-variant/60 mt-1 uppercase tracking-wider">
-                Real-time aggregate data and predictive institutional flows
+                Real-time prediction markets, AI outcome probabilities, and verifiable forecasts
               </p>
             </div>
 

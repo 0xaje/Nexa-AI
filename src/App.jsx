@@ -71,11 +71,11 @@ function App() {
   };
 
   const navItems = [
-    { id: 'research', route: '/',         label: 'Research', icon: 'biotech font-extrabold', aliases: ['', 'research', 'tokens', 'chat', 'landing'] },
-    { id: 'markets',  route: '/markets',  label: 'Markets',  icon: 'query_stats',           aliases: ['markets', 'feed', 'intelligence'] },
-    { id: 'history',  route: '/history',  label: 'History',  icon: 'history',               aliases: ['history', 'portfolio'] },
-    { id: 'explorer', route: '/explorer', label: 'Explorer', icon: 'manage_search',         aliases: ['explorer', 'transparency'] },
-    { id: 'settings', route: '/settings', label: 'Settings', icon: 'settings',              aliases: ['settings'] },
+    { id: 'research',    route: '/',             label: 'Research',    icon: 'biotech font-extrabold', aliases: ['', 'research', 'tokens', 'chat', 'landing'] },
+    { id: 'predictions', route: '/predictions',  label: 'Predictions', icon: 'online_prediction',      aliases: ['predictions', 'markets', 'feed', 'intelligence'] },
+    { id: 'history',     route: '/history',      label: 'History',     icon: 'history',                aliases: ['history', 'portfolio'] },
+    { id: 'explorer',    route: '/explorer',     label: 'Explorer',    icon: 'manage_search',          aliases: ['explorer', 'transparency'] },
+    { id: 'settings',    route: '/settings',     label: 'Settings',    icon: 'settings',              aliases: ['settings'] },
   ];
 
   return (
@@ -321,6 +321,7 @@ function App() {
           <Route path="/about" element={<Landing />} />
           <Route path="/research" element={<Tokens />} />
           <Route path="/tokens" element={<Tokens />} />
+          <Route path="/predictions" element={<Feed />} />
           <Route path="/markets" element={<Feed />} />
           <Route path="/intelligence" element={<Feed />} />
           <Route path="/feed" element={<Feed />} />
