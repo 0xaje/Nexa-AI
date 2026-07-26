@@ -4,6 +4,10 @@ const deployments: Record<number, Record<string, { address: string; abi: any }>>
   91342: {
     AiraMarketProtocol: marketProtocolDeployment,
     marketProtocol: marketProtocolDeployment
+  },
+  11155111: {
+    AiraMarketProtocol: marketProtocolDeployment,
+    marketProtocol: marketProtocolDeployment
   }
 };
 

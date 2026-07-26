@@ -1,6 +1,9 @@
 import { Logger } from '../utils/logger';
 import { CoordinatorAgent, UnifiedAgentResponse } from '../orchestration/CoordinatorAgent';
 import { ProtocolMetadata } from '../../config/protocol/protocol';
+import { ASPConfig } from '../okx/asp.config';
+import { serviceCatalog } from '../services/serviceCatalog';
+import { ASPManifestService, ASPManifest } from '../services/aspManifestService';
 
 export interface OKXAgentRequest {
     query: string;
@@ -24,60 +27,74 @@ export interface OKXAgentResponse {
 }
 
 export class OKXAgentAdapter {
-    static readonly PROVIDER_NAME = 'Nexa AI';
-    static readonly ASP_TYPE = 'A2A'; // Agent-to-Agent (A2A) ASP for complex reasoning agents
-    static readonly ADAPTER_VERSION = '1.0.0';
-    static readonly DEFAULT_TIMEOUT_MS = 10000;
+    static readonly PROVIDER_NAME = ASPConfig.provider;
+    static readonly ASP_TYPE = ASPConfig.aspType; // Agent-to-Agent (A2A) ASP for complex reasoning agents
+    static readonly ADAPTER_VERSION = ASPConfig.version;
+    static readonly DEFAULT_TIMEOUT_MS = ASPConfig.sla.timeoutGuardMs;
 
     /**
      * Agent Metadata Endpoint Handler
+     * Directly reflects synchronized ASPConfig properties.
      */
     static getMetadata() {
         return {
-            name: ProtocolMetadata.name,
-            category: "AI Crypto Intelligence Agent",
-            aspType: "A2A",
-            aspTypeDescription: "Agent-to-Agent (A2A) ASP for complex research, reasoning, risk assessment, and prediction orchestration.",
-            productStory: "Nexa AI is an autonomous crypto intelligence agent that helps traders and researchers analyze markets, evaluate risks, understand token ecosystems, and generate evidence-backed prediction opportunities through natural language.",
-            version: this.ADAPTER_VERSION,
-            description: ProtocolMetadata.protocolDescription,
-            provider: "Nexa AI / OKX A2A Agent Service Provider",
-            services: [
-                "Market Research",
-                "Token Analysis",
-                "Risk Assessment",
-                "News Intelligence",
-                "Prediction Generation"
-            ],
-            capabilities: [
-                "Token Research & Fundamental Analysis",
-                "Real-Time Market Signals & News Telemetry",
-                "Risk Scoring & Volatility Audit",
-                "Verifiable Prediction Proposals & IPFS Evidence Packaging"
-            ],
-            defaultPricing: "Free / On-Chain Query Gas Only",
-            endpoints: {
-                agentQuery: "/api/v1/okx/agent",
-                health: "/api/v1/okx/health",
-                version: "/api/v1/okx/version",
-                metadata: "/api/v1/okx/metadata"
-            },
-            supportedNetworks: ProtocolMetadata.supportedNetworks,
-            author: "Nexa AI Architecture Team",
-            website: ProtocolMetadata.website
+            name: ASPConfig.name,
+            category: ASPConfig.category,
+            aspType: ASPConfig.aspType,
+            aspTypeDescription: ASPConfig.aspTypeDescription,
+            productStory: ASPConfig.productStory,
+            version: ASPConfig.version,
+            description: ASPConfig.description,
+            provider: ASPConfig.provider,
+            author: ASPConfig.author,
+            website: ASPConfig.website,
+            repository: ASPConfig.repository,
+            supportedServices: serviceCatalog.getCatalog().map(s => s.name),
+            servicesDetailed: serviceCatalog.getCatalog(),
+            capabilities: ASPConfig.capabilities,
+            capabilitiesDetailed: ASPConfig.capabilitiesDetailed,
+            defaultPricing: ASPConfig.defaultPricing,
+            endpoints: ASPConfig.endpoints,
+            supportedNetworks: ASPConfig.supportedNetworks,
+            sla: ASPConfig.sla
         };
     }
 
     /**
-     * Health Endpoint Handler
+     * Agent Manifest Endpoint Handler
+     * Exposes full A2A ASP manifest with SHA-256 integrity hash for registration crawlers.
+     */
+    static getManifest(): ASPManifest {
+        return ASPManifestService.generateManifest();
+    }
+
+    /**
+     * Expanded Health Endpoint Handler with Service Diagnostics
      */
     static getHealth() {
+        const diagnostics = serviceCatalog.runDiagnostics();
+        const allServicesReady = diagnostics.every(d => d.ready);
+        const memory = process.memoryUsage();
+
         return {
-            status: "OK",
+            status: allServicesReady ? "OK" : "DEGRADED",
             service: "Nexa AI A2A Agent Provider",
-            aspType: "A2A",
+            aspType: ASPConfig.aspType,
+            provider: ASPConfig.provider,
+            version: ASPConfig.version,
             uptimeSeconds: Math.floor(process.uptime()),
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            swarmNodes: {
+                ResearchAgent: { status: "ONLINE", role: "Fundamental Token & Trend Analysis" },
+                MarketIntelAgent: { status: "ONLINE", role: "Real-Time Telemetry & Data Integrity" },
+                RiskAgent: { status: "ONLINE", role: "Volatility & Circuit Breaker Audit" }
+            },
+            serviceCatalogDiagnostics: diagnostics,
+            system: {
+                rssBytes: memory.rss,
+                heapUsedBytes: memory.heapUsed,
+                heapTotalBytes: memory.heapTotal
+            }
         };
     }
 
@@ -86,11 +103,11 @@ export class OKXAgentAdapter {
      */
     static getVersion() {
         return {
-            name: ProtocolMetadata.name,
-            aspType: "A2A",
-            version: this.ADAPTER_VERSION,
+            name: ASPConfig.name,
+            aspType: ASPConfig.aspType,
+            version: ASPConfig.version,
             apiVersion: "v1",
-            build: "v1.0.0-stable",
+            build: `${ProtocolMetadata.release}-stable`,
             environment: ProtocolMetadata.environment
         };
     }

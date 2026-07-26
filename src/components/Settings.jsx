@@ -98,9 +98,9 @@ export default function Settings() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
             {[
-              { name: 'AnalystAgent', role: 'Signal & Probability', status: 'ONLINE', score: '98.4%' },
-              { name: 'RiskAgent', role: 'Volatility & Safeguards', status: 'ONLINE', score: '96.2%' },
-              { name: 'ComplianceAgent', role: 'Oracle & Policy Audit', status: 'ONLINE', score: '99.1%' }
+              { name: 'ResearchAgent', role: 'Signal & Probability Modeling', status: 'ONLINE', score: '98.4%' },
+              { name: 'MarketIntelAgent', role: 'Oracle & Data Pipeline', status: 'ONLINE', score: '99.1%' },
+              { name: 'RiskAgent', role: 'Volatility & Safeguards', status: 'ONLINE', score: '96.2%' }
             ].map((node) => (
               <div key={node.name} className="p-4 bg-surface-container-low rounded-2xl border border-outline-variant/40 space-y-2">
                 <div className="flex items-center justify-between">

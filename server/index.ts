@@ -26,6 +26,8 @@ import { exec } from 'child_process';
 import { ProviderFactory } from '../services/providerFactory';
 import { indexer } from './indexer';
 import { OKXAgentAdapter } from './adapters/okx_agent_adapter';
+import { MetadataValidator } from './utils/metadataValidator';
+import { serviceCatalog } from './services/serviceCatalog';
 
 Logger.start(`Initializing ${ProtocolMetadata.protocolName} Autonomous Backend...`);
 
@@ -56,6 +58,9 @@ async function runPrismaMigrations() {
 
 async function bootstrap() {
     validateEnvironment();
+
+    // Perform OKX ASP Metadata Synchronization Check
+    MetadataValidator.validate();
 
     const report = await NetworkValidationService.validate();
 
@@ -328,26 +333,32 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // OKX AI Agent Service Provider Public REST API Endpoints
-    if (req.method === 'GET' && req.url === '/api/v1/okx/health') {
+    // OKX AI Agent Service Provider Public REST API Endpoints & Aliases
+    if (req.method === 'GET' && (req.url === '/api/v1/okx/health' || req.url === '/health' || req.url === '/api/v1/health')) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(OKXAgentAdapter.getHealth()));
         return;
     }
 
-    if (req.method === 'GET' && req.url === '/api/v1/okx/version') {
+    if (req.method === 'GET' && (req.url === '/api/v1/okx/version' || req.url === '/version' || req.url === '/api/v1/version')) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(OKXAgentAdapter.getVersion()));
         return;
     }
 
-    if (req.method === 'GET' && req.url === '/api/v1/okx/metadata') {
+    if (req.method === 'GET' && (req.url === '/api/v1/okx/metadata' || req.url === '/metadata' || req.url === '/api/v1/metadata')) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(OKXAgentAdapter.getMetadata()));
         return;
     }
 
-    if (req.method === 'POST' && req.url === '/api/v1/okx/agent') {
+    if (req.method === 'GET' && (req.url === '/api/v1/okx/manifest' || req.url === '/manifest' || req.url === '/api/v1/manifest')) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(OKXAgentAdapter.getManifest()));
+        return;
+    }
+
+    if (req.method === 'POST' && (req.url === '/api/v1/okx/agent' || req.url === '/agent' || req.url === '/api/v1/agent')) {
         let body = '';
         req.on('data', chunk => { body += chunk.toString(); });
         req.on('end', async () => {
@@ -580,6 +591,7 @@ const server = http.createServer(async (req, res) => {
         } catch (e) {}
 
         const { ProtocolMetadata } = await import('../config/protocol/protocol');
+        const serviceDiagnostics = serviceCatalog.runDiagnostics();
         const memory = process.memoryUsage();
 
         res.end(JSON.stringify({
@@ -587,6 +599,12 @@ const server = http.createServer(async (req, res) => {
             database: dbStatus,
             rpc: rpcStatus,
             contracts: "Connected",
+            services: serviceDiagnostics,
+            swarmNodes: {
+                ResearchAgent: "ONLINE",
+                MarketIntelAgent: "ONLINE",
+                RiskAgent: "ONLINE"
+            },
             memory: {
                 rss: memory.rss,
                 heapTotal: memory.heapTotal,

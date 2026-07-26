@@ -391,35 +391,42 @@ export default function Tokens() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-[calc(100vh-64px)] overflow-hidden bg-background">
+    <div className="w-full min-h-[calc(100vh-64px)] bg-background pb-20 overflow-y-auto">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 space-y-6">
 
-      {/* ══════════════════════════════════════════
-          LEFT — Research Stream
-      ══════════════════════════════════════════ */}
-      <section className="flex-1 flex flex-col min-w-0 border-r border-outline-variant/10 overflow-hidden">
-
-        {/* ── Calm, Professional Header & Input (Step 8) ── */}
-        <div className="px-6 md:px-10 pt-6 pb-4 border-b border-outline-variant/10 bg-background shrink-0 space-y-4">
-          <div className="flex items-center justify-between gap-4">
+        {/* ── 1. COMMAND CENTER HEADER ── */}
+        <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 shadow-md space-y-5">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-outline-variant/30 pb-4">
             <div>
-              <h1 className="font-serif text-2xl md:text-3xl font-medium text-on-surface">Good morning.</h1>
-              <p className="text-xs md:text-sm text-on-surface-variant/70 mt-0.5">
-                What would you like to research today?
+              <div className="flex items-center gap-2">
+                <h1 className="font-serif text-2xl md:text-3xl font-bold text-on-surface">Nexa AI Research Console</h1>
+                <span className="px-2.5 py-0.5 rounded-full bg-bullish-green/10 text-bullish-green text-[10px] font-mono font-bold uppercase tracking-wider border border-bullish-green/20">
+                  LIVE TELEMETRY
+                </span>
+              </div>
+              <p className="text-xs md:text-sm text-on-surface-variant/70 mt-1 font-medium">
+                Institutional crypto intelligence, multi-agent quorum synthesis, and verifiable evidence.
               </p>
             </div>
-            
-            <button
-              onClick={() => useAppStore.getState().openCreatorLab()}
-              className="px-4 py-2 bg-primary text-white hover:bg-primary/90 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-xs shrink-0"
-            >
-              <span className="material-symbols-outlined text-[16px]">add_circle</span>
-              <span>Create Prediction</span>
-            </button>
+
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-2xl border border-outline-variant/30 font-mono text-xs">
+                <span className="w-2 h-2 rounded-full bg-bullish-green animate-pulse"></span>
+                <span className="text-on-surface font-bold">98.4% Quorum Consensus</span>
+              </div>
+              <button
+                onClick={() => useAppStore.getState().openCreatorLab()}
+                className="px-4 py-2.5 bg-primary text-white hover:bg-primary/90 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm shrink-0"
+              >
+                <span className="material-symbols-outlined text-[18px]">add_circle</span>
+                <span>Create Prediction</span>
+              </button>
+            </div>
           </div>
 
-          {/* Clean Input Bar */}
-          <div className="flex items-center gap-2 max-w-4xl">
-            <div className="relative flex-1 bg-surface-container-low border border-outline-variant/30 rounded-xl px-4 py-2.5 flex items-center gap-3 focus-within:border-primary/50 transition-colors">
+          {/* Search Input Bar */}
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="relative flex-1 w-full bg-surface-container-low border border-outline-variant/40 rounded-2xl px-4 py-3 flex items-center gap-3 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-xs">
               <span className="material-symbols-outlined text-primary text-xl">search</span>
               <input
                 type="text"
@@ -428,30 +435,28 @@ export default function Tokens() {
                 onKeyDown={e => {
                   if (e.key === 'Enter') handleExecuteResearch(researchInput);
                 }}
-                placeholder="Search token or topic (e.g. 'Analyze Ethereum sentiment & risk')..."
-                className="w-full bg-transparent border-none text-xs sm:text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none font-sans"
+                placeholder="Search token, asset, or topic (e.g. 'Analyze Ethereum L2 gas & TVL')..."
+                className="w-full bg-transparent border-none text-xs sm:text-sm text-on-surface placeholder:text-on-surface-variant/50 outline-none font-sans font-medium"
               />
             </div>
             <button
               onClick={() => handleExecuteResearch(researchInput)}
               disabled={!researchInput.trim()}
-              className="px-5 py-2.5 bg-primary text-white disabled:opacity-40 rounded-xl text-xs font-mono font-bold uppercase tracking-wider hover:bg-primary/90 transition-all shrink-0"
+              className="w-full sm:w-auto px-6 py-3 bg-primary text-white disabled:opacity-40 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider hover:bg-primary/90 transition-all shrink-0 shadow-xs"
             >
-              Research
+              Execute Research
             </button>
           </div>
 
-          {/* Quick Start Templates */}
-          <div className="space-y-1.5 pt-1">
-            <span className="font-mono text-[10px] text-outline uppercase tracking-wider block font-bold">Quick Templates:</span>
-            <div className="flex flex-wrap gap-1.5">
+          {/* Quick Start Templates & Asset Selector */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-1">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+              <span className="font-mono text-[10px] text-on-surface-variant/70 uppercase tracking-widest font-bold shrink-0">Templates:</span>
               {[
                 { label: 'Investment Research', prompt: 'Investment Research report for top AI & L1 crypto protocols' },
                 { label: 'Token Analysis', prompt: 'Deep-dive token analysis on valuation, utility & tokenomics' },
                 { label: 'Risk Assessment', prompt: 'Institutional risk assessment on smart contract & volatility hazards' },
-                { label: 'Prediction', prompt: 'Verifiable prediction forecast for market sentiment & price targets' },
-                { label: 'Portfolio Review', prompt: 'Portfolio review on active yield positions & exposure' },
-                { label: 'Market Summary', prompt: 'Executive summary of macro crypto market movements today' }
+                { label: 'Prediction Forecast', prompt: 'Verifiable prediction forecast for market sentiment & price targets' }
               ].map((tpl) => (
                 <button
                   key={tpl.label}
@@ -459,463 +464,359 @@ export default function Tokens() {
                     setResearchInput(tpl.prompt);
                     handleExecuteResearch(tpl.prompt);
                   }}
-                  className="px-3 py-1 rounded-lg bg-surface-container border border-outline-variant/30 hover:border-primary/50 text-xs font-mono text-on-surface-variant hover:text-primary transition-all text-left flex items-center gap-1 shrink-0"
+                  className="px-3 py-1.5 rounded-xl bg-surface-container border border-outline-variant/30 hover:border-primary/50 text-[11px] font-mono text-on-surface-variant hover:text-primary transition-all shrink-0 flex items-center gap-1.5"
                 >
                   <span className="material-symbols-outlined text-[13px] text-primary">description</span>
                   <span>{tpl.label}</span>
                 </button>
               ))}
             </div>
-          </div>
 
-          {/* Featured Token Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
-            <span className="font-mono text-[10px] text-outline uppercase tracking-wider shrink-0">Featured:</span>
-            {filteredTokens.map(token => (
-              <TokenChip
-                key={token.symbol}
-                token={token}
-                selected={selectedToken.symbol === token.symbol}
-                onClick={() => handleSelectToken(token)}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* ── Research Timeline Stepper & Tool Indicators ── */}
-        <div className="px-6 md:px-10 py-3.5 border-b border-outline-variant/10 bg-surface-container-low shrink-0 space-y-2.5">
-          {/* Live Timeline Stepper */}
-          <div className="flex items-center justify-between font-mono text-[10px] text-on-surface-variant">
-            <span className="font-bold text-primary flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Research Started
-            </span>
-            <span className="text-outline-variant">↓</span>
-            <span className="font-bold text-on-surface">Market Data</span>
-            <span className="text-outline-variant">↓</span>
-            <span className="font-bold text-on-surface">Sentiment</span>
-            <span className="text-outline-variant">↓</span>
-            <span className="font-bold text-on-surface">Risk</span>
-            <span className="text-outline-variant">↓</span>
-            <span className="font-bold text-on-surface">Consensus</span>
-            <span className="text-outline-variant">↓</span>
-            <span className="font-bold text-bullish-green flex items-center gap-1">
-              <span className="material-symbols-outlined text-[13px]">check_circle</span>
-              Done
-            </span>
-          </div>
-
-          {/* Tool Indicators */}
-          <div className="flex flex-wrap gap-2 pt-1 border-t border-outline-variant/20">
-            <span className="px-2 py-0.5 rounded bg-surface border border-outline-variant/30 font-mono text-[9.5px] text-on-surface font-bold flex items-center gap-1">
-              <span>Market Data</span> <span className="text-bullish-green font-extrabold">✓</span>
-            </span>
-            <span className="px-2 py-0.5 rounded bg-surface border border-outline-variant/30 font-mono text-[9.5px] text-on-surface font-bold flex items-center gap-1">
-              <span>News</span> <span className="text-bullish-green font-extrabold">✓</span>
-            </span>
-            <span className="px-2 py-0.5 rounded bg-surface border border-outline-variant/30 font-mono text-[9.5px] text-on-surface font-bold flex items-center gap-1">
-              <span>Risk</span> <span className="text-bullish-green font-extrabold">✓</span>
-            </span>
-            <span className="px-2 py-0.5 rounded bg-surface border border-outline-variant/30 font-mono text-[9.5px] text-on-surface font-bold flex items-center gap-1">
-              <span>Prediction</span> <span className="text-bullish-green font-extrabold">✓</span>
-            </span>
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+              <span className="font-mono text-[10px] text-on-surface-variant/70 uppercase tracking-widest font-bold shrink-0">Assets:</span>
+              {filteredTokens.map(token => (
+                <TokenChip
+                  key={token.symbol}
+                  token={token}
+                  selected={selectedToken.symbol === token.symbol}
+                  onClick={() => handleSelectToken(token)}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* ── View Tabs & Export Report Bar ── */}
-        <div className="px-6 md:px-10 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
-          <div className="flex items-center gap-1">
-            {[
-              { id: 'analysis', label: 'AI Analysis', icon: 'psychology' },
-              { id: 'overview', label: 'Asset Overview', icon: 'account_balance' },
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded text-[11px] font-mono font-bold uppercase tracking-wider transition-all ${
-                  activeTab === tab.id
-                    ? 'bg-surface-container-high text-primary border-b-2 border-primary'
-                    : 'text-on-surface-variant hover:text-on-surface'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[14px]">{tab.icon}</span>
-                {tab.label}
-              </button>
-            ))}
+        {/* ── 2. AUDIT TRAIL STEPPER & EXPORT BAR ── */}
+        <div className="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
+          <div className="flex items-center gap-3 overflow-x-auto no-scrollbar w-full md:w-auto font-mono text-[11px]">
+            <span className="px-2.5 py-1 rounded-xl bg-primary/10 text-primary border border-primary/20 font-bold flex items-center gap-1.5 shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              Step 1: Signal Ingestion
+            </span>
+            <span className="text-outline-variant">→</span>
+            <span className="px-2.5 py-1 rounded-xl bg-surface border border-outline-variant/40 text-on-surface font-semibold flex items-center gap-1 shrink-0">
+              Step 2: Swarm Debate
+            </span>
+            <span className="text-outline-variant">→</span>
+            <span className="px-2.5 py-1 rounded-xl bg-surface border border-outline-variant/40 text-on-surface font-semibold flex items-center gap-1 shrink-0">
+              Step 3: IPFS Evidence
+            </span>
+            <span className="text-outline-variant">→</span>
+            <span className="px-2.5 py-1 rounded-xl bg-bullish-green/10 text-bullish-green border border-bullish-green/20 font-bold flex items-center gap-1 shrink-0">
+              <span className="material-symbols-outlined text-[13px]">verified</span>
+              Step 4: Consensus Report Ready
+            </span>
           </div>
 
-          {/* Export Report Buttons */}
-          <div className="flex items-center gap-1.5 font-mono text-xs">
-            <span className="text-on-surface-variant text-[10px] font-bold uppercase mr-1 hidden sm:inline">Export:</span>
-            <button onClick={handleExportMarkdown} className="px-2.5 py-1 bg-surface-container-high hover:bg-primary/20 text-on-surface text-[10px] font-bold rounded-lg uppercase transition-all border border-outline-variant/30 flex items-center gap-1">
-              <span className="material-symbols-outlined text-[12px]">code</span> Markdown
+          <div className="flex items-center gap-2 shrink-0 font-mono text-xs w-full md:w-auto justify-end">
+            <span className="text-on-surface-variant/70 text-[10px] font-bold uppercase mr-1">Export Report:</span>
+            <button onClick={handleExportMarkdown} className="px-3 py-1.5 bg-surface hover:bg-primary/10 text-on-surface text-[10px] font-bold rounded-xl border border-outline-variant/40 hover:border-primary/40 transition-all flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px] text-primary">code</span> Markdown
             </button>
-            <button onClick={handleExportPDF} className="px-2.5 py-1 bg-surface-container-high hover:bg-primary/20 text-on-surface text-[10px] font-bold rounded-lg uppercase transition-all border border-outline-variant/30 flex items-center gap-1">
-              <span className="material-symbols-outlined text-[12px]">picture_as_pdf</span> PDF
+            <button onClick={handleExportPDF} className="px-3 py-1.5 bg-surface hover:bg-primary/10 text-on-surface text-[10px] font-bold rounded-xl border border-outline-variant/40 hover:border-primary/40 transition-all flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px] text-primary">picture_as_pdf</span> PDF
             </button>
-            <button onClick={handleExportJSON} className="px-2.5 py-1 bg-surface-container-high hover:bg-primary/20 text-on-surface text-[10px] font-bold rounded-lg uppercase transition-all border border-outline-variant/30 flex items-center gap-1">
-              <span className="material-symbols-outlined text-[12px]">data_object</span> JSON
+            <button onClick={handleExportJSON} className="px-3 py-1.5 bg-surface hover:bg-primary/10 text-on-surface text-[10px] font-bold rounded-xl border border-outline-variant/40 hover:border-primary/40 transition-all flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px] text-primary">data_object</span> JSON
             </button>
           </div>
         </div>
 
-        {/* ── Scrollable Content ── */}
-        <div className="flex-1 overflow-y-auto px-6 md:px-10 py-6 custom-scrollbar-thin">
-          <div className="max-w-[800px] mx-auto space-y-8 pb-6">
+        {/* ── 3. MAIN 2-COLUMN RESEARCH WORKSPACE ── */}
+        <div className="grid grid-cols-12 gap-6 w-full">
 
-            {/* ── ANALYSIS TAB ── */}
-            {activeTab === 'analysis' && (
-              <>
-                {/* Headline */}
-                <div className="space-y-3">
-                  <h2 className="font-serif text-2xl md:text-3xl font-medium text-on-surface leading-tight">
-                    {selectedToken.headline}
-                  </h2>
-                  <p className="text-on-surface-variant leading-relaxed text-sm md:text-base">
-                    {selectedToken.summary}
-                  </p>
-                </div>
+          {/* ════ LEFT COLUMN (8 COLS): Primary Research & Swarm Synthesis ════ */}
+          <div className="col-span-12 lg:col-span-8 space-y-6">
 
-                {/* Executive Summary */}
-                <div className="bg-surface-container-low border border-outline-variant/10 p-5 rounded">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-mono text-[10px] text-primary uppercase tracking-widest">Executive Summary</h3>
-                    <span className="material-symbols-outlined text-outline text-[18px]">analytics</span>
+            {/* Hero Asset Header & Executive Summary */}
+            <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-outline-variant/20 pb-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center font-mono font-bold text-primary text-base">
+                    {selectedToken.symbol}
                   </div>
-                  <p className="text-sm text-on-surface-variant leading-relaxed">
-                    {selectedToken.executiveSummary}
-                  </p>
-                </div>
-
-                {/* Key Findings Bento */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-5 bg-surface-container border border-outline-variant/10 rounded hover:border-primary/30 transition-colors">
-                    <h4 className="font-mono text-[10px] text-on-surface-variant/60 uppercase tracking-wider mb-2">Market Signal</h4>
-                    <div className="flex items-baseline gap-2 mb-1">
-                      <span className="font-serif text-xl font-medium text-primary">{selectedToken.marketSignal}</span>
-                      <span className="font-mono text-[10px] text-tertiary">{selectedToken.marketSignalConf}</span>
-                    </div>
-                    <p className="text-[12px] text-on-surface-variant">{selectedToken.marketSignalDesc}</p>
-                  </div>
-                  <div className="p-5 bg-surface-container border border-outline-variant/10 rounded hover:border-primary/30 transition-colors">
-                    <h4 className="font-mono text-[10px] text-on-surface-variant/60 uppercase tracking-wider mb-2">Volatility Index</h4>
-                    <div className="flex items-baseline gap-2 mb-1">
-                      <span className="font-serif text-xl font-medium text-on-surface">{selectedToken.volatility}</span>
-                      <span className="font-mono text-[10px] text-outline">{selectedToken.volatilityVix}</span>
-                    </div>
-                    <p className="text-[12px] text-on-surface-variant">{selectedToken.volatilityDesc}</p>
+                  <div>
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-on-surface">{selectedToken.name}</h2>
+                    <span className="text-xs text-on-surface-variant font-mono">{selectedToken.symbol} • Institutional Crypto Research</span>
                   </div>
                 </div>
 
-                {/* Chart */}
-                <div className="space-y-3">
-                  <h3 className="font-serif text-lg font-medium text-on-surface">Market Execution Signal</h3>
-                  <div className="h-56 w-full bg-surface-container-lowest border border-outline-variant/10 rounded relative overflow-hidden"
-                    style={{
-                      backgroundImage: 'linear-gradient(rgba(255,180,162,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,180,162,0.03) 1px, transparent 1px)',
-                      backgroundSize: '20px 20px'
-                    }}
-                  >
-                    <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 400">
-                      <defs>
-                        <linearGradient id={`grad-${selectedToken.symbol}`} x1="0" x2="0" y1="0" y2="1">
-                          <stop offset="0%" stopColor="#ffb4a2" stopOpacity="0.12" />
-                          <stop offset="100%" stopColor="#ffb4a2" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-                      <path d={selectedToken.chartPath} fill="none" stroke="#ffb4a2" strokeWidth="2" />
-                      <path d={selectedToken.chartFill} fill={`url(#grad-${selectedToken.symbol})`} />
-                      <circle cx={selectedToken.chartDot.cx} cy={selectedToken.chartDot.cy} r="5" fill="#ffb4a2" />
-                      <line x1="0" x2="1000" y1="350" y2="350" stroke="rgba(255,180,162,0.08)" strokeDasharray="4" />
-                    </svg>
-                    <div className="absolute top-4 right-4 text-right">
-                      <span className="block font-mono text-[10px] text-outline uppercase tracking-wider">Current Price</span>
-                      <span className="block font-serif text-xl font-medium text-primary">{selectedToken.price}</span>
-                    </div>
-                    <div className="absolute bottom-3 left-4">
-                      <span className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded border ${
-                        selectedToken.isPositive
-                          ? 'bg-bullish-green/10 text-bullish-green border-bullish-green/20'
-                          : 'bg-bearish-red/10 text-bearish-red border-bearish-red/20'
-                      }`}>
-                        {selectedToken.change24h} 24H
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Multi-Agent Verdicts */}
-                <div>
-                  <h3 className="font-serif text-lg font-medium text-on-surface mb-3">Multi-Agent Intelligence Report</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {[
-                      { label: 'Analyst Agent', value: selectedToken.analystVerdict, color: 'text-bullish-green' },
-                      { label: 'Risk Agent', value: selectedToken.riskVerdict, color: 'text-amber-500' },
-                      { label: 'Compliance Agent', value: selectedToken.complianceVerdict, color: 'text-on-surface' },
-                    ].map(agent => (
-                      <div key={agent.label} className="bg-surface-container border border-outline-variant/10 rounded p-4 font-mono">
-                        <span className="text-[9px] text-on-surface-variant/60 uppercase tracking-wider font-bold block mb-1.5">
-                          {agent.label}
-                        </span>
-                        <span className={`font-bold text-[11px] ${agent.color} block`}>{agent.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Key Drivers */}
-                <div>
-                  <h4 className="flex items-center gap-1.5 font-mono text-[11px] font-bold text-on-surface uppercase tracking-wider mb-3">
-                    <span className="material-symbols-outlined text-bullish-green text-[15px]">trending_up</span>
-                    Key Growth Drivers
-                  </h4>
-                  <ul className="space-y-2">
-                    {selectedToken.keyDrivers.map((d, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-sm text-on-surface-variant leading-relaxed">
-                        <span className="w-1.5 h-1.5 rounded-full bg-bullish-green mt-2 shrink-0" />
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Risk Assessment */}
-                <div className="bg-red-950/20 border border-red-500/20 p-5 rounded">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="material-symbols-outlined text-error text-[18px]">warning</span>
-                    <h3 className="font-mono text-[10px] text-error uppercase tracking-widest font-bold">Institutional Risk Assessment</h3>
-                  </div>
-                  <ul className="space-y-2 list-disc pl-4">
-                    {selectedToken.riskFactors.map((r, i) => (
-                      <li key={i} className="text-sm text-on-surface-variant leading-relaxed">{r}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Streaming synthesis */}
-                <div className="pt-6 border-t border-outline-variant/10">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                    <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Nexa LLM Synthesizing</span>
-                  </div>
-                  <p className="text-sm text-on-surface-variant leading-relaxed">
-                    {streamText}
-                    {!streamDone && (
-                      <span className="inline-block w-0.5 h-4 bg-primary ml-0.5 align-middle animate-[blink_0.8s_step-end_infinite]" />
-                    )}
-                  </p>
-                </div>
-
-                {/* Research → Recommendation → Trade Workflow */}
-                <div className="flex flex-col sm:flex-row gap-3 pb-4">
-                  <button
-                    onClick={() => navigate('/insights', { state: { symbol: selectedToken.symbol, direction: 'YES' } })}
-                    className="flex-1 py-2.5 bg-bullish-green text-white hover:bg-bullish-green/90 rounded-xl font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-sm"
-                  >
-                    <span className="material-symbols-outlined text-[15px]">candlestick_chart</span>
-                    Execute Trade ({selectedToken.symbol})
-                  </button>
-                  <button
-                    onClick={() => navigate('/chat', { state: { initialPrompt: `Analyze ${selectedToken.name} (${selectedToken.symbol}) market metrics and risk vectors.` } })}
-                    className="flex-1 py-2.5 bg-surface-container-high border border-outline-variant/40 hover:border-primary/40 text-on-surface rounded-xl font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
-                  >
-                    <span className="material-symbols-outlined text-[15px]">chat</span>
-                    Refine AI Research
-                  </button>
-                  <button
-                    onClick={() => navigate('/lab')}
-                    className="px-4 py-2.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 rounded-xl font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
-                  >
-                    <span className="material-symbols-outlined text-[15px]">science</span>
-                    Create Prediction
-                  </button>
-                </div>
-              </>
-            )}
-
-            {/* ── OVERVIEW TAB ── */}
-            {activeTab === 'overview' && (
-              <div className="space-y-6">
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <h2 className="font-serif text-2xl font-medium text-on-surface">{selectedToken.name}</h2>
-                    <span className={`px-2.5 py-1 rounded-full font-mono text-[10px] font-bold border ${
-                      selectedToken.isPositive
-                        ? 'bg-bullish-green/10 text-bullish-green border-bullish-green/20'
-                        : 'bg-bearish-red/10 text-bearish-red border-bearish-red/20'
-                    }`}>
-                      {selectedToken.sentiment}
-                    </span>
-                  </div>
-                  <div className="font-mono text-3xl font-bold text-on-surface">{selectedToken.price}</div>
-                  <span className={`font-mono text-xs font-bold ${selectedToken.isPositive ? 'text-bullish-green' : 'text-bearish-red'}`}>
-                    {selectedToken.change24h} (24h)
+                <div className="flex items-center gap-2">
+                  <span className={`px-3 py-1 rounded-xl font-mono text-xs font-bold border ${
+                    selectedToken.isPositive
+                      ? 'bg-bullish-green/10 text-bullish-green border-bullish-green/20'
+                      : 'bg-bearish-red/10 text-bearish-red border-bearish-red/20'
+                  }`}>
+                    {selectedToken.sentiment}
+                  </span>
+                  <span className="px-3 py-1 rounded-xl bg-primary/10 text-primary border border-primary/20 font-mono text-xs font-bold">
+                    AI Score: {selectedToken.aiScore}/100
                   </span>
                 </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {[
-                    { label: 'Market Cap', value: selectedToken.marketCap },
-                    { label: '24h Volume', value: selectedToken.volume24h },
-                    { label: 'Risk Level', value: selectedToken.riskLevel, highlight: true },
-                    { label: 'AI Score', value: `${selectedToken.aiScore}/100` },
-                    { label: 'Confidence', value: `${selectedToken.confidence}%` },
-                  ].map(m => (
-                    <div key={m.label} className="bg-surface-container border border-outline-variant/10 rounded p-4 font-mono">
-                      <span className="text-[10px] text-on-surface-variant/60 uppercase tracking-wider block mb-1">{m.label}</span>
-                      <span className={`font-bold text-sm ${m.highlight ? 'text-amber-500' : 'text-primary'}`}>{m.value}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div>
-                  <h3 className="font-mono text-[11px] font-bold text-on-surface uppercase tracking-wider mb-3">Key Drivers</h3>
-                  <ul className="space-y-2">
-                    {selectedToken.keyDrivers.map((d, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-on-surface-variant">
-                        <span className="w-1.5 h-1.5 rounded-full bg-bullish-green mt-2 shrink-0" />
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-mono text-[11px] font-bold text-on-surface uppercase tracking-wider mb-3">Risk Factors</h3>
-                  <ul className="space-y-2">
-                    {selectedToken.riskFactors.map((r, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-on-surface-variant">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 shrink-0" />
-                        {r}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </div>
-            )}
 
-          </div>
-        </div>
+              {/* Headline & Summary */}
+              <div className="space-y-3">
+                <h3 className="font-serif text-xl md:text-2xl font-bold text-on-surface leading-tight">
+                  {selectedToken.headline}
+                </h3>
+                <p className="text-on-surface-variant leading-relaxed text-sm md:text-base">
+                  {selectedToken.summary}
+                </p>
+              </div>
 
-        {/* ── Input Bar ── */}
-        <div className="px-6 md:px-10 py-4 border-t border-outline-variant/10 bg-surface shrink-0">
-          <div className="flex items-center gap-2 bg-surface-container-low border border-outline-variant/20 rounded-lg p-1 pr-3 max-w-[800px] mx-auto">
-            <input
-              type="text"
-              placeholder={`Deep dive into ${selectedToken.symbol} fundamentals...`}
-              className="flex-1 bg-transparent border-none text-sm text-on-surface py-2 px-3 focus:ring-0 outline-none placeholder:text-on-surface-variant/40"
-            />
-            <div className="flex items-center gap-1.5">
-              <button className="p-1.5 text-outline hover:text-on-surface transition-colors">
-                <span className="material-symbols-outlined text-[18px]">attach_file</span>
-              </button>
-              <button
-                onClick={() => navigate('/chat')}
-                className="bg-primary text-on-primary p-2 rounded flex items-center justify-center hover:brightness-110 transition-all active:scale-95"
-              >
-                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
+              {/* Executive Summary Card */}
+              <div className="bg-surface-container-low border border-outline-variant/30 p-5 rounded-2xl space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] text-primary uppercase tracking-widest font-bold flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-sm">analytics</span>
+                    Executive Summary Callout
+                  </span>
+                  <span className="text-xs font-mono text-bullish-green font-bold">{selectedToken.confidence}% Confidence</span>
+                </div>
+                <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed font-medium">
+                  {selectedToken.executiveSummary}
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ══════════════════════════════════════════
-          RIGHT — Insight Panel
-      ══════════════════════════════════════════ */}
-      <aside className="hidden lg:flex w-72 xl:w-80 flex-col bg-surface border-l border-outline-variant/10 overflow-y-auto custom-scrollbar-thin shrink-0">
-
-        {/* Market Snapshot */}
-        <div className="p-5 border-b border-outline-variant/10">
-          <h3 className="font-mono text-[10px] text-outline uppercase tracking-widest mb-4">Market Snapshot</h3>
-          <div className="space-y-2.5">
-            {selectedToken.marketSnapshot.map(ms => (
-              <div key={ms.pair} className="flex justify-between items-center py-0.5">
-                <span className="text-sm text-on-surface-variant font-body">{ms.pair}</span>
-                <span className={`font-mono text-[12px] font-bold ${ms.up ? 'text-tertiary' : 'text-error'}`}>
-                  {ms.change}
+            {/* Multi-Agent Intelligence Swarm Report */}
+            <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 md:p-8 shadow-sm space-y-5">
+              <div className="flex items-center justify-between border-b border-outline-variant/20 pb-4">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-primary text-xl">psychology</span>
+                  <h3 className="font-serif text-xl font-bold text-on-surface">Multi-Agent Swarm Intelligence</h3>
+                </div>
+                <span className="font-mono text-[10px] text-on-surface-variant/70 uppercase tracking-widest font-bold">
+                  3/3 Swarm Nodes Consensus
                 </span>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Signal Confidence */}
-        <div className="p-5 border-b border-outline-variant/10">
-          <h3 className="font-mono text-[10px] text-outline uppercase tracking-widest mb-4">Signal Confidence</h3>
-          <ConfidenceMeter value={selectedToken.confidence} />
-        </div>
-
-        {/* Risk Exposure */}
-        <div className="p-5 border-b border-outline-variant/10">
-          <h3 className="font-mono text-[10px] text-outline uppercase tracking-widest mb-3">Risk Exposure</h3>
-          <RiskGaugeHalf pct={selectedToken.riskPct} label={selectedToken.riskLevel} />
-        </div>
-
-        {/* AI Score */}
-        <div className="p-5 border-b border-outline-variant/10">
-          <h3 className="font-mono text-[10px] text-outline uppercase tracking-widest mb-3">AI Intelligence Score</h3>
-          <div className="flex items-center gap-3">
-            <div className="relative w-14 h-14">
-              <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-                <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(86,66,61,0.3)" strokeWidth="3" />
-                <circle
-                  cx="18" cy="18" r="15"
-                  fill="none" stroke="#ffb4a2" strokeWidth="3" strokeLinecap="round"
-                  strokeDasharray={`${(selectedToken.aiScore / 100) * 94.2} 94.2`}
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-mono text-[11px] font-bold text-primary">{selectedToken.aiScore}</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                  {
+                    agent: 'Research Agent',
+                    icon: 'psychology',
+                    verdict: selectedToken.analystVerdict,
+                    score: '96% Score',
+                    color: 'text-bullish-green',
+                    borderColor: 'border-bullish-green/30',
+                    desc: 'Evaluated underlying probability metrics, trend signals, and adoption velocity.'
+                  },
+                  {
+                    agent: 'Market Intelligence Agent',
+                    icon: 'analytics',
+                    verdict: selectedToken.complianceVerdict,
+                    score: '99% Verified',
+                    color: 'text-primary',
+                    borderColor: 'border-primary/30',
+                    desc: 'Verified oracle feed integrity, cross-chain data points, and deployment parameters.'
+                  },
+                  {
+                    agent: 'Risk Agent',
+                    icon: 'shield',
+                    verdict: selectedToken.riskVerdict,
+                    score: 'Bounded Risk',
+                    color: 'text-amber-500',
+                    borderColor: 'border-amber-500/30',
+                    desc: 'Audited volatility indexes, liquidity pool depth, and downside circuit breakers.'
+                  }
+                ].map(item => (
+                  <div key={item.agent} className={`bg-surface-container-low border ${item.borderColor} p-5 rounded-2xl space-y-2.5 flex flex-col justify-between`}>
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-mono text-[10px] text-on-surface-variant/60 uppercase tracking-wider font-bold flex items-center gap-1">
+                          <span className={`material-symbols-outlined text-sm ${item.color}`}>{item.icon}</span>
+                          {item.agent}
+                        </span>
+                      </div>
+                      <span className={`font-mono font-bold text-xs ${item.color} block mb-1`}>
+                        {item.verdict}
+                      </span>
+                      <p className="text-[11px] text-on-surface-variant leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
+                    <div className="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[10px] font-mono">
+                      <span className="text-on-surface-variant">Verdict Status</span>
+                      <span className={`font-bold ${item.color}`}>{item.score}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-            <div>
-              <div className="font-mono text-[10px] text-on-surface-variant/60 uppercase tracking-wider">Score</div>
-              <div className="font-serif text-base font-medium text-on-surface">{selectedToken.aiScore}/100</div>
-              <div className="font-mono text-[9px] text-primary/70 uppercase tracking-wider">
-                {selectedToken.aiScore >= 90 ? 'Elite' : selectedToken.aiScore >= 80 ? 'High Grade' : 'Good'}
+
+            {/* Key Growth Drivers & Institutional Risk Assessment */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              {/* Growth Drivers */}
+              <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 shadow-sm space-y-4">
+                <div className="flex items-center gap-2 border-b border-outline-variant/20 pb-3">
+                  <span className="material-symbols-outlined text-bullish-green text-xl">trending_up</span>
+                  <h4 className="font-mono text-xs font-bold text-on-surface uppercase tracking-wider">
+                    Key Growth Drivers
+                  </h4>
+                </div>
+                <ul className="space-y-3">
+                  {selectedToken.keyDrivers.map((d, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-xs text-on-surface-variant leading-relaxed font-medium">
+                      <span className="w-2 h-2 rounded-full bg-bullish-green mt-1.5 shrink-0" />
+                      <span>{d}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Risk Assessment */}
+              <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 shadow-sm space-y-4">
+                <div className="flex items-center gap-2 border-b border-outline-variant/20 pb-3">
+                  <span className="material-symbols-outlined text-amber-500 text-xl">warning</span>
+                  <h4 className="font-mono text-xs font-bold text-on-surface uppercase tracking-wider">
+                    Risk Assessment Matrix
+                  </h4>
+                </div>
+                <ul className="space-y-3">
+                  {selectedToken.riskFactors.map((r, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-xs text-on-surface-variant leading-relaxed font-medium">
+                      <span className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                      <span>{r}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Execution Timeline */}
-        <div className="p-5 border-b border-outline-variant/10">
-          <h3 className="font-mono text-[10px] text-outline uppercase tracking-widest mb-5">Execution Timeline</h3>
-          <div className="relative pl-4 space-y-5">
-            <div className="absolute left-1 top-1 bottom-1 w-px bg-outline-variant/20" />
-            {selectedToken.timeline.map((step, i) => (
-              <div key={i} className="relative">
-                <div className={`absolute -left-[15px] top-1 w-2 h-2 rounded-full ${
-                  step.done
-                    ? 'bg-primary ring-4 ring-primary/20'
-                    : 'bg-surface border border-primary animate-pulse'
-                }`} />
-                <h4 className={`font-mono text-[11px] font-bold ${step.done ? 'text-on-surface' : 'text-primary'}`}>
-                  {step.label}
-                </h4>
-                <p className="font-mono text-[10px] text-outline mt-0.5">{step.desc}</p>
+            {/* Real-Time LLM Synthesis Console Stream */}
+            <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 shadow-sm space-y-3">
+              <div className="flex items-center justify-between border-b border-outline-variant/20 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                  <span className="font-mono text-xs font-bold text-primary uppercase tracking-wider">Nexa LLM Telemetry Synthesis</span>
+                </div>
+                <span className="font-mono text-[10px] text-on-surface-variant/60">Live Stream Active</span>
               </div>
-            ))}
+              <p className="font-mono text-xs text-on-surface-variant leading-relaxed bg-surface-container-low p-4 rounded-2xl border border-outline-variant/20">
+                {streamText}
+                {!streamDone && (
+                  <span className="inline-block w-1.5 h-3 bg-primary ml-1 align-middle animate-pulse" />
+                )}
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Sources & Tools */}
-        <div className="p-5">
-          <h3 className="font-mono text-[10px] text-outline uppercase tracking-widest mb-3">Sources &amp; Tools</h3>
-          <div className="flex flex-wrap gap-2">
-            {selectedToken.sources.map(src => (
-              <span
-                key={src}
-                className="px-2 py-1 bg-surface-container-high border border-outline-variant/10 text-on-surface-variant font-mono text-[9px] rounded flex items-center gap-1"
-              >
-                <span className="material-symbols-outlined text-[11px]">{sourceIcons[src] || 'link'}</span>
-                {src}
+          {/* ════ RIGHT COLUMN (4 COLS): Telemetry, Evidence & Actions ════ */}
+          <div className="col-span-12 lg:col-span-4 space-y-6">
+
+            {/* Price Signal & Execution Chart Card */}
+            <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 shadow-sm space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs font-bold text-on-surface uppercase tracking-wider">Market Execution Signal</span>
+                <span className={`font-mono text-xs font-bold px-2.5 py-0.5 rounded-full border ${
+                  selectedToken.isPositive
+                    ? 'bg-bullish-green/10 text-bullish-green border-bullish-green/20'
+                    : 'bg-bearish-red/10 text-bearish-red border-bearish-red/20'
+                }`}>
+                  {selectedToken.change24h} 24H
+                </span>
+              </div>
+
+              <div className="flex items-baseline justify-between">
+                <span className="font-serif text-3xl font-bold text-on-surface">{selectedToken.price}</span>
+                <span className="font-mono text-xs text-primary font-bold">{selectedToken.marketSignalConf}</span>
+              </div>
+
+              {/* SVG Price Chart */}
+              <div className="h-44 w-full bg-surface-container-lowest border border-outline-variant/20 rounded-2xl relative overflow-hidden">
+                <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 400">
+                  <defs>
+                    <linearGradient id={`grad-${selectedToken.symbol}`} x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stopColor="#ffb4a2" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="#ffb4a2" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path d={selectedToken.chartPath} fill="none" stroke="#ffb4a2" strokeWidth="2.5" />
+                  <path d={selectedToken.chartFill} fill={`url(#grad-${selectedToken.symbol})`} />
+                  <circle cx={selectedToken.chartDot.cx} cy={selectedToken.chartDot.cy} r="6" fill="#ffb4a2" />
+                </svg>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-outline-variant/20 font-mono text-xs">
+                <div className="bg-surface-container-low p-3 rounded-xl border border-outline-variant/20">
+                  <span className="text-[9px] text-on-surface-variant uppercase tracking-wider block mb-0.5">Market Cap</span>
+                  <span className="font-bold text-on-surface">{selectedToken.marketCap}</span>
+                </div>
+                <div className="bg-surface-container-low p-3 rounded-xl border border-outline-variant/20">
+                  <span className="text-[9px] text-on-surface-variant uppercase tracking-wider block mb-0.5">24h Volume</span>
+                  <span className="font-bold text-on-surface">{selectedToken.volume24h}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Verifiable IPFS Evidence Package */}
+            <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 shadow-sm space-y-4">
+              <div className="flex items-center justify-between border-b border-outline-variant/20 pb-3">
+                <span className="font-mono text-xs font-bold text-on-surface uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-primary text-base">fingerprint</span>
+                  IPFS Evidence Package
+                </span>
+                <span className="px-2 py-0.5 bg-primary/10 text-primary text-[9px] font-mono rounded font-bold uppercase">
+                  VERIFIED
+                </span>
+              </div>
+
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider block">SHA-256 Content Fingerprint</span>
+                <div className="bg-surface-container-low p-3 rounded-xl border border-outline-variant/30 font-mono text-xs text-primary break-all font-bold">
+                  QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco
+                </div>
+              </div>
+
+              <div className="space-y-2 pt-1">
+                <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider block">Data Feed Sources</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedToken.sources.map(src => (
+                    <span key={src} className="px-2.5 py-1 bg-surface-container-low border border-outline-variant/30 text-on-surface font-mono text-[10px] rounded-lg font-semibold flex items-center gap-1">
+                      <span className="material-symbols-outlined text-xs text-primary">{sourceIcons[src] || 'link'}</span>
+                      {src}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Trade & Research Action Console */}
+            <div className="bg-surface border border-outline-variant/30 rounded-3xl p-6 shadow-sm space-y-3">
+              <span className="font-mono text-xs font-bold text-on-surface uppercase tracking-wider block mb-1">
+                Execution Actions
               </span>
-            ))}
+              <button
+                onClick={() => navigate('/insights', { state: { symbol: selectedToken.symbol, direction: 'YES' } })}
+                className="w-full py-3 bg-bullish-green text-white hover:bg-bullish-green/90 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm"
+              >
+                <span className="material-symbols-outlined text-[16px]">candlestick_chart</span>
+                <span>Execute Trade ({selectedToken.symbol})</span>
+              </button>
+              <button
+                onClick={() => navigate('/chat', { state: { initialPrompt: `Analyze ${selectedToken.name} (${selectedToken.symbol}) market metrics and risk vectors.` } })}
+                className="w-full py-3 bg-surface-container-high border border-outline-variant/40 hover:border-primary/40 text-on-surface rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+              >
+                <span className="material-symbols-outlined text-[16px]">chat</span>
+                <span>Refine AI Research</span>
+              </button>
+              <button
+                onClick={() => navigate('/lab')}
+                className="w-full py-3 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+              >
+                <span className="material-symbols-outlined text-[16px]">science</span>
+                <span>Create Custom Prediction</span>
+              </button>
+            </div>
+
           </div>
+
         </div>
-      </aside>
+
+      </div>
     </div>
   );
 }

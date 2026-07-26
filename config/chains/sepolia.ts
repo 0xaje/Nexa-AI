@@ -1,9 +1,9 @@
 import { ChainConfig } from './types';
 
 export const sepolia: ChainConfig = {
-  chainId: 91342,
+  chainId: 11155111,
   networkName: 'Sepolia Testnet',
-  rpcUrl: 'https://rpc.sepolia.org',
+  rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com',
   blockExplorer: 'https://sepolia.etherscan.io',
   nativeCurrency: {
     name: 'Ether',

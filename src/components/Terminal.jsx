@@ -343,7 +343,7 @@ export default function Terminal() {
                    <div className="flex justify-between items-center text-[10px]">
                      <span className="font-bold text-primary flex items-center gap-1">
                        <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                       1. ANALYST AGENT
+                       1. RESEARCH AGENT
                      </span>
                      <span className="text-bullish-green font-bold">FEASIBILITY APPROVED (96%)</span>
                    </div>
@@ -369,12 +369,12 @@ export default function Terminal() {
                    <div className="flex justify-between items-center text-[10px]">
                      <span className="font-bold text-on-surface flex items-center gap-1">
                        <span className="w-1.5 h-1.5 rounded-full bg-bullish-green"></span>
-                       3. COMPLIANCE AGENT
+                       3. MARKET INTELLIGENCE AGENT
                      </span>
-                     <span className="text-bullish-green font-bold">RULES SATISFIED (99%)</span>
+                     <span className="text-bullish-green font-bold">FEEDS VERIFIED (99%)</span>
                    </div>
                     <p className="text-[10px] text-on-surface-variant leading-relaxed">
-                      Enforced decentralized oracle rules and anchor specifications on On-Chain L2.
+                      Verified cross-chain feed data integrity and oracle anchor specifications on On-Chain L2.
                     </p>
                  </div>
                </div>

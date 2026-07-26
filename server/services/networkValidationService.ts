@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import { ethers } from 'ethers';
 import { activeChainConfig } from '../../config/chains';
 import { getDeployment } from '../../deployments/loader';

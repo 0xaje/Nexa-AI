@@ -1,6 +1,6 @@
 import { BasePlatformAdapter, PlatformMetadata, PlatformHealth, PlatformVersion } from './BasePlatformAdapter';
 import { OKXAgentAdapter } from './okx_agent_adapter';
-import { ProtocolMetadata } from '../../config/protocol/protocol';
+import { ASPManifest } from '../services/aspManifestService';
 
 export class OKXAIAdapter extends BasePlatformAdapter {
     readonly platformName = 'OKX.AI';
@@ -16,11 +16,15 @@ export class OKXAIAdapter extends BasePlatformAdapter {
             aspType: raw.aspType,
             version: raw.version,
             description: raw.description,
-            services: raw.services,
+            services: raw.supportedServices,
             capabilities: raw.capabilities,
             endpoints: raw.endpoints,
             supportedNetworks: raw.supportedNetworks
         };
+    }
+
+    getManifest(): ASPManifest {
+        return OKXAgentAdapter.getManifest();
     }
 
     getHealth(): PlatformHealth {

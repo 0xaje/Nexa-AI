@@ -26,14 +26,14 @@ flowchart TD
 - **Signal Ingestion**: Aggregates real-world signals from CoinGecko, HackerNews, Reddit, and ESPN.
 - **Provider Abstraction**: Interoperable support for OpenAI (GPT-4o), Anthropic (Claude 3.5), Google Gemini (2.5 Flash), OpenRouter, and local Llama 3 models via Ollama.
 - **Multi-Agent Evaluation Swarm**:
-  - `AnalystAgent`: Probability modeling and trend signal extraction.
-  - `RiskAgent`: Volatility metrics, liquidity depth, and order book safeguards.
-  - `ComplianceAgent`: Regulatory checks and content safety validation.
+  - **Research Agent** (`AnalystAgent`): Probability modeling and trend signal extraction.
+  - **Market Intelligence Agent** (`MarketIntelAgent`): Cross-chain data feed verification, oracle integrity, and market telemetry.
+  - **Risk Agent** (`RiskAgent`): Volatility metrics, liquidity depth, and order book safeguards.
 
 ### B. Review & Consensus Engine
 - **Weighted Quorum**: Combines independent agent votes scaled by their dynamic reputation weights.
 - **66% Approval Quorum**: Proposals must achieve >66% weighted confidence to pass approval.
-- **Interactive Debate Swarm**: Sequential 4-turn challenge loop where Risk and Compliance audit the Analyst before locking consensus.
+- **Interactive Debate Swarm**: Sequential multi-turn challenge loop where Risk and Market Intelligence audit the Research Agent before locking consensus.
 
 ### C. Evidence & Storage Layer
 - **Deterministic Key Sorting**: Sorts JSON keys alphabetically prior to hashing.

@@ -47,7 +47,7 @@ const initialChatMessages = [
     agentName: 'Nexa AI Lead Analyst',
     role: 'SENIOR RESEARCH ANALYST',
     timestamp: 'Just now',
-    text: "Good day. I am **Nexa AI**, your senior crypto research analyst. I evaluate real-time market signals using empirical multi-agent research (`AnalystAgent`, `RiskAgent`, and `ComplianceAgent`).\n\nEvery analysis I provide systematically evaluates empirical telemetry and risk factors before presenting conclusions. What asset, market trend, or risk profile shall we examine today?",
+    text: "Good day. I am **Nexa AI**, your senior crypto research analyst. I evaluate real-time market signals using empirical multi-agent research (`Research Agent`, `Market Intelligence Agent`, and `Risk Agent`).\n\nEvery analysis I provide systematically evaluates empirical telemetry and risk factors before presenting conclusions. What asset, market trend, or risk profile shall we examine today?",
     sources: [
       { name: 'CoinGecko Real-Time Feed', url: 'https://coingecko.com', trust: 'VERIFIED' },
       { name: 'Multi-Agent Quorum (94% Weighted Approval)', trust: 'CONSENSUS' },
@@ -155,7 +155,7 @@ export default function Chat() {
       let followUps = [];
 
       if (lower.includes('eth') || lower.includes('ethereum')) {
-        responseBody = "### Ethereum Market & Risk Analysis\n\nEthereum (ETH) shows strong structural momentum with **L2 TVL reaching an all-time high of $48.2B**. Blob-space transaction costs post-Dencun remain ultra-low, driving decentralized application throughput.\n\n```json\n{\n  \"asset\": \"ETH\",\n  \"sentiment\": \"BULLISH\",\n  \"aiConfidence\": 0.91,\n  \"primaryRisk\": \"Layer 2 liquidity fragmentation & blob-space fee spikes\"\n}\n```\n\n- **AnalystAgent Verdict**: Strong accumulation signals based on staking yield stability (3.4% APY).\n- **RiskAgent Audit**: Volatility index is moderate (42.1). Recommended position sizing: Risk-adjusted.\n- **ComplianceAgent Check**: Staking pool regulatory frameworks verified.";
+        responseBody = "### Ethereum Market & Risk Analysis\n\nEthereum (ETH) shows strong structural momentum with **L2 TVL reaching an all-time high of $48.2B**. Blob-space transaction costs post-Dencun remain ultra-low, driving decentralized application throughput.\n\n```json\n{\n  \"asset\": \"ETH\",\n  \"sentiment\": \"BULLISH\",\n  \"aiConfidence\": 0.91,\n  \"primaryRisk\": \"Layer 2 liquidity fragmentation & blob-space fee spikes\"\n}\n```\n\n- **Research Agent Verdict**: Strong accumulation signals based on staking yield stability (3.4% APY).\n- **Risk Agent Audit**: Volatility index is moderate (42.1). Recommended position sizing: Risk-adjusted.\n- **Market Intelligence Agent Check**: Staking pool yield metrics and validator decentralized parameters verified.";
         chart = {
           title: 'ETH 7-Day Price & L2 Activity Trend',
           trend: '+5.2%',
@@ -188,7 +188,7 @@ export default function Chat() {
           "Ask RiskAgent for a liquidity audit"
         ];
       } else {
-        responseBody = "### Intelligence Analysis for \"" + textToSend + "\"\n\nMulti-agent evaluation complete. **AnalystAgent** (*0.94 confidence*), **RiskAgent** (*0.88 confidence*), and **ComplianceAgent** (*0.96 confidence*) reached **92% weighted consensus approval**.\n\n```typescript\n// Verifiable Consensus Output\ninterface DecisionResult {\n  signal: \"" + textToSend + "\";\n  weightedQuorum: 0.92;\n  status: \"APPROVED\";\n  ipfsEvidenceCID: \"QmNexaEvidencePackage99214\";\n}\n```\n\nSignals suggest positive market momentum with moderate volatility risks across primary exchanges.";
+        responseBody = "### Intelligence Analysis for \"" + textToSend + "\"\n\nMulti-agent evaluation complete. **Research Agent** (*0.94 confidence*), **Market Intelligence Agent** (*0.96 confidence*), and **Risk Agent** (*0.88 confidence*) reached **92% weighted consensus approval**.\n\n```typescript\n// Verifiable Consensus Output\ninterface DecisionResult {\n  signal: \"" + textToSend + "\";\n  weightedQuorum: 0.92;\n  status: \"APPROVED\";\n  ipfsEvidenceCID: \"QmNexaEvidencePackage99214\";\n}\n```\n\nSignals suggest positive market momentum with moderate volatility risks across primary exchanges.";
         followUps = [
           "Show me full IPFS evidence package details",
           "What are the key risk factors identified by RiskAgent?",
@@ -431,9 +431,9 @@ export default function Chat() {
             {/* Agent status row */}
             <div className="mt-3 grid grid-cols-3 gap-2">
               {[
-                { icon: 'psychology',        label: 'Analyst Agent',    status: 'ACTIVE' },
-                { icon: 'shield',            label: 'Risk Agent',       status: 'ACTIVE' },
-                { icon: 'verified_user',     label: 'Compliance Agent', status: 'ACTIVE' },
+                { icon: 'psychology',        label: 'Research Agent',            status: 'ACTIVE' },
+                { icon: 'analytics',         label: 'Market Intelligence Agent', status: 'ACTIVE' },
+                { icon: 'shield',            label: 'Risk Agent',               status: 'ACTIVE' },
               ].map(agent => (
                 <div key={agent.label} className="flex items-center gap-2 px-3 py-2 bg-surface-container-low border border-outline-variant/10 rounded">
                   <span className="material-symbols-outlined text-primary text-[14px]">{agent.icon}</span>
@@ -583,7 +583,7 @@ export default function Chat() {
 
           <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono text-on-surface-variant bg-surface-variant/40 px-3 py-1.5 rounded-xl border border-outline-variant/60">
             <span className="w-2 h-2 rounded-full bg-bullish-green animate-pulse"></span>
-            <span>Analyst, Risk & Compliance Quorum Active</span>
+            <span>Research, Market Intelligence & Risk Quorum Active</span>
           </div>
         </div>
 

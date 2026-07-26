@@ -159,7 +159,7 @@ export class CoordinatorAgent {
 
         summary += `### Evidence Used\n`;
         summary += `- CoinGecko Real-Time Price & Volume Telemetry API\n`;
-        summary += `- Multi-Agent Quorum Consensus Logs (AnalystAgent, RiskAgent, ComplianceAgent)\n`;
+        summary += `- Multi-Agent Quorum Consensus Logs (Research Agent, Market Intelligence Agent, Risk Agent)\n`;
         if (toolExecutions.length > 0) {
             summary += `- Modular Tools Executed: ${toolExecutions.map(t => t.toolName).join(', ')}\n`;
         }

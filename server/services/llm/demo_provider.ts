@@ -52,7 +52,7 @@ export class DemoModeProvider implements LlmProvider {
 
 ### Evidence Used
 - CoinGecko Real-Time Price & Volume Telemetry API
-- Multi-Agent Quorum Consensus Logs (AnalystAgent, RiskAgent, ComplianceAgent)
+- Multi-Agent Quorum Consensus Logs (Research Agent, Market Intelligence Agent, Risk Agent)
 - LayerZero & Dune Analytics L2 Bridge Telemetry
 - IPFS Anchored Verifiable Intelligence Ledgers`;
 
@@ -106,7 +106,7 @@ export class DemoModeProvider implements LlmProvider {
 ### Evidence Used
 - CoinGecko Real-Time Price & Volume Telemetry API
 - Solana RPC Cluster Telemetry & Active Address Metrics
-- Multi-Agent Quorum Consensus Logs (AnalystAgent, RiskAgent, ComplianceAgent)
+- Multi-Agent Quorum Consensus Logs (Research Agent, Market Intelligence Agent, Risk Agent)
 - IPFS Anchored Verifiable Intelligence Ledgers`;
 
         return {
@@ -159,7 +159,7 @@ export class DemoModeProvider implements LlmProvider {
 ### Evidence Used
 - U.S. Spot Bitcoin ETF Net Inflow Ledger (Farside/Bloomberg Terminal)
 - Glassnode Exchange Supply & Miner Hashrate Data
-- Multi-Agent Quorum Consensus Logs (AnalystAgent, RiskAgent, ComplianceAgent)
+- Multi-Agent Quorum Consensus Logs (Research Agent, Market Intelligence Agent, Risk Agent)
 - IPFS Anchored Verifiable Intelligence Ledgers`;
 
         return {
@@ -212,7 +212,7 @@ export class DemoModeProvider implements LlmProvider {
 ### Evidence Used
 - Global Crypto Market Telemetry API (CoinGecko/CoinMarketCap)
 - Crypto Fear & Greed Index Telemetry
-- Multi-Agent Quorum Consensus Logs (AnalystAgent, RiskAgent, ComplianceAgent)
+- Multi-Agent Quorum Consensus Logs (Research Agent, Market Intelligence Agent, Risk Agent)
 - IPFS Anchored Verifiable Intelligence Ledgers`;
 
         return {
@@ -263,7 +263,7 @@ export class DemoModeProvider implements LlmProvider {
 
 ### Evidence Used
 - On-Chain Smart Contract Ledger Events
-- Multi-Agent Quorum Consensus Logs (AnalystAgent, RiskAgent, ComplianceAgent)
+- Multi-Agent Quorum Consensus Logs (Research Agent, Market Intelligence Agent, Risk Agent)
 - IPFS Anchored Verifiable Intelligence Evidence Packages
 
 ### Prediction Question

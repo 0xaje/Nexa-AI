@@ -1,9 +1,15 @@
 {
   "framework": "vite",
+  "installCommand": "npm install --legacy-peer-deps",
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/health", "destination": "/api/health" },
+    { "source": "/version", "destination": "/api/version" },
+    { "source": "/metadata", "destination": "/api/metadata" },
+    { "source": "/agent", "destination": "/api/agent" },
+    { "source": "/api/v1/okx/health", "destination": "/api/health" },
+    { "source": "/api/v1/okx/version", "destination": "/api/version" },
+    { "source": "/api/v1/okx/metadata", "destination": "/api/metadata" },
+    { "source": "/api/v1/okx/agent", "destination": "/api/agent" },
+    { "source": "/((?!api/|_next/|_static/|favicon.ico).*)", "destination": "/index.html" }
   ]
 }

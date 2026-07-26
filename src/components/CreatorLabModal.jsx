@@ -93,9 +93,9 @@ export default function CreatorLabModal() {
           inputSignals: data.inputSignals || 'Normalized Feed Data (Chain & Sentiment Analytics)',
           reason: data.reason || 'Multi-agent review pipeline approved this proposal.',
           evaluations: data.evaluations || [
-            { agent: 'Analyst', role: 'Probability Modeling', verdict: 'Approved', score: 'High', notes: 'Signal analysis shows strong predictive confidence.' },
-            { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: 'Bounded', notes: 'Risk bounds fall within safety parameters.' },
-            { agent: 'Compliance', role: 'Policy & Safety', verdict: 'Approved', score: 'Verified', notes: 'Passed policy checks and content safety guidelines.' }
+            { agent: 'Research', role: 'Probability Modeling', verdict: 'Approved', score: 'High', notes: 'Signal analysis shows strong predictive confidence.' },
+            { agent: 'Market Intelligence', role: 'Data Integrity & Feeds', verdict: 'Approved', score: 'Verified', notes: 'Cross-chain feed data and data integrity verified.' },
+            { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: 'Bounded', notes: 'Risk bounds fall within safety parameters.' }
           ]
         };
         setCreatorMessages(prev => [...prev, botMessage]);
@@ -125,11 +125,11 @@ export default function CreatorLabModal() {
         yesProb: 76,
         noProb: 24,
         inputSignals: 'Normalized Feed Data (L2 Gas & Network Throughput Analytics)',
-        reason: 'Multi-agent review pipeline (Analyst, Risk, Compliance) approved proposal based on historical blob gas reductions.',
+        reason: 'Multi-agent review pipeline (Research, Market Intelligence, Risk) approved proposal based on historical blob gas reductions.',
         evaluations: [
-          { agent: 'Analyst', role: 'Probability Modeling', verdict: 'Approved', score: 'High', notes: 'Gas trend models indicate high probability of fee reduction post-EIP-4844 scaling.' },
-          { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: 'Bounded', notes: 'Volatilities are bounded within safe liquidity parameters.' },
-          { agent: 'Compliance', role: 'Policy & Safety', verdict: 'Approved', score: 'Verified', notes: 'Passed policy checks and content safety guidelines.' }
+          { agent: 'Research', role: 'Probability Modeling', verdict: 'Approved', score: 'High', notes: 'Gas trend models indicate high probability of fee reduction post-EIP-4844 scaling.' },
+          { agent: 'Market Intelligence', role: 'Data Integrity & Feeds', verdict: 'Approved', score: 'Verified', notes: 'Cross-chain network feed data verified.' },
+          { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: 'Bounded', notes: 'Volatilities are bounded within safe liquidity parameters.' }
         ]
       };
       setCreatorMessages(prev => [...prev, botMessage]);

@@ -124,9 +124,9 @@ export default function CreatorLab() {
           inputSignals: data.inputSignals || 'Normalized Feed Data (Chain & Sentiment Analytics)',
           reason: data.reason || 'Multi-agent review pipeline approved this proposal.',
           evaluations: data.evaluations || [
-            { agent: 'Analyst', role: 'Probability Modeling', verdict: 'Approved', score: '78%', notes: 'Signal analysis shows strong predictive confidence.' },
-            { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: '75%', notes: 'Risk bounds fall within safety parameters.' },
-            { agent: 'Compliance', role: 'Policy & Safety', verdict: 'Approved', score: '82%', notes: 'Passed policy checks and content safety guidelines.' }
+            { agent: 'Research', role: 'Probability Modeling', verdict: 'Approved', score: '78%', notes: 'Signal analysis shows strong predictive confidence.' },
+            { agent: 'Market Intelligence', role: 'Data Integrity & Feeds', verdict: 'Approved', score: '82%', notes: 'Cross-chain feeds and data integrity verified.' },
+            { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: '75%', notes: 'Risk bounds fall within safety parameters.' }
           ]
         };
         setCreatorMessages(prev => [...prev, botMessage]);
@@ -156,11 +156,11 @@ export default function CreatorLab() {
         yesProb: 76,
         noProb: 24,
         inputSignals: 'Normalized Feed Data (L2 Gas & Network Throughput Analytics)',
-        reason: 'Multi-agent review pipeline (Analyst, Risk, Compliance) approved proposal with 76% confidence quorum based on historical blob gas reductions.',
+        reason: 'Multi-agent review pipeline (Research, Market Intelligence, Risk) approved proposal with 76% confidence quorum based on historical blob gas reductions.',
         evaluations: [
-          { agent: 'Analyst', role: 'Probability Modeling', verdict: 'Approved', score: '78%', notes: 'Gas trend models indicate high probability of fee reduction post-EIP-4844 scaling.' },
-          { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: '74%', notes: 'Volatilities are bounded within safe liquidity parameters.' },
-          { agent: 'Compliance', role: 'Policy & Safety', verdict: 'Approved', score: '80%', notes: 'Passed policy checks and content safety guidelines.' }
+          { agent: 'Research', role: 'Probability Modeling', verdict: 'Approved', score: '78%', notes: 'Gas trend models indicate high probability of fee reduction post-EIP-4844 scaling.' },
+          { agent: 'Market Intelligence', role: 'Data Integrity & Feeds', verdict: 'Approved', score: '80%', notes: 'Cross-chain network feed data verified.' },
+          { agent: 'Risk', role: 'Volatility Audit', verdict: 'Approved', score: '74%', notes: 'Volatilities are bounded within safe liquidity parameters.' }
         ]
       };
       setCreatorMessages(prev => [...prev, botMessage]);
@@ -384,7 +384,7 @@ export default function CreatorLab() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full">
           {[
             { step: '01', title: 'Prompt Intent', desc: 'Describe proposal in natural language', icon: 'chat_bubble' },
-            { step: '02', title: 'Swarm Quorum', desc: 'Analyst, Risk & Compliance debate', icon: 'groups' },
+            { step: '02', title: 'Swarm Quorum', desc: 'Research, Market Intel & Risk debate', icon: 'groups' },
             { step: '03', title: 'IPFS Evidence', desc: 'SHA-256 evidence hash pinned', icon: 'fingerprint' },
             { step: '04', title: 'On-Chain Deploy', desc: 'Smart contract settlement', icon: 'rocket_launch' }
           ].map((item, idx) => (
@@ -448,7 +448,7 @@ export default function CreatorLab() {
                   Active Swarm Validators
                 </span>
                 <div className="flex gap-2">
-                  {['AnalystAgent', 'RiskAgent', 'ComplianceAgent'].map((agent) => (
+                  {['ResearchAgent', 'MarketIntelAgent', 'RiskAgent'].map((agent) => (
                     <span key={agent} className="px-2.5 py-1 rounded-xl bg-surface-container-high border border-outline-variant/50 text-[10px] font-mono text-on-surface font-semibold flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-bullish-green"></span>
                       {agent}
@@ -631,7 +631,7 @@ export default function CreatorLab() {
                   <div className="space-y-1">
                     <span className="font-mono text-xs font-bold text-on-surface block">Generating AI Decision Proposal...</span>
                     <span className="text-xs text-on-surface-variant/70 font-medium block">
-                      Analyst, Risk, and Compliance swarm nodes evaluating signal telemetry and confidence bounds.
+                      Research, Market Intelligence, and Risk swarm nodes evaluating signal telemetry and confidence bounds.
                     </span>
                   </div>
                 </div>

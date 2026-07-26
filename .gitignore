@@ -1,99 +1,91 @@
-# Logs
-logs
+# Environment & Sensitive Credentials (CRITICAL - NEVER COMMIT)
+.env
+.env*
+!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Private Keys, Certificates & Tokens
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+wallet.json
+keys.json
+.secret
+private_key*
+*private_key*
+*secret*
+*credential*
+token.json
+credentials.json
+
+# Vercel & Deployment Cache
+.vercel/
+.next/
+dist/
+dist-ssr/
+
+# Hardhat & Blockchain Artifacts
+artifacts/
+cache/
+typechain/
+typechain-types/
+
+# Node & Package Managers
+node_modules/
+jspm_packages/
+.npm
+.yarn-integrity
+*.tgz
+
+# Logs & PID Data
+logs/
+server/logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-# Runtime data
-pids
+pids/
 *.pid
 *.seed
 *.pid.lock
 
-# Dependency directories
-node_modules/
-jspm_packages/
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
+# Test Coverage & Caches
+coverage/
+coverage.json
 .eslintcache
-
-# Optional stylelint cache
 .stylelintcache
 
-# Output of 'npm pack'
-*.tgz
+# SQLite & Databases
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
 
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variable files
-.env
-.env*
-!.env.example
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-.env.*.local
-
-# Vite/Rollup build output
-dist/
-dist-ssr/
-*.local
-
-# Hardhat
-artifacts/
-cache/
-
-# Editor directories and files
+# IDE, OS & Agent Workspaces
+.gemini/
+.agents/
+.agent/
 .vscode/*
 !.vscode/extensions.json
 .idea/
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvsca*
 *.njsproj
 *.sln
 *.sw?
-server/logs/
 
-# Test coverage
-coverage/
-coverage.json
-
-# Databases
-*.db
-*.db-journal
-
-# Secrets & Keys
-wallet.json
-.secret
-keys.json
-private_key*
-*.key
-*.pem
-
-# Social Media & Promotional files
-social_media_captions.md
-
-# Developer scratch / sprint notes
-sprint_*.md
+# Scratch & Internal Notes
 scratch/
 *.scratch
-
-# Runtime logs directory
-logs/
-
-# Prisma generated client (committed via schema only)
-# prisma/generated/
-
-# Antigravity/Gemini agent config
-.gemini/
-.agents/
-.agent/
+sprint_*.md
+social_media_captions.md

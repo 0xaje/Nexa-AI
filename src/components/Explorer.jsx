@@ -15,7 +15,7 @@ const defaultSeedData = {
       confidence: 0.98,
       supportingEvidence: "Official protocol deployment milestone announced on Sepolia testnet developer portal.",
       ipfsHash: "QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco",
-      decisionReason: "Consensus threshold (>85%) achieved across Analyst, Risk, and Compliance agent evaluations.",
+      decisionReason: "Consensus threshold (>85%) achieved across Research, Market Intelligence, and Risk agent evaluations.",
       intelligenceReport: {
         summary: "Multi-Agent AI consensus confirmed valid signal metrics for protocol deployment on Sepolia L2.",
         supportingEvidence: [
@@ -31,9 +31,9 @@ const defaultSeedData = {
         recommendedDecision: "APPROVE"
       },
       evaluations: [
-        { id: "e1", agentName: "AnalystAgent", confidence: 0.96, reasoning: "Verified contract bytecode matches Sepolia deployment specification." },
+        { id: "e1", agentName: "ResearchAgent", confidence: 0.96, reasoning: "Verified contract bytecode matches Sepolia deployment specification." },
         { id: "e2", agentName: "RiskAgent", confidence: 0.94, reasoning: "Sufficient seed liquidity locked; zero re-entrancy vectors detected." },
-        { id: "e3", agentName: "ComplianceAgent", confidence: 0.99, reasoning: "Decentralized consensus framework rules fully satisfied." }
+        { id: "e3", agentName: "MarketIntelAgent", confidence: 0.99, reasoning: "Decentralized consensus framework rules fully satisfied." }
       ]
     },
     {
@@ -57,14 +57,14 @@ const defaultSeedData = {
           "No exact calendar date published in safety audit documentation"
         ],
         riskFactors: [
-          "Regulatory safety compliance review delays"
+          "Data feed latency during peak network traffic"
         ],
         recommendedDecision: "APPROVE"
       },
       evaluations: [
-        { id: "e4", agentName: "AnalystAgent", confidence: 0.90, reasoning: "Historical launch cadences align with autumn release window." },
+        { id: "e4", agentName: "ResearchAgent", confidence: 0.90, reasoning: "Historical launch cadences align with autumn release window." },
         { id: "e5", agentName: "RiskAgent", confidence: 0.82, reasoning: "Potential shift in release date due to safety alignment checks." },
-        { id: "e6", agentName: "ComplianceAgent", confidence: 0.92, reasoning: "Decentralized signal complies with market creation protocol." }
+        { id: "e6", agentName: "MarketIntelAgent", confidence: 0.92, reasoning: "Decentralized signal complies with market creation protocol." }
       ]
     },
     {
@@ -93,9 +93,9 @@ const defaultSeedData = {
         recommendedDecision: "APPROVE"
       },
       evaluations: [
-        { id: "e7", agentName: "AnalystAgent", confidence: 0.95, reasoning: "On-chain data indicates persistent institutional demand." },
+        { id: "e7", agentName: "ResearchAgent", confidence: 0.95, reasoning: "On-chain data indicates persistent institutional demand." },
         { id: "e8", agentName: "RiskAgent", confidence: 0.92, reasoning: "Liquidity depth across spot order books absorbs volatility." },
-        { id: "e9", agentName: "ComplianceAgent", confidence: 0.98, reasoning: "Oracle price feed metrics verified across multiple independent nodes." }
+        { id: "e9", agentName: "MarketIntelAgent", confidence: 0.98, reasoning: "Oracle price feed metrics verified across multiple independent nodes." }
       ]
     },
     {
@@ -120,9 +120,9 @@ const defaultSeedData = {
         recommendedDecision: "APPROVE"
       },
       evaluations: [
-        { id: "e10", agentName: "AnalystAgent", confidence: 0.92, reasoning: "Match outcome verified across official data providers." },
+        { id: "e10", agentName: "ResearchAgent", confidence: 0.92, reasoning: "Match outcome verified across official data providers." },
         { id: "e11", agentName: "RiskAgent", confidence: 0.90, reasoning: "Zero dispute claims submitted within 24h window." },
-        { id: "e12", agentName: "ComplianceAgent", confidence: 0.91, reasoning: "Decentralized consensus criteria fulfilled." }
+        { id: "e12", agentName: "MarketIntelAgent", confidence: 0.91, reasoning: "Decentralized consensus criteria fulfilled." }
       ]
     }
   ],
@@ -158,9 +158,9 @@ const defaultSeedData = {
       weightedScore: 0.963,
       approvalProbability: 0.98,
       auditTrail: [
-        { agentName: "AnalystAgent", adjustedConfidence: 0.96 },
+        { agentName: "ResearchAgent", adjustedConfidence: 0.96 },
         { agentName: "RiskAgent", adjustedConfidence: 0.94 },
-        { agentName: "ComplianceAgent", adjustedConfidence: 0.99 }
+        { agentName: "MarketIntelAgent", adjustedConfidence: 0.99 }
       ]
     }
   ]
@@ -223,9 +223,9 @@ export default function Explorer() {
             recommendedDecision: "APPROVE"
           },
           evaluations: [
-            { id: `e_onchain_${marketId}_1`, agentName: "AnalystAgent", confidence: 0.95, reasoning: "Verified smart contract market parameters and category alignment." },
+            { id: `e_onchain_${marketId}_1`, agentName: "ResearchAgent", confidence: 0.95, reasoning: "Verified smart contract market parameters and category alignment." },
             { id: `e_onchain_${marketId}_2`, agentName: "RiskAgent", confidence: 0.94, reasoning: "Liquidity pool state verified on-chain." },
-            { id: `e_onchain_${marketId}_3`, agentName: "ComplianceAgent", confidence: 0.98, reasoning: "Decentralized oracle protocol validation satisfied." }
+            { id: `e_onchain_${marketId}_3`, agentName: "MarketIntelAgent", confidence: 0.98, reasoning: "Decentralized oracle protocol validation satisfied." }
           ]
         };
       }).reverse();
@@ -255,9 +255,9 @@ export default function Explorer() {
         recommendedDecision: "APPROVE"
       },
       evaluations: [
-        { id: `e_custom_${idx}_1`, agentName: "AnalystAgent", confidence: 0.95, reasoning: "Signal inputs and proposal parameters validated." },
+        { id: `e_custom_${idx}_1`, agentName: "ResearchAgent", confidence: 0.95, reasoning: "Signal inputs and proposal parameters validated." },
         { id: `e_custom_${idx}_2`, agentName: "RiskAgent", confidence: 0.92, reasoning: "Seed liquidity verified against protocol safety parameters." },
-        { id: `e_custom_${idx}_3`, agentName: "ComplianceAgent", confidence: 0.98, reasoning: "Decentralized oracle consensus guidelines satisfied." }
+        { id: `e_custom_${idx}_3`, agentName: "MarketIntelAgent", confidence: 0.98, reasoning: "Decentralized oracle consensus guidelines satisfied." }
       ]
     }));
 
@@ -517,7 +517,7 @@ export default function Explorer() {
                               <div>
                                 <h4 className="text-[10px] font-bold text-on-surface-variant font-mono uppercase tracking-wider mb-1">Executive Summary</h4>
                                 <p className="text-xs text-on-surface leading-relaxed font-medium">
-                                  {p.intelligenceReport?.summary || `This intelligence report aggregates the consensus evaluations from Analyst, Risk, and Compliance agents for proposal "${p.title}".`}
+                                  {p.intelligenceReport?.summary || `This intelligence report aggregates the consensus evaluations from Research, Market Intelligence, and Risk agents for proposal "${p.title}".`}
                                 </p>
                               </div>
 
@@ -592,7 +592,7 @@ export default function Explorer() {
                                   <div className="flex justify-between items-center text-[10px] font-mono font-bold">
                                     <span className="text-primary flex items-center gap-1.5">
                                       <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
-                                      {ev.agentName}
+                                      {formatAgentName(ev.agentName)}
                                     </span>
                                     <span className="text-on-surface-variant font-mono">
                                       Raw: {(displayConfidence * 100).toFixed(0)}% | Consensus Weight: {(adjustedConfidence * 100).toFixed(0)}%
@@ -765,9 +765,17 @@ export default function Explorer() {
   );
 }
 
+// Helper for agent display names
+function formatAgentName(name) {
+  if (name === 'AnalystAgent' || name === 'Analyst') return 'Research Agent';
+  if (name === 'ComplianceAgent' || name === 'Compliance' || name === 'MarketIntelAgent') return 'Market Intelligence Agent';
+  if (name === 'RiskAgent' || name === 'Risk') return 'Risk Agent';
+  return name;
+}
+
 // Simple fallback helper for confidence scaling
 function agentNameMultiplier(name) {
   if (name === 'RiskAgent') return 0.95;
-  if (name === 'ComplianceAgent') return 1.05;
+  if (name === 'ComplianceAgent' || name === 'MarketIntelAgent') return 1.05;
   return 1.0;
 }
