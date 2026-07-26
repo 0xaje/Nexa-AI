@@ -695,6 +695,22 @@ export default function Chat() {
                   </div>
                 )}
 
+                {/* Contextual Trade Action following AI Recommendation */}
+                {msg.sender !== 'user' && (
+                  <div className="mt-3 pt-3 border-t border-outline-variant/40 flex items-center justify-between">
+                    <span className="text-[9px] font-mono font-bold text-on-surface-variant/70 uppercase">
+                      AI Consensus Recommendation Ready
+                    </span>
+                    <button
+                      onClick={() => navigate('/insights')}
+                      className="px-3 py-1.5 bg-bullish-green/10 text-bullish-green border border-bullish-green/30 hover:bg-bullish-green hover:text-white text-[10px] font-mono font-bold uppercase rounded-lg transition-all flex items-center gap-1.5 shadow-xs"
+                    >
+                      <span className="material-symbols-outlined text-[14px]">candlestick_chart</span>
+                      <span>Execute Trade Position</span>
+                    </button>
+                  </div>
+                )}
+
                 {/* Dynamic Follow-Up Question Chips */}
                 {msg.followUps && msg.followUps.length > 0 && (
                   <div className="mt-3 pt-3 border-t border-outline-variant/60 space-y-2">

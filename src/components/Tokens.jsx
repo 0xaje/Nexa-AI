@@ -540,21 +540,28 @@ export default function Tokens() {
                   </p>
                 </div>
 
-                {/* CTA Buttons */}
+                {/* Research → Recommendation → Trade Workflow */}
                 <div className="flex flex-col sm:flex-row gap-3 pb-4">
                   <button
+                    onClick={() => navigate('/insights', { state: { symbol: selectedToken.symbol, direction: 'YES' } })}
+                    className="flex-1 py-2.5 bg-bullish-green text-white hover:bg-bullish-green/90 rounded-xl font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                  >
+                    <span className="material-symbols-outlined text-[15px]">candlestick_chart</span>
+                    Execute Trade ({selectedToken.symbol})
+                  </button>
+                  <button
                     onClick={() => navigate('/chat', { state: { initialPrompt: `Analyze ${selectedToken.name} (${selectedToken.symbol}) market metrics and risk vectors.` } })}
-                    className="flex-1 py-2.5 bg-surface-container-high border border-outline-variant/40 hover:border-primary/40 text-on-surface rounded font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
+                    className="flex-1 py-2.5 bg-surface-container-high border border-outline-variant/40 hover:border-primary/40 text-on-surface rounded-xl font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
                   >
                     <span className="material-symbols-outlined text-[15px]">chat</span>
-                    Ask AI Agent About {selectedToken.symbol}
+                    Refine AI Research
                   </button>
                   <button
                     onClick={() => navigate('/lab')}
-                    className="flex-1 py-2.5 bg-primary text-white hover:bg-primary/90 rounded font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                    className="px-4 py-2.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 rounded-xl font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
                   >
                     <span className="material-symbols-outlined text-[15px]">science</span>
-                    Create Prediction Market
+                    Create Prediction
                   </button>
                 </div>
               </>
