@@ -6,13 +6,18 @@ const chains: Record<string, ChainConfig> = {
 };
 
 const getEnv = (key: string): string | undefined => {
-  if (typeof process !== 'undefined' && process.env && process.env[key]) {
-    return process.env[key];
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env[key]) return process.env[key];
+    if (process.env[`VITE_${key}`]) return process.env[`VITE_${key}`];
   }
-  // @ts-ignore
-  if (typeof import.meta !== 'undefined' && import.meta.env) {
+  try {
     // @ts-ignore
-    return import.meta.env[`VITE_${key}`] || import.meta.env[key];
+    const metaEnv = (import.meta as any)?.env;
+    if (metaEnv) {
+      return metaEnv[`VITE_${key}`] || metaEnv[key];
+    }
+  } catch {
+    // Ignore in environments where import.meta is invalid syntax
   }
   return undefined;
 };
