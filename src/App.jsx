@@ -72,11 +72,11 @@ function App() {
   };
 
   const navItems = [
-    { id: 'research',    route: '/',             label: 'Research',    icon: 'biotech font-extrabold', aliases: ['', 'research', 'tokens', 'chat', 'landing'] },
-    { id: 'predictions', route: '/predictions',  label: 'Predictions', icon: 'online_prediction',      aliases: ['predictions', 'markets', 'feed', 'intelligence'] },
-    { id: 'history',     route: '/history',      label: 'History',     icon: 'history',                aliases: ['history', 'portfolio'] },
-    { id: 'explorer',    route: '/explorer',     label: 'Explorer',    icon: 'manage_search',          aliases: ['explorer', 'transparency'] },
-    { id: 'settings',    route: '/settings',     label: 'Settings',    icon: 'settings',              aliases: ['settings'] },
+    { id: 'research',    route: '/',             label: 'Research',    icon: 'biotech',           aliases: ['', 'research', 'tokens', 'chat', 'landing'], badge: 'FLAGSHIP' },
+    { id: 'predictions', route: '/predictions',  label: 'Predictions', icon: 'online_prediction', aliases: ['predictions', 'markets', 'feed', 'intelligence'] },
+    { id: 'history',     route: '/history',      label: 'History',     icon: 'history',           aliases: ['history', 'portfolio'] },
+    { id: 'explorer',    route: '/explorer',     label: 'Explorer',    icon: 'manage_search',     aliases: ['explorer', 'transparency'] },
+    { id: 'settings',    route: '/settings',     label: 'Settings',    icon: 'settings',          aliases: ['settings'] },
   ];
 
   return (
@@ -97,21 +97,28 @@ function App() {
           </div>
         </div>
 
-        <div className="flex-1 space-y-1 px-base mt-gutter overflow-y-auto no-scrollbar">
+        <div className="flex-1 space-y-1.5 px-base mt-gutter overflow-y-auto no-scrollbar">
           {navItems.map((item) => {
             const isActive = item.aliases.includes(currentView);
             return (
               <button
                 key={item.id}
                 onClick={() => navigate(item.route)}
-                className={`w-full flex items-center gap-base px-gutter py-2.5 rounded-lg transition-all duration-200 text-left ${
+                className={`w-full flex items-center justify-between gap-2 px-gutter py-2.5 rounded-xl transition-all duration-200 text-left ${
                   isActive 
-                    ? 'font-bold text-primary bg-surface-container-high border-r-2 border-primary' 
-                    : 'text-on-surface-variant hover:bg-surface-container-high/60 hover:text-on-surface'
+                    ? 'font-extrabold text-primary bg-surface-container-high border-r-2 border-primary shadow-xs' 
+                    : 'text-on-surface-variant hover:bg-surface-container-high/60 hover:text-on-surface font-semibold'
                 }`}
               >
-                <span className="material-symbols-outlined text-[20px]" data-icon={item.icon}>{item.icon}</span>
-                <span className="font-body-md text-sm">{item.label}</span>
+                <div className="flex items-center gap-2.5">
+                  <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
+                  <span className="text-sm tracking-tight">{item.label}</span>
+                </div>
+                {item.badge && (
+                  <span className="px-1.5 py-0.5 rounded bg-primary/10 border border-primary/20 text-primary text-[8px] font-mono font-extrabold uppercase tracking-wider">
+                    {item.badge}
+                  </span>
+                )}
               </button>
             );
           })}
