@@ -88,9 +88,11 @@ function App() {
           className="px-gutter mb-base flex items-center gap-base cursor-pointer"
           onClick={() => navigate('/')}
         >
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary via-primary-container to-tertiary flex items-center justify-center text-on-primary font-bold shadow-md">
-            <span className="material-symbols-outlined text-xl">auto_awesome</span>
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="Nexa AI Logo" 
+            className="w-9 h-9 rounded-lg object-cover border border-outline-variant/30 shadow-md" 
+          />
           <div>
             <h1 className="font-headline-lg text-lg leading-none font-bold text-on-surface tracking-tight">{ProtocolMetadata.protocolName}</h1>
             <p className="font-label-sm text-[11px] text-on-surface-variant/60 font-mono">Institutional Intelligence</p>
@@ -148,11 +150,9 @@ function App() {
 
       {/* TopNavBar Shell */}
       <header className="fixed top-0 right-0 left-0 md:left-64 z-40 flex justify-between items-center px-4 md:px-gutter h-16 border-b border-outline-variant/20 bg-surface/95 backdrop-blur-md">
-        <div className="flex items-center gap-3 md:hidden">
-          <span 
-            className="font-bold text-base tracking-tight text-primary font-display cursor-pointer"
-            onClick={() => navigate('/landing')}
-          >
+        <div className="flex items-center gap-2 md:hidden cursor-pointer" onClick={() => navigate('/landing')}>
+          <img src="/logo.png" alt="Nexa AI Logo" className="w-7 h-7 rounded-md object-cover border border-outline-variant/30" />
+          <span className="font-bold text-base tracking-tight text-primary font-display">
             {ProtocolMetadata.protocolName}
           </span>
         </div>

@@ -14,6 +14,8 @@ export default function handler(req, res) {
         author: "Nexa AI Architecture Team",
         website: "https://nexaai.io",
         repository: "https://github.com/0xaje/Nexa-AI",
+        logoUrl: "https://nexa-ai-sepia.vercel.app/logo.png",
+        avatarUrl: "https://nexa-ai-sepia.vercel.app/logo.png",
         supportedServices: [
             "Fundamental Token & Market Research",
             "Real-Time Telemetry & Oracle Verification",
