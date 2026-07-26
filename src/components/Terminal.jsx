@@ -255,19 +255,16 @@ export default function Terminal() {
             <div>
               <h1 className="font-bold text-sm sm:text-base text-on-surface tracking-tight mb-0.5">{currentMarket.title}</h1>
               <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                <p className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant font-mono">AI RISK ASSESSMENT & INTELLIGENCE</p>
+                <span className="w-1.5 h-1.5 rounded-full bg-bullish-green animate-pulse"></span>
+                <p className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant font-mono">TRADE EXECUTION & RISK AUDIT</p>
               </div>
             </div>
           </div>
           <div className="flex gap-6 items-center w-full sm:w-auto justify-between sm:justify-end border-t border-outline-variant/30 pt-3 sm:border-0 sm:pt-0">
             <div className="text-left sm:text-right">
-              <p className="text-[8px] font-bold uppercase tracking-widest text-on-surface-variant mb-0.5 font-mono">CONSENSUS CONFIDENCE</p>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-sm text-primary font-bold">{currentMarket.confidence}</span>
-                <div className="h-1 w-16 bg-surface-variant rounded-full overflow-hidden">
-                  <div className="h-full bg-primary" style={{ width: `${currentMarket.confidence}` }}></div>
-                </div>
+              <p className="text-[8px] font-bold uppercase tracking-widest text-on-surface-variant mb-0.5 font-mono">MODEL CONFIDENCE</p>
+              <div className="flex items-center gap-2 font-mono">
+                <span className="text-xs font-bold text-bullish-green bg-bullish-green/10 border border-bullish-green/20 px-2 py-0.5 rounded">High Confidence</span>
               </div>
             </div>
 

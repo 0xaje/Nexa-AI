@@ -40,6 +40,10 @@ const useAppStore = create((set) => ({
     return { customMarkets: updated };
   }),
 
+  isCreatorLabOpen: false,
+  openCreatorLab: () => set({ isCreatorLabOpen: true }),
+  closeCreatorLab: () => set({ isCreatorLabOpen: false }),
+
   toast: null,
   showToast: (title, message, type = 'info', hash = null) => {
     set({ toast: { title, message, type, hash, id: Date.now() } });

@@ -17,6 +17,7 @@ import Explorer from './components/Explorer';
 import Chat from './components/Chat';
 import Tokens from './components/Tokens';
 import Settings from './components/Settings';
+import CreatorLabModal from './components/CreatorLabModal';
 
 function App() {
   const navigate = useNavigate();
@@ -370,6 +371,9 @@ function App() {
           })}
         </div>
       </nav>
+
+      {/* Global Creator Lab Modal */}
+      <CreatorLabModal />
 
       {/* Global Toast Notification */}
       {toast && (

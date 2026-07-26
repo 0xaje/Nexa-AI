@@ -227,6 +227,8 @@ function AgentBadge({ icon, label, active }) {
 function ConfidenceMeter({ value }) {
   const segments = 10;
   const filled = Math.round((value / 100) * segments);
+  const qualitativeLabel = value >= 80 ? 'High Confidence' : value >= 60 ? 'Strong Confidence' : 'Moderate Confidence';
+  
   return (
     <>
       <div className="flex gap-1 h-2 mb-2">
@@ -238,8 +240,8 @@ function ConfidenceMeter({ value }) {
         ))}
       </div>
       <div className="flex justify-between items-center">
-        <span className="font-serif text-xl font-medium text-primary">{value}%</span>
-        <span className="font-mono text-[10px] text-outline uppercase tracking-wider">Institutional Grade</span>
+        <span className="font-sans text-sm font-bold text-bullish-green bg-bullish-green/10 border border-bullish-green/20 px-2.5 py-0.5 rounded-lg">{qualitativeLabel}</span>
+        <span className="font-mono text-[10px] text-outline uppercase tracking-wider">Model Estimate ({value}%)</span>
       </div>
     </>
   );
@@ -370,95 +372,60 @@ export default function Tokens() {
       ══════════════════════════════════════════ */}
       <section className="flex-1 flex flex-col min-w-0 border-r border-outline-variant/10 overflow-hidden">
 
-        {/* ── Large Hero Research Input & Pipeline Header ── */}
-        <div className="px-6 md:px-10 pt-5 pb-4 border-b border-outline-variant/10 bg-surface/90 backdrop-blur-md shrink-0">
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full mb-1">
-                  <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                  <span className="font-mono text-[10px] text-primary uppercase tracking-widest font-bold">Nexa AI Research Engine</span>
-                </div>
-                <h1 className="font-serif text-xl sm:text-2xl font-medium text-on-surface leading-tight">
-                  Research Workspace
-                </h1>
-              </div>
-
-              {/* Action CTAs */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => navigate('/lab')}
-                  className="px-3.5 py-1.5 bg-primary text-white hover:bg-primary/90 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-sm shrink-0"
-                >
-                  <span className="material-symbols-outlined text-[16px]">add_circle</span>
-                  <span>Create Prediction</span>
-                </button>
-              </div>
+        {/* ── Calm, Professional Header & Input (Step 8) ── */}
+        <div className="px-6 md:px-10 pt-6 pb-4 border-b border-outline-variant/10 bg-background shrink-0 space-y-4">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h1 className="font-serif text-2xl md:text-3xl font-medium text-on-surface">Good morning.</h1>
+              <p className="text-xs md:text-sm text-on-surface-variant/70 mt-0.5">
+                What would you like to research today?
+              </p>
             </div>
+            
+            <button
+              onClick={() => useAppStore.getState().openCreatorLab()}
+              className="px-4 py-2 bg-primary text-white hover:bg-primary/90 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-xs shrink-0"
+            >
+              <span className="material-symbols-outlined text-[16px]">add_circle</span>
+              <span>Create Prediction</span>
+            </button>
+          </div>
 
-            {/* Large Search / Query Input Box */}
-            <div className="relative group">
-              <div className="absolute -inset-0.5 bg-primary/15 rounded-2xl blur-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              <div className="relative bg-surface-container-low border border-outline-variant/30 rounded-2xl p-2.5 sm:p-3.5 shadow-md group-focus-within:border-primary/40 transition-colors flex items-center gap-3">
-                <span className="material-symbols-outlined text-primary text-xl pl-1 shrink-0">biotech</span>
-                <input
-                  type="text"
-                  value={researchInput}
-                  onChange={e => setResearchInput(e.target.value)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
-                      handleExecuteResearch(researchInput);
-                    }
-                  }}
-                  placeholder="Inquire Nexa AI... What would you like to research today?"
-                  className="w-full bg-transparent border-none text-xs sm:text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none font-sans"
-                />
-                <button
-                  onClick={() => handleExecuteResearch(researchInput)}
-                  disabled={!researchInput.trim()}
-                  className="px-4 py-2 bg-primary text-white disabled:opacity-40 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 hover:bg-primary/90 transition-all shrink-0 shadow-sm"
-                >
-                  <span>Research</span>
-                  <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
-                </button>
-              </div>
+          {/* Clean Input Bar */}
+          <div className="flex items-center gap-2 max-w-4xl">
+            <div className="relative flex-1 bg-surface-container-low border border-outline-variant/30 rounded-xl px-4 py-2.5 flex items-center gap-3 focus-within:border-primary/50 transition-colors">
+              <span className="material-symbols-outlined text-primary text-xl">search</span>
+              <input
+                type="text"
+                value={researchInput}
+                onChange={e => setResearchInput(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') handleExecuteResearch(researchInput);
+                }}
+                placeholder="Search token or topic (e.g. 'Analyze Ethereum sentiment & risk')..."
+                className="w-full bg-transparent border-none text-xs sm:text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none font-sans"
+              />
             </div>
+            <button
+              onClick={() => handleExecuteResearch(researchInput)}
+              disabled={!researchInput.trim()}
+              className="px-5 py-2.5 bg-primary text-white disabled:opacity-40 rounded-xl text-xs font-mono font-bold uppercase tracking-wider hover:bg-primary/90 transition-all shrink-0"
+            >
+              Research
+            </button>
+          </div>
 
-            {/* Pipeline Step Flow */}
-            <div className="flex items-center justify-between text-[9.5px] font-mono text-on-surface-variant/70 pt-0.5 px-1 overflow-x-auto no-scrollbar">
-              <div className="flex items-center gap-1.5 text-primary font-bold shrink-0">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                <span>1. Prompt Input</span>
-              </div>
-              <span className="text-outline-variant shrink-0">→</span>
-              <div className="flex items-center gap-1 shrink-0">
-                <span className="material-symbols-outlined text-xs">biotech</span>
-                <span>2. AI Research</span>
-              </div>
-              <span className="text-outline-variant shrink-0">→</span>
-              <div className="flex items-center gap-1 shrink-0">
-                <span className="material-symbols-outlined text-xs">fact_check</span>
-                <span>3. Evidence Audit</span>
-              </div>
-              <span className="text-outline-variant shrink-0">→</span>
-              <div className="flex items-center gap-1 text-bullish-green font-bold shrink-0">
-                <span className="material-symbols-outlined text-xs">gavel</span>
-                <span>4. Consensus Decision</span>
-              </div>
-            </div>
-
-            {/* Token Selector Chips */}
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
-              <span className="font-mono text-[10px] text-outline uppercase tracking-wider shrink-0">Featured:</span>
-              {filteredTokens.map(token => (
-                <TokenChip
-                  key={token.symbol}
-                  token={token}
-                  selected={selectedToken.symbol === token.symbol}
-                  onClick={() => handleSelectToken(token)}
-                />
-              ))}
-            </div>
+          {/* Featured Token Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+            <span className="font-mono text-[10px] text-outline uppercase tracking-wider shrink-0">Featured:</span>
+            {filteredTokens.map(token => (
+              <TokenChip
+                key={token.symbol}
+                token={token}
+                selected={selectedToken.symbol === token.symbol}
+                onClick={() => handleSelectToken(token)}
+              />
+            ))}
           </div>
         </div>
 
