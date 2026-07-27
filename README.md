@@ -26,6 +26,16 @@ Nexa AI provides deep token analysis, risk scoring, real-time market telemetry, 
 
 ---
 
+## ⚡ Core Capabilities
+
+- 📊 **Market Research**: Real-time cross-chain telemetry, news sentiment analysis, and trend synthesis.
+- 🪙 **Token Analysis**: Deep fundamental token audits, on-chain liquidity evaluation, and tokenomics metrics.
+- ⚠️ **Risk Assessment**: Multi-factor volatility indexing, liquidity pool depth auditing, and downside circuit breaker evaluation.
+- 🎯 **Prediction Generation**: Autonomous creation of inspectable market prediction proposals with target probability scoring.
+- 📦 **Evidence-backed Reasoning**: Deterministic SHA-256 IPFS evidence packaging ensuring full rationale auditability.
+
+---
+
 ## 🤖 OKX.AI Agent Service Provider (ASP) Endpoints
 
 Nexa AI implements the official OKX Agent-to-Agent (A2A) ASP protocol specifications configured via [server/okx/asp.config.ts](file:///home/oyeolorun/AiraMarKet/server/okx/asp.config.ts):
