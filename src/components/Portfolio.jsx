@@ -221,12 +221,12 @@ export default function Portfolio() {
                       </span>
                       {isWon && (
                         <span className="px-2.5 py-0.5 text-[9px] font-bold font-mono rounded-full bg-bullish-green text-white uppercase">
-                          🏆 WON & CLAIMABLE
+                          WON & CLAIMABLE
                         </span>
                       )}
                       {isLost && (
                         <span className="px-2.5 py-0.5 text-[9px] font-bold font-mono rounded-full bg-bearish-red/20 text-bearish-red uppercase">
-                          ❌ LOST
+                          LOST
                         </span>
                       )}
                       {isActive && (

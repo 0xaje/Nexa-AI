@@ -6,7 +6,7 @@
 [![Sepolia Testnet](https://img.shields.io/badge/Ecosystem-Sepolia_Testnet-blue.svg)](https://sepolia.etherscan.io)
 [![Solidity](https://img.shields.io/badge/Language-Solidity-lightgrey.svg)](contracts/AiraMarket.sol)
 
-## 🏆 OKX.AI Genesis Hackathon Fact Sheet
+## Executive Product Summary
 
 | Attribute | Parameter Value |
 |---|---|
@@ -22,7 +22,7 @@
 
 ---
 
-## ❓ Why Nexa AI?
+## Why Nexa AI?
 
 **Nexa AI is an autonomous crypto intelligence agent that helps users research digital assets, evaluate market risks, and generate evidence-backed prediction opportunities using a collaborative multi-agent AI system.**
 
@@ -34,17 +34,17 @@ Nexa AI provides deep token analysis, risk scoring, real-time market telemetry, 
 
 ---
 
-## ⚡ Core Capabilities
+## Core Capabilities
 
-- 📊 **Market Research**: Real-time cross-chain telemetry, news sentiment analysis, and trend synthesis.
-- 🪙 **Token Analysis**: Deep fundamental token audits, on-chain liquidity evaluation, and tokenomics metrics.
-- ⚠️ **Risk Assessment**: Multi-factor volatility indexing, liquidity pool depth auditing, and downside circuit breaker evaluation.
-- 🎯 **Prediction Generation**: Autonomous creation of inspectable market prediction proposals with target probability scoring.
-- 📦 **Evidence-backed Reasoning**: Deterministic SHA-256 IPFS evidence packaging ensuring full rationale auditability.
+- **Market Research**: Real-time cross-chain telemetry, news sentiment analysis, and trend synthesis.
+- **Token Analysis**: Deep fundamental token audits, on-chain liquidity evaluation, and tokenomics metrics.
+- **Risk Assessment**: Multi-factor volatility indexing, liquidity pool depth auditing, and downside circuit breaker evaluation.
+- **Prediction Generation**: Autonomous creation of inspectable market prediction proposals with target probability scoring.
+- **Evidence-backed Reasoning**: Deterministic SHA-256 IPFS evidence packaging ensuring full rationale auditability.
 
 ---
 
-## 🤖 OKX.AI Agent Service Provider (ASP) Endpoints
+## OKX.AI Agent Service Provider (ASP) Endpoints
 
 Nexa AI implements the official OKX Agent-to-Agent (A2A) ASP protocol specifications configured via [server/okx/asp.config.ts](file:///home/oyeolorun/AiraMarKet/server/okx/asp.config.ts):
 
@@ -57,7 +57,7 @@ Nexa AI implements the official OKX Agent-to-Agent (A2A) ASP protocol specificat
 
 ---
 
-## 🚀 Core Swarm & UI Capabilities
+## Core Swarm & UI Capabilities
 
 1. **Multi-Agent Research Swarm (`/tokens`)**: Specialized 3-node agent swarm (**Research Agent**, **Market Intelligence Agent**, **Risk Agent**) performing fundamental audits.
 2. **AI Command Center (`/chat`)**: Natural language chat interface interacting directly with the Nexa AI A2A coordinator.
@@ -68,10 +68,10 @@ Nexa AI implements the official OKX Agent-to-Agent (A2A) ASP protocol specificat
 
 ---
 
-## 🏛️ AI Architecture
+## AI Architecture
 
 ```
-Signal Ingestion ➔ 3-Agent Swarm ➔ Quorum Consensus Engine ➔ IPFS Evidence Package ➔ OKX.AI Settlement
+Signal Ingestion -> 3-Agent Swarm -> Quorum Consensus Engine -> IPFS Evidence Package -> OKX.AI Settlement
 ```
 
 ### 1. Three Specialized Agents
@@ -80,17 +80,16 @@ Signal Ingestion ➔ 3-Agent Swarm ➔ Quorum Consensus Engine ➔ IPFS Evidence
 - **Risk Agent**: Audits liquidity pool depth, computes multi-factor volatility indices, and evaluates downside circuit breakers.
 
 ### 2. Consensus Engine
-- **Quorum Consensus Engine**: Aggregates multi-agent insights to achieve a weighted quorum consensus score (≥ 66% threshold) before emitting final prediction proposals.
+- **Quorum Consensus Engine**: Aggregates multi-agent insights to achieve a weighted quorum consensus score (>= 66% threshold) before emitting final prediction proposals.
 
 ### 3. Evidence Package & IPFS
 - **Evidence Package**: Hashes decision rationale, supporting telemetry, and agent confidence scores into deterministic SHA-256 evidence bundles.
 - **IPFS Storage**: Pins immutable evidence Content Identifiers (CIDs) on-chain for verifiable transparency.
-
 - **Settlement & Identity**: Smart contract settlement on Sepolia Testnet (`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`) with TEE-secured **OKX Agentic Wallet** (`0x7bEaFc991C38570529a889C082B61802d967EB18`).
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Core Framework**: React, Vite, Vanilla CSS, Zustand
 - **Web3 & Wallet**: OKX Agentic Wallet, Wagmi v2, Viem, Ethers.js v6
@@ -102,7 +101,7 @@ Signal Ingestion ➔ 3-Agent Swarm ➔ Quorum Consensus Engine ➔ IPFS Evidence
 
 ---
 
-## ⚡ Quickstart & Local Verification
+## Quickstart & Local Verification
 
 ### 1. Installation
 ```bash
@@ -126,5 +125,5 @@ npm run build
 
 ---
 
-## 📄 License
+## License
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
