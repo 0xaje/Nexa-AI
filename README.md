@@ -6,6 +6,10 @@
 [![Sepolia Testnet](https://img.shields.io/badge/Ecosystem-Sepolia_Testnet-blue.svg)](https://sepolia.etherscan.io)
 [![Solidity](https://img.shields.io/badge/Language-Solidity-lightgrey.svg)](contracts/AiraMarket.sol)
 
+## ❓ Why Nexa AI?
+
+**Nexa AI is an autonomous crypto intelligence agent that helps users research digital assets, evaluate market risks, and generate evidence-backed prediction opportunities using a collaborative multi-agent AI system.**
+
 Nexa AI is an autonomous, multi-agent crypto intelligence platform and official **OKX.AI Agent Service Provider (ASP)** that provides deep token analysis, risk scoring, real-time market telemetry, and inspectable prediction generation backed by SHA-256 IPFS evidence packages.
 
 > [!IMPORTANT]
