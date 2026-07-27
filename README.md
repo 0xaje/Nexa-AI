@@ -60,16 +60,25 @@ Nexa AI implements the official OKX Agent-to-Agent (A2A) ASP protocol specificat
 
 ---
 
-## 🏛️ Technical Architecture
+## 🏛️ AI Architecture
 
 ```
-Signal Ingestion ➔ Multi-Agent Swarm (Research / Market Intel / Risk) ➔ IPFS Evidence Fingerprint ➔ OKX.AI A2A Settlement
+Signal Ingestion ➔ 3-Agent Swarm ➔ Quorum Consensus Engine ➔ IPFS Evidence Package ➔ OKX.AI Settlement
 ```
 
-- **Cognitive Layer**: Multi-agent quorum consensus engine coordinating **ResearchAgent**, **MarketIntelAgent**, and **RiskAgent**.
-- **Evidence Layer**: Deterministic SHA-256 evidence packages pinned to IPFS Content Identifiers (CIDs).
-- **Settlement Layer**: Smart contract state settlement on Sepolia Testnet (`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`).
-- **Identity Layer**: TEE-secured **OKX Agentic Wallet** (`0x7bEaFc991C38570529a889C082B61802d967EB18`).
+### 1. Three Specialized Agents
+- **Research Agent**: Performs deep fundamental token auditing, protocol metrics evaluation, and tokenomics adoption analysis.
+- **Market Intelligence Agent**: Ingests real-time cross-chain telemetry, monitors news signals, and verifies data integrity.
+- **Risk Agent**: Audits liquidity pool depth, computes multi-factor volatility indices, and evaluates downside circuit breakers.
+
+### 2. Consensus Engine
+- **Quorum Consensus Engine**: Aggregates multi-agent insights to achieve a weighted quorum consensus score (≥ 66% threshold) before emitting final prediction proposals.
+
+### 3. Evidence Package & IPFS
+- **Evidence Package**: Hashes decision rationale, supporting telemetry, and agent confidence scores into deterministic SHA-256 evidence bundles.
+- **IPFS Storage**: Pins immutable evidence Content Identifiers (CIDs) on-chain for verifiable transparency.
+
+- **Settlement & Identity**: Smart contract settlement on Sepolia Testnet (`0xDD277CCB8cDa72D652CdcA4df09df5f2522fc846`) with TEE-secured **OKX Agentic Wallet** (`0x7bEaFc991C38570529a889C082B61802d967EB18`).
 
 ---
 
