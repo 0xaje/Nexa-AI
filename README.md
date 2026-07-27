@@ -6,11 +6,19 @@
 [![Sepolia Testnet](https://img.shields.io/badge/Ecosystem-Sepolia_Testnet-blue.svg)](https://sepolia.etherscan.io)
 [![Solidity](https://img.shields.io/badge/Language-Solidity-lightgrey.svg)](contracts/AiraMarket.sol)
 
-## 📌 Executive Product Summary
+## 🏆 OKX.AI Genesis Hackathon Fact Sheet
 
-1. **Product**: **Nexa AI**
-2. **Category**: **AI Crypto Intelligence Agent**
-3. **Protocol**: Built for **OKX.AI Agent-to-Agent (A2A) ASP**
+| Attribute | Parameter Value |
+|---|---|
+| **Project Name** | **Nexa AI** |
+| **Category** | `AI Crypto Intelligence Agent` |
+| **ASP Protocol Type** | `Agent-to-Agent (A2A)` |
+| **GitHub Repository** | [`https://github.com/0xaje/Nexa-AI`](https://github.com/0xaje/Nexa-AI) |
+| **Live Deployment** | [`https://nexa-ai-sepia.vercel.app`](https://nexa-ai-sepia.vercel.app) |
+| **Key Endpoints** | `/metadata`, `/health`, `/version`, `/agent` |
+| **Core Services** | Market Research, Token Analysis, Risk Assessment, Prediction Generation, Evidence-Based Reasoning |
+| **AI Architecture** | Three-Agent Swarm (Research Agent, Market Intelligence Agent, Risk Agent) |
+| **Contact Email** | `ajeseun11@gmail.com` |
 
 ---
 
